@@ -1,0 +1,1577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FM Drone Clock — Braun Study</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --page: #171717;
+  --panel: #111110;
+  --panel2: #1b1b19;
+  --panel-edge: #32312d;
+  --panel-text: #e9e6de;
+  --panel-muted: #9a9383;
+  --face: #0d0d0c;
+  --face-ink: #f0eee7;
+  --tick-minor: #9f9d96;
+  --tick-major: #efede6;
+  --yellow: #efbb2b;
+  --green: #2da52e;
+  --red: #d1a033;
+  --shadow: rgba(0,0,0,0.42);
+}
+
+html, body { min-height: 100%; }
+
+body {
+  background: linear-gradient(180deg, #242424 0%, #0f0f0f 100%);
+  color: var(--panel-text);
+  font-family: Helvetica, Arial, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 26px 18px 52px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.wrap {
+  width: min(980px, 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.instrument {
+  display: grid;
+  grid-template-columns: 500px 300px;
+  gap: 34px;
+  align-items: start;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.clock-shell {
+  width: 500px;
+  height: 612px;
+  position: relative;
+  background: linear-gradient(180deg, #1a1a18 0%, #0d0d0c 85%);
+  border: 1px solid #2d2c28;
+  border-radius: 210px 210px 34px 34px / 180px 180px 34px 34px;
+  box-shadow:
+    0 30px 70px rgba(0,0,0,0.40),
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    inset 0 -10px 30px rgba(0,0,0,0.22);
+  overflow: visible;
+}
+
+.clock-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: none;
+  pointer-events: none;
+}
+
+#ring {
+  position: absolute;
+  left: 56px;
+  top: 34px;
+  width: 388px;
+  height: 388px;
+  overflow: visible;
+}
+
+.side-knob {
+  position: absolute;
+  right: -12px;
+  top: 282px;
+  width: 28px;
+  height: 82px;
+  border-radius: 0 18px 18px 0;
+  background: linear-gradient(180deg, #2b2b29 0%, #11110f 100%);
+  border: 1px solid #3a3935;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+}
+
+.braun-logo {
+  position: absolute;
+  left: 45px;
+  bottom: 46px;
+  color: #d9d6cf;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  user-select: none;
+}
+
+
+.right {
+  width: 300px;
+  background: linear-gradient(180deg, #1b1b18 0%, #11110f 100%);
+  border: 1px solid var(--panel-edge);
+  border-radius: 18px;
+  box-shadow:
+    0 20px 42px rgba(0,0,0,0.34),
+    inset 0 1px 0 rgba(255,255,255,0.05);
+  padding: 16px 14px 15px;
+}
+
+.button-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 58px;
+  gap: 7px;
+  margin-bottom: 12px;
+}
+
+button, select {
+  background: #24231f;
+  border: 1px solid #4a473e;
+  color: var(--panel-text);
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  height: 29px;
+  border-radius: 4px;
+}
+
+button {
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.05s;
+}
+
+button:hover { background: #2e2c27; }
+button:active { transform: translateY(1px); }
+
+button.on {
+  background: #efece4;
+  color: #11110f;
+  border-color: #efece4;
+}
+
+#real-btn.on {
+  background: var(--yellow);
+  color: #11110f;
+  border-color: #c69720;
+}
+
+#freeze-btn {
+  font-size: 7px;
+  letter-spacing: 0.16em;
+}
+
+#freeze-btn.on {
+  background: #2b5d2a;
+  color: #f3f0e7;
+  border-color: #3d7f3b;
+}
+
+.panel {
+  border-top: 1px solid #34342f;
+  padding: 12px 0 0;
+  margin-bottom: 12px;
+}
+.panel:first-of-type { border-top: none; padding-top: 0; }
+
+.panel-title {
+  font-size: 8px;
+  line-height: 1;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--panel-muted);
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.ctrl-row {
+  display: grid;
+  grid-template-columns: 60px 1fr;
+  align-items: center;
+  gap: 9px;
+  margin-bottom: 8px;
+}
+.ctrl-row:last-child { margin-bottom: 0; }
+
+.ctrl-lbl,
+.sl-lbl {
+  font-size: 7.5px;
+  letter-spacing: 0.20em;
+  text-transform: uppercase;
+  color: var(--panel-muted);
+  font-weight: 700;
+}
+
+select {
+  width: 100%;
+  padding: 0 7px;
+  outline: none;
+  border-radius: 4px;
+  appearance: none;
+  background:
+    linear-gradient(45deg, transparent 50%, #9d9686 50%) calc(100% - 12px) 12px/5px 5px no-repeat,
+    linear-gradient(135deg, #9d9686 50%, transparent 50%) calc(100% - 7px) 12px/5px 5px no-repeat,
+    #24231f;
+}
+
+.sliders {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 9px;
+}
+
+.sl {
+  display: grid;
+  grid-template-columns: 72px 1fr 43px;
+  align-items: center;
+  gap: 9px;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 2px;
+  background: #565146;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #e9e4d7;
+  border: 2px solid #11110f;
+  box-shadow: 0 0 0 1px #6b6559;
+  cursor: pointer;
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #e9e4d7;
+  border: 2px solid #11110f;
+  box-shadow: 0 0 0 1px #6b6559;
+  cursor: pointer;
+}
+
+.sl-val {
+  font-size: 8px;
+  color: #aaa292;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.legend {
+  border-top: 1px solid #34342f;
+  padding-top: 10px;
+  font-size: 7.5px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--panel-muted);
+  line-height: 1.85;
+  font-weight: 700;
+}
+
+.legend span { color: var(--panel-text); }
+
+.status {
+  margin-top: 12px;
+  font-size: 11.5px;
+  color: #c6c0b3;
+  min-height: 34px;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  text-align: center;
+  width: 100%;
+  max-width: 440px;
+  font-weight: 500;
+}
+.status.active { color: #f0ece2; }
+
+/* clock graphics */
+.n-bg {
+  fill: transparent;
+  stroke: rgba(255,255,255,0.0);
+  stroke-width: 1;
+  transition: fill 0.2s, stroke 0.2s, opacity 0.2s;
+}
+
+.n-txt {
+  fill: #f3f0e7;
+  font-family: Helvetica, Arial, sans-serif;
+  font-weight: 600;
+  pointer-events: none;
+  transition: fill 0.2s;
+  user-select: none;
+}
+
+.n-deg {
+  fill: #9f9b91;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 6.1px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  pointer-events: none;
+  user-select: none;
+  transition: fill 0.2s;
+}
+
+.n-pulse { display: none; }
+
+.nd.in-scale .n-bg {
+  stroke: rgba(255,255,255,0.16);
+}
+
+.nd.root .n-bg {
+  fill: #f0ede6;
+  stroke: #f0ede6;
+}
+
+.nd.root .n-txt,
+.nd.root .n-deg {
+  fill: #11110f;
+}
+
+.nd.interval .n-bg {
+  fill: rgba(0,0,0,0.0);
+  stroke: var(--yellow);
+  stroke-width: 1.7;
+}
+
+.nd.interval .n-txt {
+  fill: var(--yellow);
+}
+
+.nd.root.interval .n-bg {
+  fill: #f0ede6;
+}
+
+.hand {
+  transform-origin: 180px 180px;
+  transition: transform 0.2s ease-out;
+  stroke-linecap: round;
+  pointer-events: none;
+}
+
+.hour-hand {
+  stroke: #f1eee6;
+  stroke-width: 7.2;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.20));
+}
+
+.minute-hand {
+  stroke: #f1eee6;
+  stroke-width: 5.2;
+  filter: drop-shadow(0 1px 1px rgba(0,0,0,0.20));
+}
+
+.second-hand {
+  stroke: var(--yellow);
+  stroke-width: 2.2;
+  opacity: 1;
+}
+
+.hand-cap-under {
+  fill: #6e6d67;
+}
+
+.hand-cap {
+  fill: var(--yellow);
+  stroke: #dfb028;
+  stroke-width: 1;
+}
+
+.center-note,
+.center-sub {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (max-width: 920px) {
+  body { justify-content: flex-start; padding-top: 18px; }
+  .instrument {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .clock-shell { width: min(500px, 94vw); height: min(612px, 115vw); }
+  #ring { left: 50%; transform: translateX(-50%); top: 28px; width: min(388px, 82vw); height: auto; }
+  .right { width: min(300px, 94vw); }
+  .status { max-width: 90vw; }
+}
+
+@media (max-height: 760px) and (orientation: landscape) {
+  body { padding: 12px 12px 36px; }
+  .instrument {
+    grid-template-columns: 410px 290px;
+    gap: 20px;
+  }
+  .clock-shell { width: 410px; height: 500px; border-radius: 170px 170px 28px 28px / 150px 150px 28px 28px; }
+  #ring { left: 18px; top: 20px; width: 374px; }
+  .braun-logo { left: 34px; bottom: 34px; font-size: 24px; }
+  .-meta { right: 32px; bottom: 38px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+    <div class="instrument">
+    <div class="left">
+      <div class="clock-shell">
+        <div class="side-knob" title="Volume"><input type="range" id="side-volume" min="0" max="1" step="0.01" value="0.82" aria-label="Volume"></div>
+
+        <svg id="ring" width="390" height="390" viewBox="0 0 360 360">
+          <defs>
+            <linearGradient id="case-sheen" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="rgba(255,255,255,0.10)"/>
+              <stop offset="22%" stop-color="rgba(255,255,255,0.02)"/>
+              <stop offset="78%" stop-color="rgba(0,0,0,0.00)"/>
+              <stop offset="100%" stop-color="rgba(255,255,255,0.03)"/>
+            </linearGradient>
+          </defs>
+
+          <!-- face -->
+          <circle id="face-fill" cx="180" cy="180" r="146" fill="#0f0f0e"/>
+          <circle id="face-rim-outer" cx="180" cy="180" r="151.5" fill="none" stroke="#61615e" stroke-width="1.3"/>
+          <circle id="face-rim-inner" cx="180" cy="180" r="147.5" fill="none" stroke="#2e2d29" stroke-width="0.9"/>
+
+          <g id="minute-ticks"></g>
+          <g id="spokes"></g>
+          <g id="nodes"></g>
+
+          <!-- hands -->
+          <line id="hour-hand" class="hand hour-hand" x1="180" y1="180" x2="180" y2="95"/>
+          <line id="minute-hand" class="hand minute-hand" x1="180" y1="180" x2="180" y2="60"/>
+          <line id="second-hand" class="hand second-hand" x1="180" y1="188" x2="180" y2="44"/>
+          <circle class="hand-cap-under" cx="180" cy="180" r="8.5"/>
+          <circle class="hand-cap" cx="180" cy="180" r="11"/>
+
+          <!-- kept for logic, hidden visually -->
+          <text id="ctr-note" class="center-note" x="180" y="172" text-anchor="middle" dominant-baseline="middle"></text>
+          <text id="ctr-sub" class="center-sub" x="180" y="195" text-anchor="middle" dominant-baseline="middle"></text>
+        </svg>
+
+        <div class="braun-logo">DIETER</div>
+</div>
+
+      <div class="status" id="status">select a key and press start</div>
+    </div>
+
+    <div class="right">
+      <div class="button-row">
+        <button id="start-btn">start</button>
+        <button id="triad-btn">triad</button>
+        <button id="real-btn">real</button>
+        <button id="freeze-btn">frz</button>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">scale quantizer</div>
+        <div class="ctrl-row">
+          <div class="ctrl-lbl">Key</div>
+          <select id="key-select">
+            <option value="0" selected>C</option>
+            <option value="1">C♯</option>
+            <option value="2">D</option>
+            <option value="3">D♯</option>
+            <option value="4">E</option>
+            <option value="5">F</option>
+            <option value="6">F♯</option>
+            <option value="7">G</option>
+            <option value="8">G♯</option>
+            <option value="9">A</option>
+            <option value="10">B♭</option>
+            <option value="11">B</option>
+          </select>
+        </div>
+        <div class="ctrl-row">
+          <div class="ctrl-lbl">Scale</div>
+          <select id="scale-select">
+            <option value="mixolydian" selected>Mixolydian</option>
+            <option value="lydian">Lydian</option>
+            <option value="dorian">Dorian</option>
+            <option value="aeolian">Aeolian</option>
+            <option value="ionian">Ionian</option>
+            <option value="majorPent">Major Pent</option>
+            <option value="minorPent">Minor Pent</option>
+            <option value="suspended">Suspended</option>
+            <option value="harmMinor">Harmonic Minor</option>
+          </select>
+        </div>
+        <div class="ctrl-row">
+          <div class="ctrl-lbl">Tune</div>
+          <select id="tuning-select">
+            <option value="equal" selected>Equal Temperament</option>
+            <option value="ji5">5-Limit</option>
+            <option value="ji7">7-Limit</option>
+            <option value="ji9">9-Limit</option>
+            <option value="ji13">13-Limit</option>
+            <option value="ji17">17-Limit</option>
+            <option value="partch11">Partch 11</option>
+            <option value="pythagorean">Pythagorean</option>
+            <option value="wtp_lmy">WTP / LMY</option>
+            <option value="bohlen">Bohlen–Pierce</option>
+            <option value="kafi22">Kafi / 22 Shruti</option>
+            <option value="yaman">Raga Yaman</option>
+            <option value="bhairav">Raga Bhairav</option>
+            <option value="malkauns">Raga Malkauns</option>
+          </select>
+        </div>
+        <div class="ctrl-row">
+          <div class="ctrl-lbl">Algo</div>
+          <select id="algo-select">
+            <option value="alg32" selected>DX7 32 Parallel</option>
+            <option value="alg16">DX7 16 Pad</option>
+            <option value="alg5">DX7 5 Glass</option>
+            <option value="alg2">DX7 2 Dual Stack</option>
+            <option value="alg1">DX7 1 Stack</option>
+            <option value="alg8">DX7 8 Bell</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">clock motion</div>
+        <div class="sliders">
+          <div class="sl">
+            <div class="sl-lbl">Rate</div>
+            <input type="range" id="r-rate" min="0.0005" max="0.12" step="0.0005" value="0.006">
+            <div class="sl-val" id="v-rate">0.006</div>
+          </div>
+          <div class="sl">
+            <div class="sl-lbl">Orbit</div>
+            <input type="range" id="r-orbit" min="0" max="1" step="0.01" value="0.56">
+            <div class="sl-val" id="v-orbit">0.56</div>
+          </div>
+          <div class="sl">
+            <div class="sl-lbl">Osc Mix</div>
+            <input type="range" id="r-oscmix" min="0" max="1" step="0.01" value="0.25">
+            <div class="sl-val" id="v-oscmix">LOW 82</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-title">voice base</div>
+        <div class="sliders">
+          <div class="sl">
+            <div class="sl-lbl">Shimmer</div>
+            <input type="range" id="r-shimmer" min="0" max="2" step="0.02" value="0.46">
+            <div class="sl-val" id="v-shimmer">0.46</div>
+          </div>
+          <div class="sl">
+            <div class="sl-lbl">Drift</div>
+            <input type="range" id="r-drift" min="0" max="22" step="0.5" value="4">
+            <div class="sl-val" id="v-drift">4¢</div>
+          </div>
+          <div class="sl">
+            <div class="sl-lbl">Evolve</div>
+            <input type="range" id="r-evolve" min="0.004" max="0.28" step="0.004" value="0.035">
+            <div class="sl-val" id="v-evolve">0.035</div>
+          </div>
+          <div class="sl">
+            <div class="sl-lbl">Space</div>
+            <input type="range" id="r-space" min="0" max="1" step="0.01" value="0.50">
+            <div class="sl-val" id="v-space">0.50</div>
+          </div>
+          <div class="sl">
+            <div class="sl-lbl">Volume</div>
+            <input type="range" id="r-volume" min="0" max="1" step="0.01" value="0.82">
+            <div class="sl-val" id="v-volume">0.82</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="legend">
+        <div><span>key</span> root</div>
+        <div><span>click</span> jump interval</div>
+        <div><span>second</span> synth mod</div>
+        <div><span>frz</span> hold interval</div>
+        <div><span>triad</span> second becomes 3rd voice</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ─── Constants ───────────────────────────────────────────
+const NOTES   = ['C','C♯','D','D♯','E','F','F♯','G','G♯','A','B♭','B'];
+const BASE_HZ = 261.6255653005986; // C4
+
+const SCALES = {
+  mixolydian: { name: 'Mixolydian', deg: [0,2,4,5,7,9,10] },
+  lydian:     { name: 'Lydian',     deg: [0,2,4,6,7,9,11] },
+  dorian:     { name: 'Dorian',     deg: [0,2,3,5,7,9,10] },
+  aeolian:    { name: 'Aeolian',    deg: [0,2,3,5,7,8,10] },
+  ionian:     { name: 'Ionian',     deg: [0,2,4,5,7,9,11] },
+  majorPent:  { name: 'Major Pent', deg: [0,2,4,7,9] },
+  minorPent:  { name: 'Minor Pent', deg: [0,3,5,7,10] },
+  suspended:  { name: 'Suspended',  deg: [0,2,5,7,10] },
+  harmMinor:  { name: 'Harm Minor', deg: [0,2,3,5,7,8,11] },
+};
+
+const TUNINGS = {
+  equal: {
+    name: 'Equal Temperament',
+    ratios: null
+  },
+  ji5: {
+    name: '5-Limit',
+    ratios: [1,16/15,9/8,6/5,5/4,4/3,45/32,3/2,8/5,5/3,9/5,15/8]
+  },
+  ji7: {
+    name: '7-Limit',
+    ratios: [1,15/14,8/7,7/6,5/4,4/3,7/5,3/2,14/9,5/3,7/4,15/8]
+  },
+  ji9: {
+    name: '9-Limit',
+    ratios: [1,16/15,9/8,7/6,5/4,4/3,11/8,3/2,8/5,5/3,7/4,15/8]
+  },
+  ji13: {
+    name: '13-Limit',
+    ratios: [1,16/15,9/8,7/6,5/4,4/3,11/8,3/2,13/8,5/3,7/4,15/8]
+  },
+  ji17: {
+    name: '17-Limit',
+    ratios: [1,17/16,9/8,19/16,5/4,4/3,11/8,3/2,13/8,5/3,7/4,15/8]
+  },
+  partch11: {
+    name: 'Partch 11',
+    ratios: [1,33/32,9/8,7/6,5/4,4/3,11/8,3/2,8/5,5/3,7/4,15/8]
+  },
+  pythagorean: {
+    name: 'Pythagorean',
+    ratios: [1,256/243,9/8,32/27,81/64,4/3,729/512,3/2,128/81,27/16,16/9,243/128]
+  },
+  wtp_lmy: {
+    name: 'WTP / LMY',
+    ratios: [1,567/512,9/8,7/6,81/64,4/3,729/512,3/2,3/2*81/64/1.5,27/16,7/4,243/128]
+  },
+  bohlen: {
+    name: 'Bohlen–Pierce',
+    // compressed into a 12-position ring, tritave flavor
+    ratios: [1,27/25,25/21,9/7,7/5,75/49,5/3,9/5,49/25,15/7,7/3,63/25]
+  },
+  kafi22: {
+    name: 'Kafi / 22 Shruti',
+    ratios: [1,16/15,10/9,6/5,5/4,4/3,45/32,3/2,8/5,5/3,9/5,16/9]
+  },
+  yaman: {
+    name: 'Raga Yaman',
+    ratios: [1,16/15,9/8,6/5,5/4,45/32,729/512,3/2,8/5,5/3,9/5,15/8]
+  },
+  bhairav: {
+    name: 'Raga Bhairav',
+    ratios: [1,16/15,9/8,6/5,5/4,4/3,45/32,3/2,8/5,5/3,9/5,15/8]
+  },
+  malkauns: {
+    name: 'Raga Malkauns',
+    ratios: [1,16/15,9/8,6/5,5/4,4/3,45/32,3/2,8/5,5/3,9/5,7/4]
+  }
+};
+
+// Circle-of-fifths clock positions.
+const FIFTHS = [0,7,2,9,4,11,6,1,8,3,10,5];
+
+// FM operator pair configs.
+// cR = carrier ratio, mR = modulator ratio, bScale = beta multiplier.
+const DX_ALGOS = {
+  // These are intentionally stable/drone-safe interpretations of DX7 routing ideas.
+  // They change ratios, output balance, and modulation depth without changing the working audio graph.
+  alg32: {
+    name: 'DX7 32 Parallel',
+    pairs: [
+      { cR: 1.00, mR: 1.00, bScale: 0.18, det: -1, gain: 0.30 },
+      { cR: 2.00, mR: 2.00, bScale: 0.10, det:  0, gain: 0.16 },
+      { cR: 0.50, mR: 0.50, bScale: 0.12, det: +1, gain: 0.20 }
+    ]
+  },
+  alg16: {
+    name: 'DX7 16 Pad',
+    pairs: [
+      { cR: 1.00, mR: 1.00, bScale: 0.26, det: -1, gain: 0.31 },
+      { cR: 1.00, mR: 2.00, bScale: 0.24, det:  0, gain: 0.18 },
+      { cR: 0.50, mR: 1.50, bScale: 0.18, det: +1, gain: 0.20 }
+    ]
+  },
+  alg5: {
+    name: 'DX7 5 Glass',
+    pairs: [
+      { cR: 1.00, mR: 2.00, bScale: 0.34, det: -1, gain: 0.28 },
+      { cR: 1.00, mR: 3.00, bScale: 0.30, det:  0, gain: 0.19 },
+      { cR: 0.50, mR: 2.50, bScale: 0.20, det: +1, gain: 0.17 }
+    ]
+  },
+  alg2: {
+    name: 'DX7 2 Dual Stack',
+    pairs: [
+      { cR: 1.00, mR: 1.00, bScale: 0.34, det: -1, gain: 0.30 },
+      { cR: 1.00, mR: 4.00, bScale: 0.28, det:  0, gain: 0.18 },
+      { cR: 2.00, mR: 3.00, bScale: 0.18, det: +1, gain: 0.12 }
+    ]
+  },
+  alg1: {
+    name: 'DX7 1 Stack',
+    pairs: [
+      { cR: 1.00, mR: 1.00, bScale: 0.44, det: -1, gain: 0.30 },
+      { cR: 1.00, mR: 3.00, bScale: 0.34, det:  0, gain: 0.16 },
+      { cR: 0.50, mR: 5.00, bScale: 0.22, det: +1, gain: 0.12 }
+    ]
+  },
+  alg8: {
+    name: 'DX7 8 Bell',
+    pairs: [
+      { cR: 1.00, mR: 1.414, bScale: 0.38, det: -1, gain: 0.24 },
+      { cR: 1.00, mR: 2.71,  bScale: 0.34, det:  0, gain: 0.17 },
+      { cR: 0.50, mR: 3.50,  bScale: 0.24, det: +1, gain: 0.14 }
+    ]
+  }
+};
+
+function currentPairs() {
+  return (DX_ALGOS[P.algorithm] || DX_ALGOS.alg32).pairs;
+}
+
+const PAIRS = DX_ALGOS.alg32.pairs;
+
+// ─── State ───────────────────────────────────────────────
+let actx = null, convolver = null, reverbIn = null, reverbOut = null, masterOut = null, wetOut = null;
+let octave = 3;
+let running = false;
+let triadMode = false;
+let clock = {
+  phase: 0,
+  last: 0,
+  hourPhase: 0,
+  minutePhase: 0,
+  secondPhase: 0,
+  prevSecondPhase: 0
+}; // internal clock by default; optional real-clock mode.
+let voices = {}; // root, interval, third
+let active = {
+  rootPc: 0,
+  intervalPc: 7,
+  thirdPc: 4,
+  rootIndex: 0,
+  intIndex: 4,
+  thirdIndex: 2,
+};
+
+let P = {
+  key: 0,
+  scale: 'mixolydian',
+  tuning: 'equal',
+  algorithm: 'alg32',
+  rate: 0.006,
+  orbit: 0.56,
+  oscmix: 0.25,
+  realClock: false,
+  manualIntervalIndex: 4,
+  freezeInterval: false,
+  shimmer: 0.46,
+  drift: 4,
+  evolve: 0.035,
+  space: 0.50,
+  volume: 0.82,
+};
+
+
+function oscMixGains(v) {
+  // Slightly high-tamed crossfade.
+  // The +1 octave reads louder psychoacoustically, so the high side is intentionally padded down.
+  const x = Math.max(0, Math.min(1, v));
+  const low = Math.cos(x * Math.PI / 2);
+  const high = Math.sin(x * Math.PI / 2) * 0.68;
+  return { low, high };
+}
+
+function oscMixLabel(v) {
+  const g = oscMixGains(v);
+  const low = Math.round(g.low * 100);
+  const high = Math.round(g.high * 100);
+  if (v <= 0.03) return 'LOW';
+  if (v >= 0.97) return 'HIGH';
+  if (Math.abs(v - 0.5) < 0.04) return 'BLEND';
+  return v < 0.5 ? `LOW ${low}` : `HI ${high}`;
+}
+
+function syncRealClockPhases() {
+  const now = new Date();
+  const h = now.getHours() % 12;
+  const m = now.getMinutes();
+  const sec = now.getSeconds() + now.getMilliseconds() / 1000;
+
+  clock.hourPhase = (h + m / 60 + sec / 3600) / 12;
+  clock.minutePhase = (m + sec / 60) / 60;
+  clock.secondPhase = sec / 60;
+}
+
+function syncInternalClockPhases() {
+  clock.hourPhase = clock.phase % 1;
+  clock.minutePhase = (clock.phase * 12) % 1;
+  clock.secondPhase = (clock.phase * 60) % 1;
+}
+
+
+function setMasterVolume(v, updateControls = true) {
+  P.volume = Math.max(0, Math.min(1, Number(v)));
+
+  if (masterOut && actx) masterOut.gain.setTargetAtTime(P.volume, actx.currentTime, 0.08);
+  if (wetOut && actx) wetOut.gain.setTargetAtTime(P.volume, actx.currentTime, 0.08);
+
+  document.documentElement.style.setProperty('--vol', P.volume.toFixed(3));
+
+  if (updateControls) {
+    const vol = document.getElementById('r-volume');
+    const side = document.getElementById('side-volume');
+    const val = document.getElementById('v-volume');
+
+    if (vol) vol.value = P.volume;
+    if (side) side.value = P.volume;
+    if (val) val.textContent = P.volume.toFixed(2);
+  }
+}
+
+function advanceInternalSecondClock(dt) {
+  const before = clock.secondPhase || 0;
+
+  // Internal slow instrument clock.
+  clock.phase = (clock.phase + dt * P.rate / 60) % 1;
+  syncInternalClockPhases();
+
+  const after = clock.secondPhase || 0;
+  const wrapped = before > 0.92 && after < 0.08;
+
+  // In internal mode, the clicked interval keeps moving like a minute hand:
+  // it advances one scale degree whenever the second hand returns to 12.
+  if (wrapped && !P.freezeInterval) {
+    const n = scaleDegrees().length;
+    P.manualIntervalIndex = ((P.manualIntervalIndex || 0) + 1) % n;
+
+    // Re-anchor the internal minute position to the new interval.
+    clock.phase = (P.manualIntervalIndex / n) / 12 + after / 720;
+    clock.phase = ((clock.phase % 1) + 1) % 1;
+    syncInternalClockPhases();
+  }
+
+  clock.prevSecondPhase = after;
+}
+
+// ─── Audio ───────────────────────────────────────────────
+function ensureCtx() {
+  if (actx) {
+    if (actx.state === 'suspended') actx.resume();
+    return;
+  }
+
+  actx = new (window.AudioContext || window.webkitAudioContext)();
+
+  masterOut = actx.createGain();
+  wetOut = actx.createGain();
+  masterOut.gain.value = P.volume;
+  wetOut.gain.value = P.volume;
+  masterOut.connect(actx.destination);
+  wetOut.connect(actx.destination);
+
+  // Generative reverb impulse.
+  convolver = actx.createConvolver();
+  const sr = actx.sampleRate;
+  const len = Math.floor(sr * 3.8);
+  const buf = actx.createBuffer(2, len, sr);
+
+  for (let c = 0; c < 2; c++) {
+    const d = buf.getChannelData(c);
+    for (let i = 0; i < len; i++) {
+      const t = i / len;
+      const env = Math.pow(1 - t, 1.75) * (t < 0.003 ? t / 0.003 : 1);
+      const slow = Math.sin(i * 0.00045 + c * 1.8) * 0.08;
+      d[i] = (Math.random() * 2 - 1 + slow) * env;
+    }
+  }
+
+  convolver.buffer = buf;
+  reverbIn = actx.createGain();
+  reverbOut = actx.createGain();
+  reverbIn.gain.value = 0.55;
+  reverbOut.gain.value = P.space;
+
+  reverbIn.connect(convolver);
+  convolver.connect(reverbOut);
+  reverbOut.connect(wetOut);
+}
+
+function pcToFreq(pc, oct = octave) {
+  const tuning = TUNINGS[P.tuning] || TUNINGS.equal;
+  const octaveOffset = oct - 4;
+
+  if (!tuning.ratios) {
+    const semi = pc + octaveOffset * 12;
+    return BASE_HZ * Math.pow(2, semi / 12);
+  }
+
+  const rootRatio = tuning.ratios[P.key] || Math.pow(2, P.key / 12);
+  const noteRatio = tuning.ratios[pc] || Math.pow(2, pc / 12);
+
+  // Keeps selected key as the tuning reference/root.
+  let ratio = noteRatio / rootRatio;
+  while (ratio < 1) ratio *= 2;
+  while (ratio >= 2) ratio /= 2;
+
+  const rootHz = BASE_HZ * Math.pow(2, P.key / 12);
+  return rootHz * ratio * Math.pow(2, octaveOffset);
+}
+
+function buildVoice(freq, role) {
+  const masterGain = actx.createGain();
+  const filter = actx.createBiquadFilter();
+  const dryGain = actx.createGain();
+  const sendGain = actx.createGain();
+
+  masterGain.gain.setValueAtTime(0, actx.currentTime);
+  filter.type = 'lowpass';
+  filter.frequency.value = role === 'root' ? 3200 : 4200;
+  filter.Q.value = 0.35;
+
+  dryGain.gain.value = role === 'root' ? 0.72 : 0.45;
+  sendGain.gain.value = role === 'root' ? 0.52 : 0.62;
+
+  masterGain.connect(filter);
+  filter.connect(dryGain);
+  filter.connect(sendGain);
+  dryGain.connect(masterOut);
+  sendGain.connect(reverbIn);
+
+  const pairNodes = currentPairs().map((cfg, idx) => {
+    const fc = freq * cfg.cR;
+    const fm = freq * cfg.mR;
+    const beta = P.shimmer * cfg.bScale;
+
+    const carrier = actx.createOscillator();
+    const upper = actx.createOscillator();
+    const mod = actx.createOscillator();
+    const modGain = actx.createGain();
+    const pGain = actx.createGain();
+    const upGain = actx.createGain();
+    const lfo = actx.createOscillator();
+    const lfoGain = actx.createGain();
+    const pan = actx.createStereoPanner();
+
+    carrier.type = upper.type = mod.type = lfo.type = 'sine';
+
+    carrier.frequency.value = fc;
+    upper.frequency.value = fc * 2;
+    carrier.detune.value = cfg.det * P.drift;
+    mod.frequency.value = fm;
+    modGain.gain.value = beta * fm;
+
+    lfo.frequency.value = P.evolve * (0.65 + 0.18 * idx);
+    lfoGain.gain.value = P.shimmer * fm * 0.16;
+
+    mod.connect(modGain);
+    modGain.connect(carrier.frequency);
+    lfo.connect(lfoGain);
+    lfoGain.connect(modGain.gain);
+
+    carrier.connect(pGain);
+    upper.connect(upGain);
+    upGain.connect(pan);
+
+    const oscG = oscMixGains(P.oscmix);
+    const baseOut = (role === 'root' ? 1.0 : 0.72) * (cfg.gain ?? 0.22);
+    pGain.gain.value = baseOut * oscG.low;
+    upGain.gain.value = baseOut * oscG.high;
+
+    pan.pan.value = role === 'root'
+      ? [-0.08, 0.08, 0.0][idx]
+      : [0.28, -0.23, 0.12][idx];
+
+    pGain.connect(pan);
+    pan.connect(masterGain);
+
+    carrier.start();
+    upper.start();
+    mod.start();
+    lfo.start();
+
+    return { carrier, upper, mod, modGain, pGain, upGain, lfo, lfoGain, pan, fm, cfg };
+  });
+
+  const voice = {
+    role,
+    freq,
+    masterGain,
+    filter,
+    pairNodes,
+
+    on(level = 1) {
+      const t = actx.currentTime;
+      const amp = role === 'root' ? 0.34 : (triadMode && role === 'third' ? 0.20 : 0.24);
+      masterGain.gain.cancelScheduledValues(t);
+      masterGain.gain.setValueAtTime(masterGain.gain.value, t);
+      masterGain.gain.linearRampToValueAtTime(amp * level, t + 2.1);
+    },
+
+    off(cb) {
+      const t = actx.currentTime;
+      masterGain.gain.cancelScheduledValues(t);
+      masterGain.gain.setValueAtTime(masterGain.gain.value, t);
+      masterGain.gain.linearRampToValueAtTime(0, t + 2.5);
+      setTimeout(() => {
+        pairNodes.forEach(o => {
+          try { o.carrier.stop(); if (o.upper) o.upper.stop(); o.mod.stop(); o.lfo.stop(); } catch(e) {}
+        });
+        if (cb) cb();
+      }, 2850);
+    },
+
+    setFreq(freq, glide = 1.8) {
+      this.freq = freq;
+      const now = actx.currentTime;
+      pairNodes.forEach(o => {
+        o.fm = freq * o.cfg.mR;
+        o.carrier.frequency.setTargetAtTime(freq * o.cfg.cR, now, glide);
+        if (o.upper) o.upper.frequency.setTargetAtTime(freq * o.cfg.cR * 2, now, glide);
+        o.mod.frequency.setTargetAtTime(freq * o.cfg.mR, now, glide);
+      });
+    },
+
+    setOscMix(v) {
+      const now = actx.currentTime;
+      const oscG = oscMixGains(v);
+      pairNodes.forEach(o => {
+        const baseOut = (role === 'root' ? 1.0 : 0.72) * (o.cfg.gain ?? 0.22);
+        o.pGain.gain.setTargetAtTime(baseOut * oscG.low, now, 0.35);
+        if (o.upGain) o.upGain.gain.setTargetAtTime(baseOut * oscG.high, now, 0.35);
+      });
+    },
+
+    applyBase() {
+      const now = actx.currentTime;
+      pairNodes.forEach(o => {
+        const beta = P.shimmer * o.cfg.bScale;
+        o.modGain.gain.setTargetAtTime(beta * o.fm, now, 0.35);
+        o.lfoGain.gain.setTargetAtTime(P.shimmer * o.fm * 0.16, now, 0.35);
+        o.lfo.frequency.setTargetAtTime(P.evolve * (0.65 + 0.18 * pairNodes.indexOf(o)), now, 0.4);
+        o.carrier.detune.setTargetAtTime(o.cfg.det * P.drift, now, 0.22);
+      });
+      this.setOscMix(P.oscmix);
+      filter.frequency.setTargetAtTime(this.role === 'root' ? 3200 : 4200, now, 0.35);
+    },
+
+    applySecondHand(m) {
+      // m = 0..1. This is the second-hand synth mod macro.
+      const now = actx.currentTime;
+      const modDepth = 0.78 + (m * P.orbit * 0.78);
+      const driftDepth = P.drift + (m * P.orbit * 7.5);
+      const evolveDepth = P.evolve * (1 + m * P.orbit * 3.6);
+      const bright = (this.role === 'root' ? 2300 : 3200) + (m * P.orbit * 3600);
+
+      filter.frequency.setTargetAtTime(bright, now, 0.18);
+      filter.Q.setTargetAtTime(0.28 + m * P.orbit * 0.58, now, 0.25);
+
+      pairNodes.forEach((o, i) => {
+        const beta = P.shimmer * modDepth * o.cfg.bScale;
+        o.modGain.gain.setTargetAtTime(beta * o.fm, now, 0.18);
+        o.lfoGain.gain.setTargetAtTime(P.shimmer * o.fm * (0.11 + m * 0.13), now, 0.22);
+        o.lfo.frequency.setTargetAtTime(evolveDepth * (0.62 + 0.2 * i), now, 0.24);
+        o.carrier.detune.setTargetAtTime(o.cfg.det * driftDepth * (1 + i * 0.12), now, 0.18);
+      });
+    }
+  };
+
+  return voice;
+}
+
+function setVoice(role, pc, octOffset = 0) {
+  ensureCtx();
+  const freq = pcToFreq(pc, octave + octOffset);
+  const id = `${pc}:${octOffset}:${P.tuning}:${P.algorithm}`;
+
+  if (voices[role] && voices[role].id === id) return;
+
+  const old = voices[role];
+  const fresh = buildVoice(freq, role);
+  const t = actx.currentTime;
+  const fade = role === 'root' ? 3.8 : 6.5;
+  const amp = role === 'root' ? 0.34 : (triadMode && role === 'third' ? 0.20 : 0.24);
+
+  fresh.masterGain.gain.cancelScheduledValues(t);
+  fresh.masterGain.gain.setValueAtTime(0, t);
+  fresh.masterGain.gain.linearRampToValueAtTime(amp, t + fade);
+
+  fresh.id = id;
+  voices[role] = fresh;
+
+  if (old) {
+    old.masterGain.gain.cancelScheduledValues(t);
+    old.masterGain.gain.setValueAtTime(old.masterGain.gain.value, t);
+    old.masterGain.gain.linearRampToValueAtTime(0, t + fade);
+    setTimeout(() => {
+      old.pairNodes.forEach(o => {
+        try { o.carrier.stop(); if (o.upper) o.upper.stop(); o.mod.stop(); o.lfo.stop(); } catch(e) {}
+      });
+    }, Math.ceil((fade + 0.35) * 1000));
+  }
+}
+function stopVoice(role) {
+  if (!voices[role]) return;
+  const old = voices[role];
+  delete voices[role];
+  old.off();
+}
+
+function stopAllVoices() {
+  Object.keys(voices).forEach(stopVoice);
+}
+
+// ─── Scale / clock logic ─────────────────────────────────
+function scaleDegrees() {
+  return SCALES[P.scale].deg;
+}
+
+function scalePcs() {
+  return scaleDegrees().map(d => (P.key + d) % 12);
+}
+
+function rootOrder() {
+  const allowed = scalePcs();
+  // Preserve circle-of-fifths feel while only allowing notes from the selected scale.
+  const ordered = FIFTHS.map(pc => (pc + P.key) % 12).filter(pc => allowed.includes(pc));
+  return ordered.length ? ordered : [P.key];
+}
+
+function degreeName(index) {
+  const degs = scaleDegrees();
+  const n = degs.length;
+  const names7 = ['1','2','3','4','5','6','7'];
+  if (n === 5) return ['1','2','3','5','6'][index % n] || String(index + 1);
+  return names7[index % 7] || String(index + 1);
+}
+
+function computeClockNotes() {
+  const degs = scaleDegrees();
+
+  if (P.realClock) {
+    syncRealClockPhases();
+  } else {
+    syncInternalClockPhases();
+  }
+
+  // Root is locked to the Key selector.
+  const rootPc = P.key;
+  const rootIndex = 0;
+
+  // Internal mode:
+  // clicked interval behaves like the minute hand and advances only
+  // when the second hand returns to 12, unless FRZ is on.
+  const intIndex = P.realClock
+    ? Math.floor(clock.minutePhase * degs.length) % degs.length
+    : Math.max(0, Math.min(degs.length - 1, P.manualIntervalIndex || 0));
+
+  const thirdIndex = Math.floor(clock.secondPhase * degs.length) % degs.length;
+
+  const rootRel = 0;
+  const intervalPc = (rootPc + degs[intIndex]) % 12;
+
+  let thirdPc = (rootPc + degs[thirdIndex]) % 12;
+  if (thirdPc === rootPc && degs.length > 2) {
+    thirdPc = (rootPc + degs[(thirdIndex + 2) % degs.length]) % 12;
+  }
+
+  active = { rootPc, intervalPc, thirdPc, rootIndex, intIndex, thirdIndex, rootRel };
+}
+
+
+function updateSoundFromClock() {
+  computeClockNotes();
+
+  setVoice('root', active.rootPc, -1);
+  const intervalOct = active.intervalPc <= active.rootPc ? 0 : -1;
+  setVoice('interval', active.intervalPc, intervalOct);
+
+  if (triadMode) {
+    const thirdOct = active.thirdPc <= active.rootPc ? 0 : -1;
+    setVoice('third', active.thirdPc, thirdOct);
+  } else {
+    stopVoice('third');
+  }
+
+  if (reverbOut) {
+    const m = secondMacro();
+    reverbOut.gain.setTargetAtTime(P.space * (0.78 + m * P.orbit * 0.38), actx.currentTime, 0.18);
+  }
+
+  Object.values(voices).forEach(v => v.applySecondHand(secondMacro()));
+}
+
+function secondMacro() {
+  // smooth 0..1 synth macro from whichever second hand is active.
+  const a = clock.secondPhase * Math.PI * 2;
+  return 0.5 + 0.5 * Math.sin(a - Math.PI / 2);
+}
+
+// ─── SVG Ring ────────────────────────────────────────────
+const SVG_NS = 'http://www.w3.org/2000/svg';
+const CX = 180, CY = 180, RING_R = 138;
+
+
+function buildTicks() {
+  const g = document.getElementById('minute-ticks');
+  if (!g || g.childNodes.length) return;
+
+  for (let i = 0; i < 60; i++) {
+    const a = (i * 6 - 90) * Math.PI / 180;
+    const major = i % 5 === 0;
+    const r1 = major ? 131 : 136;
+    const r2 = 145;
+    const line = document.createElementNS(SVG_NS, 'line');
+    line.setAttribute('x1', CX + r1 * Math.cos(a));
+    line.setAttribute('y1', CY + r1 * Math.sin(a));
+    line.setAttribute('x2', CX + r2 * Math.cos(a));
+    line.setAttribute('y2', CY + r2 * Math.sin(a));
+    line.setAttribute('stroke', major ? '#efede6' : '#96938a');
+    line.setAttribute('stroke-width', major ? '1.8' : '0.9');
+    g.appendChild(line);
+  }
+}
+
+function buildRing() {
+  const g = document.getElementById('nodes');
+  g.innerHTML = '';
+
+  FIFTHS.forEach((pc, i) => {
+    const ang = (i * 30 - 90) * Math.PI / 180;
+    const nodeR = 92;
+    const nx = CX + nodeR * Math.cos(ang);
+    const ny = CY + nodeR * Math.sin(ang);
+    const sharp = NOTES[pc].includes('♯') || NOTES[pc].includes('♭');
+    const r = sharp ? 14 : 16;
+
+    const grp = document.createElementNS(SVG_NS, 'g');
+    grp.classList.add('nd');
+    grp.setAttribute('data-pc', pc);
+    grp.setAttribute('data-i', i);
+    grp.style.cursor = 'pointer';
+
+    const bg = document.createElementNS(SVG_NS, 'circle');
+    bg.setAttribute('class', 'n-bg');
+    bg.setAttribute('cx', nx);
+    bg.setAttribute('cy', ny);
+    bg.setAttribute('r', r);
+
+    const txt = document.createElementNS(SVG_NS, 'text');
+    txt.setAttribute('class', 'n-txt');
+    txt.setAttribute('x', nx);
+    txt.setAttribute('y', ny - 3);
+    txt.setAttribute('text-anchor', 'middle');
+    txt.setAttribute('font-size', sharp ? '11.8' : '13.8');
+    txt.setAttribute('dominant-baseline', 'middle');
+    txt.textContent = NOTES[pc];
+
+    const deg = document.createElementNS(SVG_NS, 'text');
+    deg.setAttribute('class', 'n-deg');
+    deg.setAttribute('x', nx);
+    deg.setAttribute('y', ny + 9);
+    deg.setAttribute('text-anchor', 'middle');
+    deg.setAttribute('dominant-baseline', 'middle');
+
+    grp.appendChild(bg);
+    grp.appendChild(txt);
+    grp.appendChild(deg);
+    grp.addEventListener('click', () => manualRoot(pc));
+    g.appendChild(grp);
+  });
+
+  updateScaleMarks();
+}
+
+function manualRoot(pc) {
+  const degs = scaleDegrees();
+  const rel = (pc - P.key + 12) % 12;
+  const ix = degs.indexOf(rel);
+  if (ix < 0) return;
+
+  // Clicking a note jumps the interval only.
+  // It keeps advancing when the second hand strikes 12 unless FRZ is on.
+  P.realClock = false;
+  P.manualIntervalIndex = ix;
+
+  const realBtn = document.getElementById('real-btn');
+  if (realBtn) realBtn.classList.remove('on');
+
+  // Set the internal minute hand to this interval while preserving second-hand position.
+  const secPart = clock.secondPhase || ((clock.phase * 60) % 1);
+  clock.phase = (ix / degs.length) / 12 + secPart / 720;
+  clock.phase = ((clock.phase % 1) + 1) % 1;
+  syncInternalClockPhases();
+
+  computeClockNotes();
+  if (running) updateSoundFromClock();
+  updateVisuals();
+  updateStatus();
+}
+
+
+function romanForPc(pc) {
+  const rel = (pc - P.key + 12) % 12;
+  const map = {
+    0:'I', 1:'♭II', 2:'II', 3:'♭III', 4:'III', 5:'IV',
+    6:'♯IV', 7:'V', 8:'♭VI', 9:'VI', 10:'♭VII', 11:'VII'
+  };
+  return map[rel] || '';
+}
+
+function updateScaleMarks() {
+  const allowed = scalePcs();
+
+  document.querySelectorAll('.nd').forEach(grp => {
+    const pc = +grp.getAttribute('data-pc');
+    const inScale = allowed.includes(pc);
+    grp.classList.toggle('in-scale', inScale);
+    const deg = grp.querySelector('.n-deg');
+    deg.textContent = inScale ? romanForPc(pc) : '';
+  });
+}
+
+function updateVisuals() {
+  const allowed = scalePcs();
+
+  document.querySelectorAll('.nd').forEach(grp => {
+    const pc = +grp.getAttribute('data-pc');
+    grp.classList.toggle('root', pc === active.rootPc);
+    grp.classList.toggle('interval', pc === active.intervalPc || (triadMode && pc === active.thirdPc));
+    grp.classList.toggle('in-scale', allowed.includes(pc));
+  });
+
+  // Hands:
+  // Internal mode: hour points to locked key/root, minute points to selected interval note.
+  // Real mode: hands behave like an actual clock.
+  const rootFi = FIFTHS.indexOf(active.rootPc);
+  const intFi = FIFTHS.indexOf(active.intervalPc);
+
+  const hourDeg = P.realClock ? clock.hourPhase * 360 : (rootFi >= 0 ? rootFi * 30 : 0);
+  const minuteDeg = P.realClock ? clock.minutePhase * 360 : (intFi >= 0 ? intFi * 30 : 0);
+  const secondDeg = clock.secondPhase * 360;
+
+  document.getElementById('hour-hand').style.transform = `rotate(${hourDeg}deg)`;
+  document.getElementById('minute-hand').style.transform = `rotate(${minuteDeg}deg)`;
+  document.getElementById('second-hand').style.transform = `rotate(${secondDeg}deg)`;
+
+  drawSpokes();
+
+  const cNote = document.getElementById('ctr-note');
+  const cSub = document.getElementById('ctr-sub');
+  cNote.textContent = '';
+  cSub.textContent = '';
+}
+
+function drawSpokes() {
+  const spokes = document.getElementById('spokes');
+  if (spokes) spokes.innerHTML = '';
+}
+
+// ─── Controls ─────────────────────────────────────────────
+function bindSlider(id, valId, paramKey, fmt, onchange) {
+  const sl = document.getElementById(id);
+  const vl = document.getElementById(valId);
+
+  sl.addEventListener('input', () => {
+    P[paramKey] = +sl.value;
+    vl.textContent = fmt(P[paramKey]);
+    if (onchange) onchange(P[paramKey]);
+    Object.values(voices).forEach(v => v.applyBase());
+  });
+}
+
+bindSlider('r-rate', 'v-rate', 'rate', v => v.toFixed(4));
+bindSlider('r-orbit', 'v-orbit', 'orbit', v => v.toFixed(2));
+bindSlider('r-oscmix', 'v-oscmix', 'oscmix', v => oscMixLabel(v), val => {
+  Object.values(voices).forEach(v => {
+    if (v.setOscMix) v.setOscMix(val);
+  });
+});
+bindSlider('r-shimmer','v-shimmer','shimmer', v => v.toFixed(2));
+bindSlider('r-drift','v-drift','drift', v => v + '¢');
+bindSlider('r-evolve','v-evolve','evolve', v => v.toFixed(3));
+bindSlider('r-space','v-space','space', v => v.toFixed(2), val => {
+  if (reverbOut) reverbOut.gain.setTargetAtTime(val, actx.currentTime, 0.12);
+});
+
+bindSlider('r-volume','v-volume','volume', v => v.toFixed(2), val => {
+  setMasterVolume(val, true);
+});
+
+document.getElementById('key-select').addEventListener('change', e => {
+  P.key = +e.target.value;
+  computeClockNotes();
+  updateScaleMarks();
+  if (running) updateSoundFromClock();
+  updateVisuals();
+  updateStatus();
+});
+
+document.getElementById('scale-select').addEventListener('change', e => {
+  P.scale = e.target.value;
+  P.manualIntervalIndex = Math.min(P.manualIntervalIndex || 0, scaleDegrees().length - 1);
+  computeClockNotes();
+  updateScaleMarks();
+  if (running) updateSoundFromClock();
+  updateVisuals();
+  updateStatus();
+});
+
+document.getElementById('tuning-select').addEventListener('change', e => {
+  P.tuning = e.target.value;
+  // Force clean crossfade into the same musical positions with the new tuning.
+  if (running) {
+    Object.keys(voices).forEach(role => {
+      const old = voices[role];
+      delete voices[role];
+      old.off();
+    });
+    updateSoundFromClock();
+  }
+  updateStatus();
+});
+
+document.getElementById('algo-select').addEventListener('change', e => {
+  P.algorithm = e.target.value;
+  // Force a clean crossfade into the same notes with the new FM character.
+  if (running) {
+    const oldVoices = { ...voices };
+    voices = {};
+    updateSoundFromClock();
+    Object.values(oldVoices).forEach(v => {
+      const t = actx.currentTime;
+      v.masterGain.gain.cancelScheduledValues(t);
+      v.masterGain.gain.setValueAtTime(v.masterGain.gain.value, t);
+      v.masterGain.gain.linearRampToValueAtTime(0, t + 3.2);
+      setTimeout(() => {
+        v.pairNodes.forEach(o => {
+          try { o.carrier.stop(); if (o.upper) o.upper.stop(); o.mod.stop(); o.lfo.stop(); } catch(e) {}
+        });
+      }, 3600);
+    });
+  }
+  updateStatus();
+});
+
+document.getElementById('triad-btn').addEventListener('click', () => {
+  triadMode = !triadMode;
+  document.getElementById('triad-btn').classList.toggle('on', triadMode);
+  if (running) updateSoundFromClock();
+  else stopVoice('third');
+  updateVisuals();
+  updateStatus();
+});
+
+document.getElementById('real-btn').addEventListener('click', () => {
+  P.realClock = !P.realClock;
+  document.getElementById('real-btn').classList.toggle('on', P.realClock);
+  computeClockNotes();
+  if (running) updateSoundFromClock();
+  updateVisuals();
+  updateStatus();
+});
+
+document.getElementById('freeze-btn').addEventListener('click', () => {
+  computeClockNotes();
+  P.freezeInterval = !P.freezeInterval;
+
+  if (P.freezeInterval) {
+    P.manualIntervalIndex = active.intIndex;
+  }
+
+  document.getElementById('freeze-btn').classList.toggle('on', P.freezeInterval);
+  if (running) updateSoundFromClock();
+  updateVisuals();
+  updateStatus();
+});
+
+document.getElementById('start-btn').addEventListener('click', () => {
+  ensureCtx();
+  running = !running;
+
+  const btn = document.getElementById('start-btn');
+  btn.classList.toggle('on', running);
+  btn.textContent = running ? 'stop' : 'start';
+
+  if (running) {
+    updateSoundFromClock();
+    document.getElementById('ctr-fill').setAttribute('fill', 'url(#active-grad)');
+  } else {
+    stopAllVoices();
+    document.getElementById('ctr-fill').setAttribute('fill', 'url(#glow-grad)');
+  }
+
+  updateVisuals();
+  updateStatus();
+});
+
+// ─── Status ──────────────────────────────────────────────
+function updateStatus() {
+  const el = document.getElementById('status');
+  const thirdText = triadMode ? ` + ${NOTES[active.thirdPc]}` : '';
+  const intervalText = degreeName(active.intIndex);
+
+  if (!running) {
+    const mode = P.realClock ? 'real clock' : 'internal clock';
+    el.textContent = `${NOTES[P.key]} ${SCALES[P.scale].name} · ${mode} · ${TUNINGS[P.tuning].name}`;
+    el.classList.remove('active');
+    return;
+  }
+
+  el.innerHTML =
+    `droning: ${NOTES[active.rootPc]} + ${NOTES[active.intervalPc]}${thirdText}` +
+    `<br>${P.realClock ? 'real clock' : 'internal clock'} · interval degree ${intervalText}${P.freezeInterval ? ' · frozen' : ' · moving'} · second hand modulates FM/space/drift · knob = volume`;
+  el.classList.add('active');
+}
+
+// ─── Animation ───────────────────────────────────────────
+function animate(ts) {
+  if (!clock.last) clock.last = ts;
+  const dt = Math.min(0.05, (ts - clock.last) / 1000);
+  clock.last = ts;
+
+  if (running) {
+    if (!P.realClock) {
+      advanceInternalSecondClock(dt);
+    }
+    updateSoundFromClock();
+  } else {
+    computeClockNotes();
+  }
+
+  updateVisuals();
+  requestAnimationFrame(animate);
+}
+
+
+// ─── Init ────────────────────────────────────────────────
+setMasterVolume(P.volume, true);
+buildTicks();
+buildRing();
+computeClockNotes();
+updateVisuals();
+updateStatus();
+requestAnimationFrame(animate);
+</script>
+</body>
+</html>
