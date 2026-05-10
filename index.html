@@ -427,6 +427,271 @@ input[type=range]::-moz-range-thumb {
   .braun-logo { left: 34px; bottom: 34px; font-size: 24px; }
   .-meta { right: 32px; bottom: 38px; }
 }
+
+.clock-shell {
+  --tension: 0;
+}
+
+.clock-shell::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 405px;
+  width: 82px;
+  height: 2px;
+  transform: translateX(-50%) scaleX(calc(0.25 + var(--tension) * 0.75));
+  transform-origin: center;
+  background: var(--yellow);
+  opacity: calc(0.12 + var(--tension) * 0.45);
+  border-radius: 999px;
+  pointer-events: none;
+}
+
+
+
+.crown-panel {
+  padding-bottom: 12px;
+}
+
+.crown-control-row {
+  display: grid;
+  grid-template-columns: 1fr 72px;
+  align-items: center;
+  gap: 10px;
+}
+
+.crown-copy {
+  font-size: 7.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--panel-muted);
+  font-weight: 700;
+}
+
+.crown-mode {
+  position: static;
+  width: 72px;
+  height: 28px;
+  border-radius: 4px;
+  padding: 0;
+  font-size: 8px;
+  letter-spacing: 0.14em;
+  opacity: 1;
+  background: #24231f;
+  border: 1px solid #514d43;
+  color: #e9e4d7;
+}
+
+.crown-mode.on {
+  background: var(--yellow);
+  color: #11110f;
+  border-color: #c69720;
+}
+
+
+.movement-controls-panel {
+  padding-bottom: 12px;
+}
+
+.movement-knobs {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 9px;
+}
+
+.mini-knob {
+  min-width: 0;
+  border: 1px solid #38352f;
+  background: #151512;
+  border-radius: 9px;
+  padding: 9px 8px 8px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
+}
+
+.mini-lbl {
+  font-size: 7px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--panel-muted);
+  font-weight: 700;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.mini-knob input[type=range] {
+  display: block;
+  width: 100%;
+  margin: 9px 0 8px;
+}
+
+.step-btn {
+  width: 100%;
+  height: 28px;
+  border-radius: 999px;
+  font-size: 7px;
+  letter-spacing: 0.14em;
+}
+
+.step-btn:active {
+  background: var(--yellow);
+  color: #11110f;
+}
+
+.mini-knob .sl-val {
+  text-align: center;
+  font-size: 7.5px;
+}
+
+
+/* movement view */
+#movement-view {
+  position: absolute;
+  left: 56px;
+  top: 34px;
+  width: 388px;
+  height: 388px;
+  overflow: visible;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.18s ease;
+}
+
+body.movement-view #ring {
+  opacity: 0;
+  pointer-events: none;
+}
+
+body.movement-view #movement-view {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mv-face {
+  fill: #0f0f0e;
+  stroke: #61615e;
+  stroke-width: 1.3;
+}
+
+.mv-title {
+  fill: #d8d4ca;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.mv-node {
+  fill: transparent;
+  stroke: #68645b;
+  stroke-width: 1;
+}
+
+.mv-node.active {
+  fill: var(--yellow);
+  stroke: var(--yellow);
+}
+
+.mv-node.next {
+  stroke: #d8d4ca;
+  stroke-width: 1.5;
+}
+
+.mv-node-text {
+  fill: #d8d4ca;
+  font-size: 8px;
+  font-weight: 700;
+  pointer-events: none;
+}
+
+.mv-small-text {
+  fill: #9f9b91;
+  font-size: 6.5px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mv-label {
+  fill: #9f9b91;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.mv-state {
+  fill: var(--yellow);
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.mv-wheel {
+  fill: transparent;
+  stroke: #777168;
+  stroke-width: 1.1;
+}
+
+.mv-arm {
+  stroke: var(--yellow);
+  stroke-width: 2;
+  stroke-linecap: round;
+  transform-origin: 180px 180px;
+}
+
+.mv-jumper-arm {
+  stroke: #d8d4ca;
+  stroke-width: 3;
+  stroke-linecap: round;
+  transform-origin: 80px 255px;
+  transition: transform 0.16s ease;
+}
+
+.mv-pivot {
+  fill: #d8d4ca;
+}
+
+.mv-box {
+  fill: #151512;
+  stroke: #49453b;
+  stroke-width: 1;
+}
+
+.mv-charge-bg {
+  fill: #2a2823;
+}
+
+.mv-charge {
+  fill: var(--yellow);
+}
+
+.mv-readout {
+  fill: #d8d4ca;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 920px) {
+  #movement-view {
+    left: 50%;
+    transform: translateX(-50%);
+    top: 28px;
+    width: min(388px, 82vw);
+    height: auto;
+  }
+}
+
+@media (max-height: 760px) and (orientation: landscape) {
+  #movement-view {
+    left: 18px;
+    top: 20px;
+    width: 374px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -435,7 +700,8 @@ input[type=range]::-moz-range-thumb {
     <div class="instrument">
     <div class="left">
       <div class="clock-shell">
-        <div class="side-knob" title="Volume"><input type="range" id="side-volume" min="0" max="1" step="0.01" value="0.82" aria-label="Volume"></div>
+        <div class="crown-adjust-wrap"><div class="crown-adjust-label">movement assign</div></div>
+        <div class="side-knob" title="decorative side crown"></div>
 
         <svg id="ring" width="390" height="390" viewBox="0 0 360 360">
           <defs>
@@ -468,6 +734,42 @@ input[type=range]::-moz-range-thumb {
           <text id="ctr-sub" class="center-sub" x="180" y="195" text-anchor="middle" dominant-baseline="middle"></text>
         </svg>
 
+        <svg id="movement-view" width="390" height="390" viewBox="0 0 360 360" aria-label="movement view">
+          <circle class="mv-face" cx="180" cy="180" r="146"/>
+          <text class="mv-title" x="180" y="52" text-anchor="middle">movement</text>
+
+          <g id="mv-root-ring"></g>
+          <g id="mv-interval-ring"></g>
+
+          <g id="mv-second-wheel">
+            <circle class="mv-wheel" cx="180" cy="180" r="42"/>
+            <line id="mv-second-arm" class="mv-arm" x1="180" y1="180" x2="180" y2="142"/>
+            <text class="mv-label" x="180" y="232" text-anchor="middle">second wheel</text>
+          </g>
+
+          <g id="mv-jumper">
+            <line id="mv-jumper-arm" class="mv-jumper-arm" x1="80" y1="255" x2="132" y2="255"/>
+            <circle class="mv-pivot" cx="80" cy="255" r="4"/>
+            <text class="mv-label" x="106" y="276" text-anchor="middle">jumper</text>
+            <text id="mv-jumper-state" class="mv-state" x="106" y="289" text-anchor="middle">locked</text>
+          </g>
+
+          <g id="mv-safety">
+            <rect class="mv-box" x="205" y="242" width="76" height="48" rx="8"/>
+            <text class="mv-label" x="243" y="262" text-anchor="middle">safety</text>
+            <text id="mv-safety-state" class="mv-state" x="243" y="278" text-anchor="middle">closed</text>
+          </g>
+
+          <g id="mv-remontoire">
+            <rect class="mv-box" x="76" y="72" width="72" height="38" rx="8"/>
+            <rect class="mv-charge-bg" x="87" y="94" width="50" height="5" rx="3"/>
+            <rect id="mv-rem-charge" class="mv-charge" x="87" y="94" width="50" height="5" rx="3"/>
+            <text class="mv-label" x="112" y="88" text-anchor="middle">force</text>
+          </g>
+
+          <text id="mv-readout" class="mv-readout" x="180" y="326" text-anchor="middle">root / interval</text>
+        </svg>
+
         <div class="braun-logo">DIETER</div>
 </div>
 
@@ -485,7 +787,7 @@ input[type=range]::-moz-range-thumb {
       <div class="panel">
         <div class="panel-title">scale quantizer</div>
         <div class="ctrl-row">
-          <div class="ctrl-lbl">Key</div>
+          <div class="ctrl-lbl">Home</div>
           <select id="key-select">
             <option value="0" selected>C</option>
             <option value="1">C♯</option>
@@ -547,6 +849,43 @@ input[type=range]::-moz-range-thumb {
         </div>
       </div>
 
+      <div class="panel view-panel">
+        <div class="panel-title">view</div>
+        <div class="crown-control-row">
+          <div class="crown-copy">clock display</div>
+          <button id="view-toggle-btn" class="crown-mode" title="view mode">FACE</button>
+        </div>
+      </div>
+
+      <div class="panel root-drive-panel">
+        <div class="panel-title">root drive</div>
+        <div class="crown-control-row">
+          <div class="crown-copy">hour hand modulation</div>
+          <button id="root-drive-btn" class="crown-mode on" title="root drive">CRAWL</button>
+        </div>
+      </div>
+
+      <div class="panel movement-controls-panel">
+        <div class="panel-title">movement controls</div>
+        <div class="movement-knobs">
+          <div class="mini-knob">
+            <div class="mini-lbl">Volume</div>
+            <input type="range" id="r-volume" min="0" max="1" step="0.01" value="0.82">
+            <div class="sl-val" id="v-volume">0.82</div>
+          </div>
+          <div class="mini-knob">
+            <div class="mini-lbl">Interval</div>
+            <button id="interval-step-btn" class="step-btn">STEP</button>
+            <div class="sl-val" id="v-interval-step">+1</div>
+          </div>
+          <div class="mini-knob">
+            <div class="mini-lbl">Root</div>
+            <button id="root-step-btn" class="step-btn">STEP</button>
+            <div class="sl-val" id="v-root-step">+5th</div>
+          </div>
+        </div>
+      </div>
+
       <div class="panel">
         <div class="panel-title">clock motion</div>
         <div class="sliders">
@@ -590,11 +929,6 @@ input[type=range]::-moz-range-thumb {
             <div class="sl-lbl">Space</div>
             <input type="range" id="r-space" min="0" max="1" step="0.01" value="0.50">
             <div class="sl-val" id="v-space">0.50</div>
-          </div>
-          <div class="sl">
-            <div class="sl-lbl">Volume</div>
-            <input type="range" id="r-volume" min="0" max="1" step="0.01" value="0.82">
-            <div class="sl-val" id="v-volume">0.82</div>
           </div>
         </div>
       </div>
@@ -758,12 +1092,14 @@ let running = false;
 let triadMode = false;
 let clock = {
   phase: 0,
+  rootPhase: 0,
   last: 0,
   hourPhase: 0,
   minutePhase: 0,
   secondPhase: 0,
-  prevSecondPhase: 0
-}; // internal clock by default; optional real-clock mode.
+  prevSecondPhase: 0,
+  displayAngles: { hour: null, minute: null, second: null }
+}; // fifths clock by default; optional real-clock mode.
 let voices = {}; // root, interval, third
 let active = {
   rootPc: 0,
@@ -776,6 +1112,8 @@ let active = {
 
 let P = {
   key: 0,
+  viewMode: 'face',
+  homeKey: 0,
   scale: 'mixolydian',
   tuning: 'equal',
   algorithm: 'alg32',
@@ -783,6 +1121,7 @@ let P = {
   orbit: 0.56,
   oscmix: 0.25,
   realClock: false,
+  rootDrive: 'crawl',
   manualIntervalIndex: 4,
   freezeInterval: false,
   shimmer: 0.46,
@@ -791,6 +1130,459 @@ let P = {
   space: 0.50,
   volume: 0.82,
 };
+
+// Phase 1 movement core:
+// The hands, note rings, modes, and requests now live in one mechanism object.
+// Legacy `clock`, `P`, and `active` are still mirrored for the existing UI/audio code.
+const movement = {
+  power: {
+    running: false
+  },
+
+  modes: {
+    realClock: false,
+    rootDrive: 'crawl',
+    freeze: false,
+    triad: false
+  },
+
+  wheels: {
+    hour: {
+      phase: 0,
+      tooth: 0
+    },
+    minute: {
+      phase: 4 / 7,
+      tooth: 4
+    },
+    second: {
+      phase: 0,
+      prevPhase: 0
+    }
+  },
+
+  rings: {
+    root: {
+      tooth: 0,
+      target: 0,
+      lastTooth: 0,
+      previousNote: 0,
+      targetNote: 0,
+      note: 0,
+      transition: 1,
+      locked: true
+    },
+    interval: {
+      tooth: 4,
+      target: 4,
+      degree: 4,
+      transition: 1,
+      locked: true,
+      armed: false
+    },
+    third: {
+      tooth: 2,
+      degree: 2
+    }
+  },
+
+  jumpers: {
+    interval: {
+      tension: 0,
+      engaged: true
+    },
+    root: {
+      tension: 0,
+      engaged: true
+    }
+  },
+
+  safety: {
+    intervalWindow: false,
+    rootWindow: false,
+    pendingInterval: null,
+    pendingRootHome: null
+  },
+
+  remontoire: {
+    charge: 1,
+    output: 0,
+    smoothed: 0,
+    period: 1
+  },
+
+  crown: {
+    mode: 'volume',
+    value: 0.82
+  },
+
+  display: {
+    hourAngle: 0,
+    minuteAngle: 0,
+    secondAngle: 0
+  },
+
+  requests: {
+    interval: null,
+    rootHome: null
+  }
+};
+
+
+
+function movementScaleLength() {
+  return Math.max(1, scaleDegrees().length);
+}
+
+function syncMovementModes() {
+  movement.power.running = running;
+  movement.modes.realClock = P.realClock;
+  movement.modes.rootDrive = P.rootDrive;
+  movement.modes.freeze = P.freezeInterval;
+  movement.modes.triad = triadMode;
+}
+
+function syncLegacyClockFromMovement() {
+  clock.hourPhase = movement.wheels.hour.phase;
+  clock.minutePhase = movement.wheels.minute.phase;
+  clock.secondPhase = movement.wheels.second.phase;
+  clock.rootPhase = movement.wheels.hour.phase;
+  clock.prevSecondPhase = movement.wheels.second.prevPhase;
+
+  movement.display.hourAngle = clock.hourPhase * 360;
+  movement.display.minuteAngle = clock.minutePhase * 360;
+  movement.display.secondAngle = clock.secondPhase * 360;
+
+  const shell = document.querySelector('.clock-shell');
+  if (shell) shell.style.setProperty('--tension', movement.jumpers.interval.tension.toFixed(3));
+}
+
+function phaseInWindow(p, start, end) {
+  return start < end ? (p >= start && p <= end) : (p >= start || p <= end);
+}
+
+function windowAmount(p, start, end) {
+  if (!phaseInWindow(p, start, end)) return 0;
+  if (start > end) {
+    if (p >= start) return (p - start) / (1 - start);
+    return 1 - (p / Math.max(0.0001, end));
+  }
+  return (p - start) / Math.max(0.0001, end - start);
+}
+
+function easeOutCubic(t) {
+  const x = Math.max(0, Math.min(1, t));
+  return 1 - Math.pow(1 - x, 3);
+}
+
+function resolveMovementRequests() {
+  const n = movementScaleLength();
+
+  if (movement.requests.rootHome !== null) {
+    // Root-home request is deferred during a root change window.
+    if (movement.safety.rootWindow) {
+      movement.safety.pendingRootHome = movement.requests.rootHome;
+    } else {
+      movement.wheels.hour.phase = 0;
+      movement.wheels.hour.tooth = 0;
+      movement.rings.root.tooth = 0;
+      movement.rings.root.target = 0;
+      movement.rings.root.transition = 1;
+      movement.rings.root.locked = true;
+    }
+    movement.requests.rootHome = null;
+  }
+
+  if (movement.requests.interval !== null) {
+    const tooth = ((movement.requests.interval % n) + n) % n;
+
+    // Safety cam: during the changeover window, queue the click.
+    // This prevents double-advances and weird jumps.
+    if (movement.safety.intervalWindow && !movement.modes.freeze) {
+      movement.safety.pendingInterval = tooth;
+    } else {
+      movement.rings.interval.target = tooth;
+      movement.rings.interval.transition = 0;
+      movement.rings.interval.locked = false;
+      movement.rings.interval.tooth = tooth;
+      movement.rings.interval.degree = tooth;
+      movement.wheels.minute.tooth = tooth;
+      movement.wheels.minute.phase = tooth / n;
+      P.manualIntervalIndex = tooth;
+    }
+
+    movement.requests.interval = null;
+  }
+}
+
+function updateMovementFromRealClock() {
+  const now = new Date();
+  const h = now.getHours() % 12;
+  const m = now.getMinutes();
+  const sec = now.getSeconds() + now.getMilliseconds() / 1000;
+
+  movement.wheels.hour.phase = ((h + m / 60 + sec / 3600) / 12) % 1;
+  movement.wheels.minute.phase = ((m + sec / 60) / 60) % 1;
+  movement.wheels.second.prevPhase = movement.wheels.second.phase;
+  movement.wheels.second.phase = (sec / 60) % 1;
+
+  const n = movementScaleLength();
+  movement.wheels.hour.tooth = Math.floor(movement.wheels.hour.phase * rootOrder().length);
+  movement.wheels.minute.tooth = Math.floor(movement.wheels.minute.phase * n);
+  movement.rings.interval.tooth = movement.wheels.minute.tooth;
+  movement.rings.interval.target = movement.wheels.minute.tooth;
+  movement.rings.interval.degree = movement.wheels.minute.tooth;
+  movement.rings.interval.transition = 1;
+  movement.rings.interval.locked = true;
+}
+
+function updateRemontoire(dt) {
+  // Constant-force remontoire-style modulation.
+  // This is intentionally NOT sampling the second-hand sine at release.
+  // The point is an evenly spaced, fixed-energy impulse that is smoothed into the modulation system.
+  movement.remontoire.charge -= dt / Math.max(0.08, movement.remontoire.period);
+
+  if (movement.remontoire.charge <= 0) {
+    movement.remontoire.charge = 1;
+    movement.remontoire.output = 0.72; // fixed quantum of energy
+  } else {
+    // Between releases, let the impulse decay toward rest.
+    movement.remontoire.output += (0.18 - movement.remontoire.output) * Math.min(1, dt * 1.65);
+  }
+
+  movement.remontoire.smoothed +=
+    (movement.remontoire.output - movement.remontoire.smoothed) * Math.min(1, dt * 4.2);
+}
+
+
+function updateSafetyWindows() {
+  const s = movement.wheels.second.phase;
+  const h = movement.wheels.hour.phase;
+
+  movement.safety.intervalWindow = phaseInWindow(s, 0.88, 0.06);
+  movement.safety.rootWindow = phaseInWindow(h, 0.96, 0.02);
+
+  const tension = Math.max(
+    windowAmount(s, 0.88, 0.06),
+    movement.rings.interval.locked ? 0 : 0.75
+  );
+
+  movement.jumpers.interval.tension = tension;
+  movement.jumpers.interval.engaged = !movement.safety.intervalWindow && movement.rings.interval.locked;
+}
+
+
+function advanceIntervalOneTooth(reason = 'manual') {
+  if (movement.modes.freeze) return;
+
+  const n = movementScaleLength();
+  const current = movement.rings.interval.tooth || 0;
+  const next = (current + 1) % n;
+
+  movement.rings.interval.target = next;
+  movement.rings.interval.transition = 0;
+  movement.rings.interval.locked = false;
+}
+
+function updateIntervalJumper(dt, wrapped) {
+  const n = movementScaleLength();
+
+  if (wrapped && !movement.modes.freeze) {
+    advanceIntervalOneTooth('second-wrap');
+  }
+
+  if (!movement.rings.interval.locked) {
+    movement.rings.interval.transition += dt / 0.85;
+    const t = easeOutCubic(movement.rings.interval.transition);
+
+    if (t >= 1) {
+      movement.rings.interval.tooth = movement.rings.interval.target;
+      movement.rings.interval.degree = movement.rings.interval.tooth;
+      movement.wheels.minute.tooth = movement.rings.interval.tooth;
+      movement.wheels.minute.phase = movement.wheels.minute.tooth / n;
+      P.manualIntervalIndex = movement.wheels.minute.tooth;
+      movement.rings.interval.locked = true;
+
+      if (movement.safety.pendingInterval !== null) {
+        const pending = movement.safety.pendingInterval;
+        movement.safety.pendingInterval = null;
+        movement.requests.interval = pending;
+      }
+    } else {
+      // Display stays mostly stable until the jumper settles.
+      movement.wheels.minute.phase = movement.rings.interval.tooth / n;
+    }
+  } else {
+    movement.wheels.minute.tooth = movement.rings.interval.tooth;
+    movement.wheels.minute.phase = movement.wheels.minute.tooth / n;
+  }
+}
+
+function updateRootRing(dt) {
+  const roots = rootOrder();
+  const rootN = Math.max(1, roots.length);
+
+  if (P.rootDrive === 'hold') {
+    movement.rings.root.tooth = 0;
+    movement.rings.root.target = 0;
+    movement.rings.root.lastTooth = 0;
+    movement.rings.root.previousNote = P.key;
+    movement.rings.root.targetNote = P.key;
+    movement.rings.root.note = P.key;
+    movement.rings.root.transition = 1;
+    movement.rings.root.locked = true;
+    movement.wheels.hour.phase = 0;
+    return;
+  }
+
+  const target = Math.floor(movement.wheels.hour.phase * rootN) % rootN;
+
+  if (target !== movement.rings.root.tooth && movement.rings.root.locked) {
+    movement.rings.root.previousNote = roots[movement.rings.root.tooth] ?? P.key;
+    movement.rings.root.target = target;
+    movement.rings.root.targetNote = roots[target] ?? P.key;
+    movement.rings.root.transition = 0;
+    movement.rings.root.locked = false;
+  }
+
+  if (!movement.rings.root.locked) {
+    // Longer, smoother harmonic crawl between roots.
+    movement.rings.root.transition += dt / 3.0;
+    if (movement.rings.root.transition >= 1) {
+      const oldTooth = movement.rings.root.tooth;
+      movement.rings.root.tooth = movement.rings.root.target;
+      movement.rings.root.previousNote = movement.rings.root.targetNote;
+      movement.rings.root.transition = 1;
+      movement.rings.root.locked = true;
+
+      // Mechanical coupling: when the hour/root ring settles into a new root,
+      // the minute/interval ring advances one tooth so the route does not feel pinned.
+      if (movement.rings.root.tooth !== oldTooth && !movement.modes.freeze) {
+        movement.rings.root.lastTooth = movement.rings.root.tooth;
+        advanceIntervalOneTooth('root-settle');
+      }
+    }
+  }
+
+  movement.rings.root.note = roots[movement.rings.root.tooth] ?? P.key;
+
+  if (movement.safety.pendingRootHome !== null && !movement.safety.rootWindow) {
+    movement.requests.rootHome = movement.safety.pendingRootHome;
+    movement.safety.pendingRootHome = null;
+  }
+}
+function updateMovementInternal(dt) {
+  const before = movement.wheels.second.phase || 0;
+
+  movement.wheels.hour.phase = (movement.wheels.hour.phase + dt * P.rate / 60) % 1;
+  movement.wheels.second.prevPhase = before;
+  movement.wheels.second.phase = (movement.wheels.second.phase + dt * P.rate) % 1;
+
+  const after = movement.wheels.second.phase || 0;
+  const wrapped = before > 0.92 && after < 0.08;
+
+  updateSafetyWindows();
+  updateIntervalJumper(dt, wrapped);
+  updateRootRing(dt);
+  updateRemontoire(dt);
+
+  movement.wheels.second.prevPhase = after;
+}
+
+function updateMovement(dt = 0) {
+  syncMovementModes();
+
+  if (movement.modes.realClock) {
+    updateMovementFromRealClock();
+    updateSafetyWindows();
+    updateRootRing(0);
+    updateRemontoire(dt);
+  } else {
+    if (dt > 0 && movement.power.running) {
+      updateMovementInternal(dt);
+    } else {
+      updateSafetyWindows();
+      updateRootRing(0);
+      updateRemontoire(0);
+      const n = movementScaleLength();
+      movement.rings.interval.tooth = Math.max(0, Math.min(n - 1, movement.rings.interval.tooth || 0));
+      movement.rings.interval.degree = movement.rings.interval.tooth;
+      movement.wheels.minute.tooth = movement.rings.interval.tooth;
+      movement.wheels.minute.phase = movement.wheels.minute.tooth / n;
+    }
+  }
+
+  const n = movementScaleLength();
+  movement.rings.third.tooth = Math.floor(movement.wheels.second.phase * n) % n;
+  movement.rings.third.degree = movement.rings.third.tooth;
+
+  resolveMovementRequests();
+  syncLegacyClockFromMovement();
+}
+
+function requestMovementInterval(tooth) {
+  movement.requests.interval = tooth;
+  resolveMovementRequests();
+  syncLegacyClockFromMovement();
+}
+
+function requestMovementRootStep(delta) {
+  const roots = rootOrder();
+  const n = Math.max(1, roots.length);
+  movement.rings.root.tooth = ((movement.rings.root.tooth + delta) % n + n) % n;
+  movement.rings.root.target = movement.rings.root.tooth;
+  movement.rings.root.note = roots[movement.rings.root.tooth] ?? P.key;
+  movement.wheels.hour.phase = movement.rings.root.tooth / n;
+  syncLegacyClockFromMovement();
+}
+
+function requestMovementHomeKey() {
+  movement.requests.rootHome = P.key;
+  resolveMovementRequests();
+  syncLegacyClockFromMovement();
+}
+
+function crownModeNext() {
+  const modes = ['volume', 'interval', 'root'];
+  const ix = modes.indexOf(movement.crown.mode);
+  movement.crown.mode = modes[(ix + 1) % modes.length];
+
+  const btn = document.getElementById('crown-mode-btn');
+  if (btn) {
+    btn.textContent = movement.crown.mode === 'volume' ? 'VOL' : movement.crown.mode === 'interval' ? 'INT' : 'ROOT';
+    btn.classList.toggle('on', movement.crown.mode !== 'volume');
+  }
+}
+
+function crownTurn(v) {
+  const val = Math.max(0, Math.min(1, Number(v)));
+  const prev = movement.crown.value ?? P.volume;
+  movement.crown.value = val;
+
+  if (movement.crown.mode === 'volume') {
+    setMasterVolume(val, true);
+    return;
+  }
+
+  const delta = val - prev;
+  if (Math.abs(delta) < 0.08) return;
+
+  if (movement.crown.mode === 'interval') {
+    const step = delta > 0 ? 1 : -1;
+    requestMovementInterval((movement.rings.interval.tooth || 0) + step);
+  }
+
+  if (movement.crown.mode === 'root') {
+    const step = delta > 0 ? 1 : -1;
+    requestMovementRootStep(step);
+  }
+
+  // Recenter the physical crown slider so repeated nudges work.
+  movement.crown.value = 0.5;
+  const side = document.getElementById('side-volume');
+  if (side) side.value = 0.5;
+}
+
 
 
 function oscMixGains(v) {
@@ -813,22 +1605,13 @@ function oscMixLabel(v) {
 }
 
 function syncRealClockPhases() {
-  const now = new Date();
-  const h = now.getHours() % 12;
-  const m = now.getMinutes();
-  const sec = now.getSeconds() + now.getMilliseconds() / 1000;
-
-  clock.hourPhase = (h + m / 60 + sec / 3600) / 12;
-  clock.minutePhase = (m + sec / 60) / 60;
-  clock.secondPhase = sec / 60;
+  updateMovementFromRealClock();
+  syncLegacyClockFromMovement();
 }
 
 function syncInternalClockPhases() {
-  clock.hourPhase = clock.phase % 1;
-  clock.minutePhase = (clock.phase * 12) % 1;
-  clock.secondPhase = (clock.phase * 60) % 1;
+  updateMovement(0);
 }
-
 
 function setMasterVolume(v, updateControls = true) {
   P.volume = Math.max(0, Math.min(1, Number(v)));
@@ -840,41 +1623,17 @@ function setMasterVolume(v, updateControls = true) {
 
   if (updateControls) {
     const vol = document.getElementById('r-volume');
-    const side = document.getElementById('side-volume');
     const val = document.getElementById('v-volume');
 
     if (vol) vol.value = P.volume;
-    if (side) side.value = P.volume;
     if (val) val.textContent = P.volume.toFixed(2);
   }
 }
 
 function advanceInternalSecondClock(dt) {
-  const before = clock.secondPhase || 0;
-
-  // Internal slow instrument clock.
-  clock.phase = (clock.phase + dt * P.rate / 60) % 1;
-  syncInternalClockPhases();
-
-  const after = clock.secondPhase || 0;
-  const wrapped = before > 0.92 && after < 0.08;
-
-  // In internal mode, the clicked interval keeps moving like a minute hand:
-  // it advances one scale degree whenever the second hand returns to 12.
-  if (wrapped && !P.freezeInterval) {
-    const n = scaleDegrees().length;
-    P.manualIntervalIndex = ((P.manualIntervalIndex || 0) + 1) % n;
-
-    // Re-anchor the internal minute position to the new interval.
-    clock.phase = (P.manualIntervalIndex / n) / 12 + after / 720;
-    clock.phase = ((clock.phase % 1) + 1) % 1;
-    syncInternalClockPhases();
-  }
-
-  clock.prevSecondPhase = after;
+  updateMovement(dt);
 }
 
-// ─── Audio ───────────────────────────────────────────────
 function ensureCtx() {
   if (actx) {
     if (actx.state === 'suspended') actx.resume();
@@ -976,8 +1735,9 @@ function buildVoice(freq, role) {
     carrier.type = upper.type = mod.type = lfo.type = 'sine';
 
     carrier.frequency.value = fc;
-    upper.frequency.value = fc * 2;
+    upper.frequency.value = fc * 2; // +1 octave carrier, same FM path as low oscillator
     carrier.detune.value = cfg.det * P.drift;
+    upper.detune.value = cfg.det * P.drift;
     mod.frequency.value = fm;
     modGain.gain.value = beta * fm;
 
@@ -986,6 +1746,7 @@ function buildVoice(freq, role) {
 
     mod.connect(modGain);
     modGain.connect(carrier.frequency);
+    modGain.connect(upper.frequency);
     lfo.connect(lfoGain);
     lfoGain.connect(modGain.gain);
 
@@ -1070,6 +1831,7 @@ function buildVoice(freq, role) {
         o.lfoGain.gain.setTargetAtTime(P.shimmer * o.fm * 0.16, now, 0.35);
         o.lfo.frequency.setTargetAtTime(P.evolve * (0.65 + 0.18 * pairNodes.indexOf(o)), now, 0.4);
         o.carrier.detune.setTargetAtTime(o.cfg.det * P.drift, now, 0.22);
+        if (o.upper) o.upper.detune.setTargetAtTime(o.cfg.det * P.drift, now, 0.22);
       });
       this.setOscMix(P.oscmix);
       filter.frequency.setTargetAtTime(this.role === 'root' ? 3200 : 4200, now, 0.35);
@@ -1092,6 +1854,7 @@ function buildVoice(freq, role) {
         o.lfoGain.gain.setTargetAtTime(P.shimmer * o.fm * (0.11 + m * 0.13), now, 0.22);
         o.lfo.frequency.setTargetAtTime(evolveDepth * (0.62 + 0.2 * i), now, 0.24);
         o.carrier.detune.setTargetAtTime(o.cfg.det * driftDepth * (1 + i * 0.12), now, 0.18);
+        if (o.upper) o.upper.detune.setTargetAtTime(o.cfg.det * driftDepth * (1 + i * 0.12), now, 0.18);
       });
     }
   };
@@ -1109,8 +1872,9 @@ function setVoice(role, pc, octOffset = 0) {
   const old = voices[role];
   const fresh = buildVoice(freq, role);
   const t = actx.currentTime;
-  const fade = role === 'root' ? 3.8 : 6.5;
-  const amp = role === 'root' ? 0.34 : (triadMode && role === 'third' ? 0.20 : 0.24);
+  const isRootRole = role === 'root';
+  const fade = isRootRole ? 9.0 : 6.5;
+  const amp = isRootRole ? 0.34 : (triadMode && role === 'third' ? 0.20 : 0.24);
 
   fresh.masterGain.gain.cancelScheduledValues(t);
   fresh.masterGain.gain.setValueAtTime(0, t);
@@ -1166,28 +1930,26 @@ function degreeName(index) {
 }
 
 function computeClockNotes() {
+  updateMovement(0);
+
   const degs = scaleDegrees();
 
-  if (P.realClock) {
-    syncRealClockPhases();
-  } else {
-    syncInternalClockPhases();
-  }
+  // Movement readout:
+  // hour/root ring = scale-safe circle of fifths or held key
+  // minute/interval ring = indexed scale degree
+  // second wheel = independent modulation / third selector
+  const rootIndex = movement.rings.root.tooth;
+  const rootPc = movement.rings.root.note;
 
-  // Root is locked to the Key selector.
-  const rootPc = P.key;
-  const rootIndex = 0;
-
-  // Internal mode:
-  // clicked interval behaves like the minute hand and advances only
-  // when the second hand returns to 12, unless FRZ is on.
   const intIndex = P.realClock
-    ? Math.floor(clock.minutePhase * degs.length) % degs.length
-    : Math.max(0, Math.min(degs.length - 1, P.manualIntervalIndex || 0));
+    ? Math.floor(movement.wheels.minute.phase * degs.length) % degs.length
+    : movement.rings.interval.tooth;
 
-  const thirdIndex = Math.floor(clock.secondPhase * degs.length) % degs.length;
+  movement.rings.third.tooth = Math.floor(movement.wheels.second.phase * degs.length) % degs.length;
+  movement.rings.third.degree = movement.rings.third.tooth;
+  const thirdIndex = movement.rings.third.tooth;
 
-  const rootRel = 0;
+  const rootRel = (rootPc - P.key + 12) % 12;
   const intervalPc = (rootPc + degs[intIndex]) % 12;
 
   let thirdPc = (rootPc + degs[thirdIndex]) % 12;
@@ -1202,7 +1964,13 @@ function computeClockNotes() {
 function updateSoundFromClock() {
   computeClockNotes();
 
+  // Safer crawl behavior:
+  // the movement decides the root, and the normal setVoice crossfade handles the transition.
+  // No stacked rootNext/pivot voices.
+  stopVoice('rootNext');
+  stopVoice('pivot');
   setVoice('root', active.rootPc, -1);
+
   const intervalOct = active.intervalPc <= active.rootPc ? 0 : -1;
   setVoice('interval', active.intervalPc, intervalOct);
 
@@ -1221,11 +1989,20 @@ function updateSoundFromClock() {
   Object.values(voices).forEach(v => v.applySecondHand(secondMacro()));
 }
 
-function secondMacro() {
-  // smooth 0..1 synth macro from whichever second hand is active.
-  const a = clock.secondPhase * Math.PI * 2;
+
+function secondMacroRaw() {
+  const a = movement.wheels.second.phase * Math.PI * 2;
   return 0.5 + 0.5 * Math.sin(a - Math.PI / 2);
 }
+
+function secondMacro() {
+  // Second-hand modulation = mostly fixed-energy remontoire pulses,
+  // with a small amount of visible hand phase left in for clock/body relation.
+  const constantForce = movement.remontoire.smoothed;
+  const handShape = secondMacroRaw() * 0.22;
+  return Math.max(0, Math.min(1, constantForce * 0.78 + handShape));
+}
+
 
 // ─── SVG Ring ────────────────────────────────────────────
 const SVG_NS = 'http://www.w3.org/2000/svg';
@@ -1251,6 +2028,127 @@ function buildTicks() {
     g.appendChild(line);
   }
 }
+
+
+function buildMovementView() {
+  const rootG = document.getElementById('mv-root-ring');
+  const intG = document.getElementById('mv-interval-ring');
+  if (!rootG || !intG || rootG.childNodes.length) return;
+
+  for (let i = 0; i < 7; i++) {
+    const a = (i * (360 / 7) - 90) * Math.PI / 180;
+    const x = CX + 112 * Math.cos(a);
+    const y = CY + 112 * Math.sin(a);
+    const c = document.createElementNS(SVG_NS, 'circle');
+    c.setAttribute('class', 'mv-node mv-root-node');
+    c.setAttribute('cx', x);
+    c.setAttribute('cy', y);
+    c.setAttribute('r', 13);
+    c.setAttribute('data-i', i);
+    const t = document.createElementNS(SVG_NS, 'text');
+    t.setAttribute('class', 'mv-node-text mv-root-text');
+    t.setAttribute('x', x);
+    t.setAttribute('y', y + 1);
+    t.setAttribute('text-anchor', 'middle');
+    t.setAttribute('dominant-baseline', 'middle');
+    t.setAttribute('data-i', i);
+    t.textContent = '·';
+    rootG.appendChild(c);
+    rootG.appendChild(t);
+  }
+
+  for (let i = 0; i < 7; i++) {
+    const x = 88 + i * 31;
+    const y = 132;
+    const c = document.createElementNS(SVG_NS, 'circle');
+    c.setAttribute('class', 'mv-node mv-int-node');
+    c.setAttribute('cx', x);
+    c.setAttribute('cy', y);
+    c.setAttribute('r', 11);
+    c.setAttribute('data-i', i);
+    const t = document.createElementNS(SVG_NS, 'text');
+    t.setAttribute('class', 'mv-node-text mv-int-text');
+    t.setAttribute('x', x);
+    t.setAttribute('y', y + 1);
+    t.setAttribute('text-anchor', 'middle');
+    t.setAttribute('dominant-baseline', 'middle');
+    t.setAttribute('data-i', i);
+    t.textContent = String(i + 1);
+    intG.appendChild(c);
+    intG.appendChild(t);
+  }
+
+  const lbl = document.createElementNS(SVG_NS, 'text');
+  lbl.setAttribute('class', 'mv-label');
+  lbl.setAttribute('x', 180);
+  lbl.setAttribute('y', 116);
+  lbl.setAttribute('text-anchor', 'middle');
+  lbl.textContent = 'interval ring';
+  intG.appendChild(lbl);
+}
+
+function updateMovementView() {
+  if (P.viewMode !== 'movement') return;
+
+  const roots = rootOrder();
+  const degs = scaleDegrees();
+  const rootTooth = movement.rings.root.tooth || 0;
+  const rootTarget = movement.rings.root.target ?? rootTooth;
+  const intTooth = movement.rings.interval.tooth || 0;
+  const intTarget = movement.rings.interval.target ?? intTooth;
+
+  document.querySelectorAll('.mv-root-node').forEach(n => {
+    const i = +n.getAttribute('data-i');
+    n.classList.toggle('active', i === rootTooth);
+    n.classList.toggle('next', i === rootTarget && rootTarget !== rootTooth);
+    n.style.opacity = i < roots.length ? '1' : '0.18';
+  });
+  document.querySelectorAll('.mv-root-text').forEach(t => {
+    const i = +t.getAttribute('data-i');
+    t.textContent = i < roots.length ? NOTES[roots[i]] : '·';
+    t.style.opacity = i < roots.length ? '1' : '0.18';
+  });
+
+  document.querySelectorAll('.mv-int-node').forEach(n => {
+    const i = +n.getAttribute('data-i');
+    n.classList.toggle('active', i === intTooth);
+    n.classList.toggle('next', i === intTarget && intTarget !== intTooth);
+    n.style.opacity = i < degs.length ? '1' : '0.18';
+  });
+  document.querySelectorAll('.mv-int-text').forEach(t => {
+    const i = +t.getAttribute('data-i');
+    t.textContent = i < degs.length ? degreeName(i) : '·';
+    t.style.opacity = i < degs.length ? '1' : '0.18';
+  });
+
+  const secondArm = document.getElementById('mv-second-arm');
+  if (secondArm) secondArm.style.transform = `rotate(${(movement.wheels.second.phase || 0) * 360}deg)`;
+
+  const jumper = document.getElementById('mv-jumper-arm');
+  const jumperState = document.getElementById('mv-jumper-state');
+  const tension = movement.jumpers?.interval?.tension || 0;
+  if (jumper) jumper.style.transform = `rotate(${-18 * tension}deg)`;
+  if (jumperState) {
+    jumperState.textContent = movement.rings.interval.locked
+      ? (movement.safety.intervalWindow ? 'armed' : 'locked')
+      : 'settling';
+  }
+
+  const safety = document.getElementById('mv-safety-state');
+  if (safety) safety.textContent = movement.safety.intervalWindow
+    ? (movement.safety.pendingInterval !== null ? 'queued' : 'open')
+    : 'closed';
+
+  const charge = document.getElementById('mv-rem-charge');
+  if (charge) charge.setAttribute('width', String(Math.max(1, 50 * (movement.remontoire.charge ?? 0))));
+
+  const readout = document.getElementById('mv-readout');
+  if (readout) {
+    readout.textContent =
+      `root ${NOTES[active.rootPc]} · interval ${degreeName(active.intIndex)} · force ${Math.round((movement.remontoire.smoothed || 0) * 100)}`;
+  }
+}
+
 
 function buildRing() {
   const g = document.getElementById('nodes');
@@ -1303,31 +2201,28 @@ function buildRing() {
 }
 
 function manualRoot(pc) {
+  computeClockNotes();
+
   const degs = scaleDegrees();
-  const rel = (pc - P.key + 12) % 12;
+  const rel = (pc - active.rootPc + 12) % 12;
   const ix = degs.indexOf(rel);
   if (ix < 0) return;
 
-  // Clicking a note jumps the interval only.
-  // It keeps advancing when the second hand strikes 12 unless FRZ is on.
+  // Phase 1: click becomes a request into the movement,
+  // not a direct rewrite of second/root timing.
   P.realClock = false;
-  P.manualIntervalIndex = ix;
+  movement.modes.realClock = false;
 
   const realBtn = document.getElementById('real-btn');
   if (realBtn) realBtn.classList.remove('on');
 
-  // Set the internal minute hand to this interval while preserving second-hand position.
-  const secPart = clock.secondPhase || ((clock.phase * 60) % 1);
-  clock.phase = (ix / degs.length) / 12 + secPart / 720;
-  clock.phase = ((clock.phase % 1) + 1) % 1;
-  syncInternalClockPhases();
+  requestMovementInterval(ix);
 
   computeClockNotes();
   if (running) updateSoundFromClock();
   updateVisuals();
   updateStatus();
 }
-
 
 function romanForPc(pc) {
   const rel = (pc - P.key + 12) % 12;
@@ -1350,7 +2245,40 @@ function updateScaleMarks() {
   });
 }
 
+
+function setHandRotationContinuous(id, targetDeg, key) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  let current = clock.displayAngles[key];
+  if (current === null || current === undefined || !Number.isFinite(current)) {
+    current = targetDeg;
+  } else {
+    let diff = targetDeg - (current % 360);
+    diff = ((diff + 540) % 360) - 180;
+    current += diff;
+  }
+
+  clock.displayAngles[key] = current;
+  el.style.transform = `rotate(${current}deg)`;
+}
+
+
+function syncKeySelectToActiveRoot() {
+  const keySel = document.getElementById('key-select');
+  if (!keySel) return;
+
+  // In crawl mode, the dropdown reads as the current root.
+  // Internally, P.key remains the home key that defines the route.
+  if (P.rootDrive === 'crawl' && running) {
+    keySel.value = String(active.rootPc);
+  } else {
+    keySel.value = String(P.key);
+  }
+}
+
 function updateVisuals() {
+  syncKeySelectToActiveRoot();
   const allowed = scalePcs();
 
   document.querySelectorAll('.nd').forEach(grp => {
@@ -1370,9 +2298,9 @@ function updateVisuals() {
   const minuteDeg = P.realClock ? clock.minutePhase * 360 : (intFi >= 0 ? intFi * 30 : 0);
   const secondDeg = clock.secondPhase * 360;
 
-  document.getElementById('hour-hand').style.transform = `rotate(${hourDeg}deg)`;
-  document.getElementById('minute-hand').style.transform = `rotate(${minuteDeg}deg)`;
-  document.getElementById('second-hand').style.transform = `rotate(${secondDeg}deg)`;
+  setHandRotationContinuous('hour-hand', hourDeg, 'hour');
+  setHandRotationContinuous('minute-hand', minuteDeg, 'minute');
+  setHandRotationContinuous('second-hand', secondDeg, 'second');
 
   drawSpokes();
 
@@ -1380,6 +2308,8 @@ function updateVisuals() {
   const cSub = document.getElementById('ctr-sub');
   cNote.textContent = '';
   cSub.textContent = '';
+
+  updateMovementView();
 }
 
 function drawSpokes() {
@@ -1417,9 +2347,33 @@ bindSlider('r-space','v-space','space', v => v.toFixed(2), val => {
 bindSlider('r-volume','v-volume','volume', v => v.toFixed(2), val => {
   setMasterVolume(val, true);
 });
+const intervalStepBtn = document.getElementById('interval-step-btn');
+if (intervalStepBtn) {
+  intervalStepBtn.addEventListener('click', () => {
+    requestMovementInterval((movement.rings.interval.tooth || 0) + 1);
+    computeClockNotes();
+    if (running) updateSoundFromClock();
+    updateVisuals();
+    updateStatus();
+  });
+}
+
+const rootStepBtn = document.getElementById('root-step-btn');
+if (rootStepBtn) {
+  rootStepBtn.addEventListener('click', () => {
+    requestMovementRootStep(1);
+    computeClockNotes();
+    if (running) updateSoundFromClock();
+    updateVisuals();
+    updateStatus();
+  });
+}
+
 
 document.getElementById('key-select').addEventListener('change', e => {
   P.key = +e.target.value;
+  P.homeKey = P.key;
+  requestMovementHomeKey();
   computeClockNotes();
   updateScaleMarks();
   if (running) updateSoundFromClock();
@@ -1429,7 +2383,7 @@ document.getElementById('key-select').addEventListener('change', e => {
 
 document.getElementById('scale-select').addEventListener('change', e => {
   P.scale = e.target.value;
-  P.manualIntervalIndex = Math.min(P.manualIntervalIndex || 0, scaleDegrees().length - 1);
+  requestMovementInterval(Math.min(movement.rings.interval.tooth || 0, scaleDegrees().length - 1));
   computeClockNotes();
   updateScaleMarks();
   if (running) updateSoundFromClock();
@@ -1475,6 +2429,7 @@ document.getElementById('algo-select').addEventListener('change', e => {
 
 document.getElementById('triad-btn').addEventListener('click', () => {
   triadMode = !triadMode;
+  movement.modes.triad = triadMode;
   document.getElementById('triad-btn').classList.toggle('on', triadMode);
   if (running) updateSoundFromClock();
   else stopVoice('third');
@@ -1484,7 +2439,14 @@ document.getElementById('triad-btn').addEventListener('click', () => {
 
 document.getElementById('real-btn').addEventListener('click', () => {
   P.realClock = !P.realClock;
+  movement.modes.realClock = P.realClock;
   document.getElementById('real-btn').classList.toggle('on', P.realClock);
+
+  if (!P.realClock) {
+    movement.wheels.second.phase = 0;
+    movement.wheels.second.prevPhase = 0;
+  }
+
   computeClockNotes();
   if (running) updateSoundFromClock();
   updateVisuals();
@@ -1494,9 +2456,10 @@ document.getElementById('real-btn').addEventListener('click', () => {
 document.getElementById('freeze-btn').addEventListener('click', () => {
   computeClockNotes();
   P.freezeInterval = !P.freezeInterval;
+  movement.modes.freeze = P.freezeInterval;
 
   if (P.freezeInterval) {
-    P.manualIntervalIndex = active.intIndex;
+    requestMovementInterval(active.intIndex);
   }
 
   document.getElementById('freeze-btn').classList.toggle('on', P.freezeInterval);
@@ -1508,6 +2471,7 @@ document.getElementById('freeze-btn').addEventListener('click', () => {
 document.getElementById('start-btn').addEventListener('click', () => {
   ensureCtx();
   running = !running;
+  movement.power.running = running;
 
   const btn = document.getElementById('start-btn');
   btn.classList.toggle('on', running);
@@ -1515,10 +2479,8 @@ document.getElementById('start-btn').addEventListener('click', () => {
 
   if (running) {
     updateSoundFromClock();
-    document.getElementById('ctr-fill').setAttribute('fill', 'url(#active-grad)');
   } else {
     stopAllVoices();
-    document.getElementById('ctr-fill').setAttribute('fill', 'url(#glow-grad)');
   }
 
   updateVisuals();
@@ -1532,15 +2494,15 @@ function updateStatus() {
   const intervalText = degreeName(active.intIndex);
 
   if (!running) {
-    const mode = P.realClock ? 'real clock' : 'internal clock';
-    el.textContent = `${NOTES[P.key]} ${SCALES[P.scale].name} · ${mode} · ${TUNINGS[P.tuning].name}`;
+    const mode = P.rootDrive === 'hold' ? 'root hold' : (P.realClock ? 'real clock' : 'root crawl + interval route + interval route');
+    el.textContent = `${NOTES[P.key]} ${SCALES[P.scale].name} · ${mode} · key menu follows current root`;
     el.classList.remove('active');
     return;
   }
 
   el.innerHTML =
     `droning: ${NOTES[active.rootPc]} + ${NOTES[active.intervalPc]}${thirdText}` +
-    `<br>${P.realClock ? 'real clock' : 'internal clock'} · interval degree ${intervalText}${P.freezeInterval ? ' · frozen' : ' · moving'} · second hand modulates FM/space/drift · knob = volume`;
+    `<br>${P.rootDrive === 'hold' ? 'root hold' : 'root crawl + interval route + interval route'} · interval degree ${intervalText}${P.freezeInterval ? ' · frozen' : ' · moving'} · second hand modulates FM/space/drift`;
   el.classList.add('active');
 }
 
@@ -1551,11 +2513,10 @@ function animate(ts) {
   clock.last = ts;
 
   if (running) {
-    if (!P.realClock) {
-      advanceInternalSecondClock(dt);
-    }
+    updateMovement(dt);
     updateSoundFromClock();
   } else {
+    updateMovement(0);
     computeClockNotes();
   }
 
@@ -1567,7 +2528,9 @@ function animate(ts) {
 // ─── Init ────────────────────────────────────────────────
 setMasterVolume(P.volume, true);
 buildTicks();
+buildMovementView();
 buildRing();
+document.body.classList.toggle('movement-view', P.viewMode === 'movement');
 computeClockNotes();
 updateVisuals();
 updateStatus();
