@@ -644,7 +644,7 @@ body::before {
   content: "";
   position: absolute;
   left: 50%;
-  top: 466px;
+  top: 434px;
   width: 72px;
   height: 2px;
   transform: translateX(-50%) scaleX(calc(0.18 + var(--tension) * 0.82));
@@ -660,16 +660,16 @@ body::before {
 
 .face-region {
   position: relative;
-  height: 474px;
+  height: 442px;
   overflow: visible;
 }
 
 #ring {
   position: absolute;
-  left: 30px;
-  top: 20px;
-  width: 460px;
-  height: 460px;
+  left: 45px;
+  top: 12px;
+  width: 430px;
+  height: 430px;
   transform: none;
   overflow: visible;
   filter: none;
@@ -678,7 +678,7 @@ body::before {
 .side-knob {
   position: absolute;
   right: -13px;
-  top: 218px;
+  top: 202px;
   width: 26px;
   height: 66px;
   border-radius: 0 13px 13px 0;
@@ -796,7 +796,7 @@ button.on {
 
 #start-btn.side-knob {
   position: absolute;
-  right: -13px;
+  right: -1px;
   top: 218px;
   width: 26px;
   height: 66px;
@@ -913,8 +913,30 @@ input[type=range]::-moz-range-thumb {
   margin: 0;
 }
 
+.brand-bar .expand-toggle {
+  width: auto;
+  height: auto;
+  align-self: center;
+  justify-self: center;
+  background: transparent;
+  border: none;
+  color: rgba(222,218,209,0.22);
+  font-family: "Univers", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  line-height: 1;
+  padding: 0;
+  box-shadow: none;
+  border-radius: 0;
+  margin: 0;
+}
+
 .row-primary .expand-toggle:hover,
-.row-primary .expand-toggle.open {
+.row-primary .expand-toggle.open,
+.brand-bar .expand-toggle:hover,
+.brand-bar .expand-toggle.open {
   background: #171611;
   border-color: #3a362b;
   color: var(--muted);
@@ -1025,9 +1047,9 @@ input[type=range]::-moz-range-thumb {
 }
 
 .brand-bar {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
-  justify-content: space-between;
   padding: 8px 20px 10px;
   border-top: 1px solid #181610;
 }
@@ -1040,6 +1062,49 @@ input[type=range]::-moz-range-thumb {
   letter-spacing: 0.05em;
   color: #a8a49c;
   user-select: none;
+}
+
+.snooze-control {
+  display: flex;
+  align-items: center;
+  justify-self: end;
+  gap: 7px;
+  color: #77736a;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  user-select: none;
+}
+
+.snooze-light {
+  width: 18px;
+  height: 18px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid #172316;
+  background:
+    radial-gradient(circle at 36% 30%, rgba(255,255,255,0.18), transparent 28%),
+    linear-gradient(145deg, #10200f, #071006);
+  box-shadow:
+    inset 0 1px 2px rgba(255,255,255,0.08),
+    inset 0 -2px 4px rgba(0,0,0,0.65);
+}
+
+.snooze-light:hover {
+  background:
+    radial-gradient(circle at 36% 30%, rgba(255,255,255,0.22), transparent 28%),
+    linear-gradient(145deg, #173016, #0a1609);
+}
+
+.snooze-light.on {
+  border-color: #244d20;
+  background:
+    radial-gradient(circle at 36% 30%, rgba(255,255,255,0.42), transparent 24%),
+    linear-gradient(145deg, #39b833, #0e4f10);
+  box-shadow:
+    0 0 12px rgba(45,165,46,0.42),
+    inset 0 1px 2px rgba(255,255,255,0.22),
+    inset 0 -2px 5px rgba(0,0,0,0.42);
 }
 
 .status {
@@ -1085,6 +1150,810 @@ input[type=range]::-moz-range-thumb {
     grid-template-columns: 1fr;
   }
 }
+
+/* ── Dark theme restoration + Braun physical hardware controls ─────── */
+
+:root {
+  --yellow:      #efbb2b;
+  --yellow-dk:   #c69820;
+  --text:        #dedad1;
+  --muted:       #6e6a60;
+  --dim:         #38352c;
+  --border:      #242220;
+  --case:        #181714;
+  --base:        #10100e;
+  --face:        #0c0c0b;
+  --page:        #080807;
+  --panel-muted: #6e6a60;
+  --panel-text:  #dedad1;
+  --green:       #2da52e;
+  --red:         var(--yellow-dk);
+}
+
+html, body, button, select, input {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+body {
+  background: #080807;
+  color: var(--text);
+}
+
+body::before {
+  background: radial-gradient(ellipse 65% 38% at 50% 0%, rgba(28,26,20,0.55) 0%, transparent 60%);
+}
+
+/* ── Instrument housing ─────────────────────────────────────────────── */
+
+.instrument {
+  background: linear-gradient(168deg, #1e1d19 0%, #131210 55%, #0d0d0b 100%);
+  border-color: #232118;
+  box-shadow:
+    0 48px 90px rgba(0,0,0,0.72),
+    0 16px 32px rgba(0,0,0,0.52),
+    inset 0 1px 0 rgba(255,255,255,0.06),
+    inset 0 -2px 0 rgba(0,0,0,0.7);
+}
+
+.instrument::after { background: var(--yellow); }
+
+#face-fill            { fill: #0c0c0b; }
+#face-rim-outer       { stroke: #484640; stroke-width: 1.2; }
+#face-rim-inner       { stroke: #1e1c18; stroke-width: 0.8; }
+
+/* ── Note ring ──────────────────────────────────────────────────────── */
+
+.n-bg                              { stroke: rgba(255,255,255,0); }
+.nd.in-scale .n-bg                 { stroke: rgba(255,255,255,0.22); }
+.nd.root .n-bg                     { fill: #f0ede6; stroke: #f0ede6; }
+.nd.root .n-txt, .nd.root .n-deg   { fill: #11110f; }
+.nd.interval .n-bg                 { stroke: var(--yellow); stroke-width: 2.2; }
+.nd.interval .n-txt                { fill: var(--yellow); }
+.nd.third .n-bg                    { stroke: rgba(239,187,43,0.62); }
+.n-txt                             { fill: #f3f0e7; font-weight: 600; }
+.n-deg                             { fill: #9f9b91; }
+
+/* ── Clock hands ────────────────────────────────────────────────────── */
+
+.hour-hand, .minute-hand { stroke: #e8e1d6; filter: none; }
+.second-hand              { stroke: var(--yellow); stroke-width: 2; }
+.hand-cap-under           { fill: #6e6d67; }
+.hand-cap                 { fill: var(--yellow); stroke: var(--yellow-dk); }
+
+/* ── Base plate & brand ─────────────────────────────────────────────── */
+
+.base-plate {
+  background: linear-gradient(180deg, #111010 0%, #0c0c0b 100%);
+  border-top-color: #1e1c16;
+  box-shadow: inset 0 3px 8px rgba(0,0,0,0.5);
+}
+
+.brand-bar {
+  background: #0a0a09;
+  border-top-color: #181610;
+}
+
+.braun-logo {
+  color: #48443e;
+  font-size: 17px;
+  letter-spacing: 0.035em;
+}
+
+/* ── Buttons — recessed cavity, tactile press ───────────────────────── */
+
+button, select {
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  border-radius: 4px;
+}
+
+button {
+  background: #1c1a16;
+  border: 1px solid #2e2b24;
+  color: #58544e;
+  box-shadow:
+    0 1px 0 rgba(255,255,255,0.04),
+    inset 0 1px 5px rgba(0,0,0,0.55),
+    inset 0 -1px 0 rgba(255,255,255,0.025);
+}
+
+button:hover {
+  background: #252320;
+  color: var(--text);
+  border-color: #403d36;
+}
+
+button:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 8px rgba(0,0,0,0.80);
+}
+
+button.on {
+  background: #d4d0c8;
+  color: #0c0c0b;
+  border-color: #a4a09a;
+  box-shadow:
+    inset 0 2px 5px rgba(0,0,0,0.22),
+    inset 0 -1px 0 rgba(255,255,255,0.14);
+}
+
+#real-btn.on,
+#start-btn:not(.side-knob).on {
+  background: var(--yellow);
+  color: #0c0c0b;
+  border-color: var(--yellow-dk);
+  box-shadow:
+    0 0 14px rgba(239,187,43,0.22),
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    inset 0 -1px 3px rgba(0,0,0,0.30);
+}
+
+#freeze-btn.on {
+  background: #192819;
+  color: #78bc78;
+  border-color: #2c4a2c;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.50);
+}
+
+button:focus-visible,
+select:focus-visible,
+input[type=range]:focus-visible {
+  outline: 2px solid rgba(239,187,43,0.38);
+  outline-offset: 2px;
+}
+
+/* ── Selects ────────────────────────────────────────────────────────── */
+
+select {
+  background-color: #1c1a16;
+  border: 1px solid #2e2b24;
+  color: var(--text);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 10px) 11px, calc(100% - 6px) 11px;
+  background-size: 4px 4px, 4px 4px;
+  background-repeat: no-repeat;
+}
+
+/* ── Expand toggle ──────────────────────────────────────────────────── */
+
+.row-primary .expand-toggle,
+.expand-toggle {
+  background: transparent;
+  border-color: #26231c;
+  color: #44413a;
+  box-shadow: none;
+}
+
+.row-primary .expand-toggle:hover,
+.row-primary .expand-toggle.open,
+.brand-bar .expand-toggle:hover,
+.brand-bar .expand-toggle.open,
+.expand-toggle:hover,
+.expand-toggle.open {
+  background: #161410;
+  color: var(--muted);
+  border-color: #38352c;
+}
+
+.advanced { border-top: 1px solid #1e1c16; }
+
+/* calibrate button in brand-bar: bare-text, no box on hover */
+.brand-bar .expand-toggle:hover,
+.brand-bar .expand-toggle.open {
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  transform: none;
+  color: rgba(222,218,209,0.42);
+}
+
+
+/* ── Slider labels ──────────────────────────────────────────────────── */
+
+.sl-lbl, .ctrl-lbl, .engine-lbl { color: var(--muted); font-weight: 700; }
+.sl-val                          { color: #888480; font-weight: 700; }
+.engine-lbl.r                    { color: var(--yellow); }
+.engine-val                      { color: var(--yellow); margin-bottom: 10px; }
+.snooze-control                  { color: var(--muted); }
+
+/* ── Slider track — deep recessed channel ───────────────────────────── */
+
+input[type=range] {
+  height: 2px;
+  background: #141210;
+  box-shadow:
+    inset 0 1px 4px rgba(0,0,0,1),
+    0 1px 0 rgba(255,255,255,0.022);
+  border-radius: 1px;
+}
+
+/* ── Slider thumb — milled aluminum cap ─────────────────────────────── */
+/* Horizontal microgrooves suggest a physical grip surface              */
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(0,0,0,0)    0px,
+      rgba(0,0,0,0)    2.5px,
+      rgba(0,0,0,0.11) 2.5px,
+      rgba(0,0,0,0.11) 3px
+    ),
+    linear-gradient(160deg,
+      #cac6be 0%,
+      #9e9a94 35%,
+      #6e6a64 62%,
+      #8e8a84 100%
+    );
+  border: 1px solid #201e18;
+  box-shadow:
+    0 2px 6px rgba(0,0,0,0.82),
+    inset 0 1px 0 rgba(255,255,255,0.26),
+    inset 0 -1px 0 rgba(0,0,0,0.42);
+  cursor: pointer;
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+  background: linear-gradient(160deg, #cac6be 0%, #9e9a94 35%, #6e6a64 62%, #8e8a84 100%);
+  border: 1px solid #201e18;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.82);
+  cursor: pointer;
+}
+
+/* ── Engine slider — gold-tinted cap ───────────────────────────────── */
+
+.engine-row input[type=range] {
+  background: linear-gradient(90deg, #141210 0%, #38300e 100%);
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.95);
+}
+
+.engine-row input[type=range]::-webkit-slider-thumb {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      rgba(0,0,0,0)    0px,
+      rgba(0,0,0,0)    2.5px,
+      rgba(0,0,0,0.10) 2.5px,
+      rgba(0,0,0,0.10) 3px
+    ),
+    linear-gradient(160deg,
+      #f4d870 0%,
+      #d4a822 35%,
+      #a87e10 62%,
+      #d0a030 100%
+    );
+  border-color: #7a5a0e;
+  box-shadow:
+    0 2px 6px rgba(0,0,0,0.72),
+    0 0 10px rgba(239,187,43,0.32),
+    inset 0 1px 0 rgba(255,255,255,0.32),
+    inset 0 -1px 0 rgba(0,0,0,0.38);
+}
+
+.engine-row input[type=range]::-moz-range-thumb {
+  background: linear-gradient(160deg, #f4d870 0%, #d4a822 35%, #a87e10 62%, #d0a030 100%);
+  border: 1px solid #7a5a0e;
+}
+
+/* ── Side winder — watch crown with knurling ────────────────────────── */
+/* Cylinder viewed from side: deep shadow left, bright highlight at    */
+/* ~20%, falling off to the right. Knurling lines run circumferentially */
+
+#start-btn.side-knob {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent              0px,
+      transparent              2.5px,
+      rgba(255,255,255,0.052)  2.5px,
+      rgba(255,255,255,0.052)  3.5px
+    ),
+    linear-gradient(90deg,
+      #0c0b09  0%,
+      #252218  8%,
+      #4a4640  18%,
+      #302c24  30%,
+      #1c1a14  52%,
+      #131210  76%,
+      #0c0b09  100%
+    );
+  border-color: #302e26;
+  box-shadow:
+    3px 0 12px rgba(0,0,0,0.72),
+    inset -3px 0 7px rgba(0,0,0,0.58),
+    inset 1px 0 2px rgba(255,255,255,0.055);
+}
+
+#start-btn.side-knob::before {
+  background: repeating-linear-gradient(
+    180deg,
+    transparent             0px,
+    transparent             2.5px,
+    rgba(255,255,255,0.052) 2.5px,
+    rgba(255,255,255,0.052) 3.5px
+  );
+}
+
+#start-btn.side-knob:hover {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent             0px,
+      transparent             2.5px,
+      rgba(255,255,255,0.070) 2.5px,
+      rgba(255,255,255,0.070) 3.5px
+    ),
+    linear-gradient(90deg,
+      #0c0b09  0%,
+      #2e2a20  8%,
+      #56524a  18%,
+      #38342c  30%,
+      #222018  52%,
+      #161410  76%,
+      #0c0b09  100%
+    );
+  border-color: #3e3a32;
+}
+
+#start-btn.side-knob.on {
+  background:
+    repeating-linear-gradient(
+      180deg,
+      transparent             0px,
+      transparent             2.5px,
+      rgba(255,255,255,0.092) 2.5px,
+      rgba(255,255,255,0.092) 3.5px
+    ),
+    linear-gradient(90deg,
+      #9a7410  0%,
+      #efbb2b  18%,
+      #fcd870  32%,
+      #efbb2b  52%,
+      #c89810  76%,
+      #9a7010  100%
+    );
+  border-color: var(--yellow-dk);
+  box-shadow:
+    3px 0 16px rgba(239,187,43,0.30),
+    inset -3px 0 7px rgba(0,0,0,0.30),
+    inset 1px 0 2px rgba(255,255,255,0.20);
+}
+
+.side-start-label {
+  position: absolute;
+  right: 30px;
+  top: 251px;
+  transform: translateY(-50%) rotate(180deg);
+  writing-mode: vertical-rl;
+  font-family: "Univers", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 8.5px;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: rgba(230,224,205,0.30);
+  pointer-events: none;
+  user-select: none;
+}
+
+body.cream-mode .side-start-label {
+  color: rgba(48,44,38,0.30);
+}
+
+/* ── Snooze LED — deep glass dome ───────────────────────────────────── */
+
+.snooze-light {
+  border-color: #15200e;
+  background:
+    radial-gradient(circle at 36% 30%, rgba(255,255,255,0.10) 0%, transparent 42%),
+    linear-gradient(145deg, #0d1a0c 0%, #050a05 100%);
+  box-shadow:
+    inset 0 1px 4px rgba(0,0,0,0.98),
+    inset 0 -1px 1px rgba(255,255,255,0.022);
+}
+
+.snooze-light:hover {
+  background:
+    radial-gradient(circle at 36% 30%, rgba(255,255,255,0.16) 0%, transparent 42%),
+    linear-gradient(145deg, #162414 0%, #0a1209 100%);
+}
+
+.snooze-light.on {
+  border-color: #73302a;
+  background:
+    radial-gradient(circle at 36% 30%, rgba(255,255,255,0.56) 0%, rgba(237,63,28,0.58) 28%, transparent 58%),
+    linear-gradient(145deg, #ed3f1c 0%, #7c170e 100%);
+  box-shadow:
+    0 0 11px rgba(237,63,28,0.50),
+    0 0 26px rgba(237,63,28,0.16),
+    inset 0 1px 2px rgba(255,255,255,0.40),
+    inset 0 -2px 6px rgba(0,0,0,0.55);
+}
+
+/* ── Status ─────────────────────────────────────────────────────────── */
+
+.status        { color: #3e3c36; }
+.status.active { color: #8a8680; }
+
+/* ── Final hardware tuning: mode caps + fader slots ────────────────── */
+
+.row-modes {
+  align-items: end;
+}
+
+.row-modes button {
+  position: relative;
+  justify-self: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  padding: 0;
+  background:
+    radial-gradient(circle at 50% 44%, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.14) 30%, transparent 54%),
+    radial-gradient(circle at 40% 24%, rgba(255,255,255,0.26) 0%, rgba(255,255,255,0.10) 23%, transparent 42%),
+    linear-gradient(180deg, #d9d2c3 0%, #aaa296 60%, #756f66 100%);
+  border: 1px solid #191711;
+  color: transparent;
+  font-size: 0;
+  text-shadow: none;
+  box-shadow:
+    0 0 0 4px #050504,
+    0 4px 8px rgba(0,0,0,0.56),
+    inset 0 3px 7px rgba(0,0,0,0.30),
+    inset 0 -2px 3px rgba(255,255,255,0.12);
+}
+
+.row-modes button::after {
+  content: attr(data-label);
+  position: absolute;
+  left: 50%;
+  top: 42px;
+  transform: translateX(-50%);
+  color: #7a746a;
+  font-size: 6px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.row-modes button:hover {
+  background:
+    radial-gradient(circle at 50% 44%, rgba(0,0,0,0.24) 0%, rgba(0,0,0,0.12) 30%, transparent 54%),
+    radial-gradient(circle at 40% 24%, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0.12) 23%, transparent 42%),
+    linear-gradient(180deg, #e7dfce 0%, #b7aea0 60%, #7e776e 100%);
+}
+
+.row-modes button:active,
+.row-modes button.on,
+.row-modes button.root-freeze {
+  transform: translateY(3px);
+  box-shadow:
+    0 0 0 4px #050504,
+    0 2px 5px rgba(0,0,0,0.48),
+    inset 0 6px 9px rgba(0,0,0,0.36),
+    inset 0 -1px 2px rgba(255,255,255,0.14);
+}
+
+#triad-btn.on {
+  background:
+    radial-gradient(circle at 50% 44%, rgba(0,0,0,0.24) 0%, rgba(0,0,0,0.12) 30%, transparent 54%),
+    radial-gradient(circle at 40% 24%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 23%, transparent 42%),
+    linear-gradient(180deg, #f0a43a 0%, #ed8008 60%, #945007 100%);
+}
+
+#real-btn.on {
+  background:
+    radial-gradient(circle at 50% 44%, rgba(0,0,0,0.24) 0%, rgba(0,0,0,0.12) 30%, transparent 54%),
+    radial-gradient(circle at 40% 24%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0.08) 23%, transparent 42%),
+    linear-gradient(180deg, #ee6240 0%, #ed3f1c 60%, #8d210f 100%);
+}
+
+#freeze-btn.on {
+  background:
+    radial-gradient(circle at 50% 44%, rgba(0,0,0,0.24) 0%, rgba(0,0,0,0.12) 30%, transparent 54%),
+    radial-gradient(circle at 40% 24%, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 23%, transparent 42%),
+    linear-gradient(180deg, #ca3434 0%, #bf1b1b 60%, #6f0d0d 100%);
+}
+
+#freeze-btn.root-freeze {
+  background:
+    radial-gradient(circle at 50% 44%, rgba(0,0,0,0.24) 0%, rgba(0,0,0,0.12) 30%, transparent 54%),
+    radial-gradient(circle at 40% 24%, rgba(255,255,255,0.20) 0%, rgba(255,255,255,0.08) 23%, transparent 42%),
+    linear-gradient(180deg, #3e8539 0%, #276e26 60%, #143c14 100%);
+}
+
+.row-modes button.on::after,
+.row-modes button.root-freeze::after {
+  color: #dedad1;
+}
+
+.row-modes { margin-bottom: 30px; }
+
+input[type=range] {
+  height: 4px;
+  background: #070706;
+  border-radius: 999px;
+  box-shadow:
+    inset 0 1px 5px rgba(0,0,0,1),
+    0 1px 0 rgba(255,255,255,0.035);
+}
+
+input[type=range]::-webkit-slider-thumb {
+  width: 18px;
+  height: 17px;
+  border-radius: 3px;
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.72) 0 2px, transparent 2px calc(100% - 2px), rgba(255,255,255,0.18) calc(100% - 2px)),
+    linear-gradient(180deg, #3e3c36 0%, #151412 100%);
+  border: 1px solid #050504;
+  box-shadow:
+    0 5px 8px rgba(0,0,0,0.78),
+    inset 0 1px 0 rgba(255,255,255,0.18);
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 18px;
+  height: 17px;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #3e3c36 0%, #151412 100%);
+  border: 1px solid #050504;
+  box-shadow: 0 5px 8px rgba(0,0,0,0.78);
+}
+
+.engine-row input[type=range]::-webkit-slider-thumb {
+  background:
+    linear-gradient(90deg, rgba(255,255,255,0.70) 0 2px, transparent 2px calc(100% - 2px), rgba(255,255,255,0.18) calc(100% - 2px)),
+    linear-gradient(180deg, #efbb2b 0%, #8d6411 100%);
+}
+
+.engine-row input[type=range]::-moz-range-thumb {
+  background: linear-gradient(180deg, #efbb2b 0%, #8d6411 100%);
+}
+
+.theme-toggle {
+  width: auto;
+  height: auto;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: rgba(222,218,209,0.26);
+  font-family: "Univers", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 7px;
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.theme-toggle:hover,
+.theme-toggle:active,
+.theme-toggle.on {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: rgba(222,218,209,0.42);
+  transform: none;
+}
+
+/* Optional cream mode, hidden inside Calibrate */
+body.cream-mode {
+  --yellow: #d6a21a;
+  --yellow-dk: #a8790d;
+  --text: #25231f;
+  --muted: #736f66;
+  --dim: #c8c1b5;
+  --border: #d6d0c5;
+  --case: #dfdbd2;
+  --base: #eee9df;
+  --face: #e6e2d9;
+  --page: #f5f2eb;
+  --panel-muted: #746f65;
+  --panel-text: #25231f;
+  background: #f5f2eb;
+  color: var(--text);
+}
+
+body.cream-mode::before {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.65), rgba(226,219,207,0.35)),
+    radial-gradient(ellipse 70% 40% at 50% 0%, rgba(188,178,163,0.20) 0%, transparent 62%);
+}
+
+body.cream-mode .instrument {
+  background: linear-gradient(180deg, #ebe7de 0%, #dfdbd2 58%, #d0cabf 100%);
+  border-color: #c8c1b5;
+  box-shadow:
+    0 20px 46px rgba(50,46,40,0.18),
+    0 4px 12px rgba(50,46,40,0.10),
+    inset 0 1px 0 rgba(255,255,255,0.86),
+    inset 0 -1px 0 rgba(90,82,72,0.10);
+}
+
+body.cream-mode .base-plate {
+  background: #eee9df;
+  border-top-color: #ccc4b8;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.52);
+}
+
+body.cream-mode .brand-bar {
+  background: #e6e1d7;
+  border-top-color: #cbc3b7;
+}
+
+body.cream-mode #face-fill {
+  fill: #e8e5de;
+}
+
+body.cream-mode circle[fill="url(#face-depth)"] {
+  fill: rgba(255,255,255,0.18);
+}
+
+body.cream-mode circle[fill="url(#face-glow)"] {
+  fill: rgba(55,50,43,0.035);
+}
+
+body.cream-mode ellipse[fill="rgba(255,255,255,0.025)"] {
+  fill: rgba(255,255,255,0.22);
+}
+
+body.cream-mode #face-rim-outer {
+  stroke: #aaa49a;
+}
+
+body.cream-mode #face-rim-inner {
+  stroke: #d3cec5;
+}
+
+body.cream-mode #minute-ticks line {
+  stroke: #282520 !important;
+  opacity: 0.82;
+}
+
+body.cream-mode .n-txt {
+  fill: #26231f;
+}
+
+body.cream-mode .hour-hand,
+body.cream-mode .minute-hand {
+  stroke: #25231f;
+  filter: drop-shadow(0 1px 1px rgba(255,255,255,0.36));
+}
+
+body.cream-mode .second-hand {
+  stroke: var(--yellow);
+}
+
+body.cream-mode .hand-cap-under {
+  fill: #817a70;
+}
+
+body.cream-mode .hand-cap {
+  fill: var(--yellow);
+  stroke: var(--yellow-dk);
+}
+
+body.cream-mode .n-deg {
+  fill: #6b645b;
+}
+
+body.cream-mode .nd.in-scale .n-bg {
+  stroke: rgba(45,41,36,0.24);
+}
+
+body.cream-mode .nd.root .n-bg {
+  fill: #26231f;
+  stroke: #26231f;
+}
+
+body.cream-mode .nd.root .n-txt,
+body.cream-mode .nd.root .n-deg {
+  fill: #f0ece4;
+}
+
+body.cream-mode .nd.interval .n-bg {
+  fill: transparent;
+  stroke: #2f2b26;
+}
+
+body.cream-mode .nd.interval .n-txt {
+  fill: #2f2b26;
+}
+
+body.cream-mode .braun-logo,
+body.cream-mode .sl-val,
+body.cream-mode .status.active {
+  color: #403b35;
+}
+
+body.cream-mode .sl-lbl,
+body.cream-mode .snooze-control {
+  color: #69635a;
+}
+
+body.cream-mode .theme-toggle,
+body.cream-mode .theme-toggle:hover,
+body.cream-mode .theme-toggle:active,
+body.cream-mode .theme-toggle.on {
+  background: transparent;
+  border: 0;
+  box-shadow: none;
+  color: rgba(48,44,38,0.34);
+}
+
+body.cream-mode button,
+body.cream-mode select {
+  background-color: #e8e3d9;
+  border-color: #bdb6ab;
+  color: #2d2a25;
+}
+
+body.cream-mode .row-modes button {
+  background:
+    radial-gradient(circle at 50% 56%, rgba(65,60,52,0.20) 0%, rgba(65,60,52,0.09) 31%, transparent 55%),
+    radial-gradient(circle at 38% 25%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.30) 24%, transparent 43%),
+    linear-gradient(180deg, #f0ece2 0%, #cfc8ba 66%, #aaa295 100%);
+  border-color: #a9a195;
+  box-shadow:
+    0 0 0 4px #d7d1c5,
+    inset 0 3px 8px rgba(73,66,58,0.18),
+    inset 0 -2px 3px rgba(255,255,255,0.38);
+}
+
+body.cream-mode .row-modes button.on,
+body.cream-mode .row-modes button.root-freeze {
+  background:
+    radial-gradient(circle at 50% 60%, rgba(25,23,20,0.25) 0%, rgba(25,23,20,0.14) 32%, transparent 58%),
+    linear-gradient(180deg, #d9d3c8 0%, #b9b1a4 70%, #928a7f 100%);
+  border-color: #8d8579;
+  box-shadow:
+    0 0 0 4px #d7d1c5,
+    inset 0 4px 9px rgba(58,52,45,0.22),
+    inset 0 -1px 2px rgba(255,255,255,0.34);
+}
+
+body.cream-mode .row-modes button::after {
+  color: #665f55;
+}
+
+body.cream-mode .row-modes button.on::after,
+body.cream-mode .row-modes button.root-freeze::after {
+  color: #2f2b26;
+}
+
+body.cream-mode input[type=range]::-webkit-slider-thumb {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.34),
+    inset 0 -1px 2px rgba(0,0,0,0.28),
+    0 0 0 1px #bdb6aa;
+}
+
+body.cream-mode input[type=range]::-moz-range-thumb {
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.34),
+    inset 0 -1px 2px rgba(0,0,0,0.28),
+    0 0 0 1px #bdb6aa;
+}
+
+body.cream-mode .row-primary .expand-toggle,
+body.cream-mode .expand-toggle {
+  background: transparent;
+  border-color: #c2baae;
+  color: #6f695f;
+}
+
+body.cream-mode .advanced {
+  border-color: #d0c8bc;
+}
 </style>
 </head>
 <body>
@@ -1092,6 +1961,7 @@ input[type=range]::-moz-range-thumb {
   <div class="instrument">
     <div class="clock-shell">
       <button id="start-btn" class="side-knob" aria-label="Press winder to start" title="press winder to start">start</button>
+      <div class="side-start-label" aria-hidden="true">START</div>
       <div class="face-region">
       <svg id="ring" width="390" height="390" viewBox="0 0 360 360">
         <defs>
@@ -1129,14 +1999,10 @@ input[type=range]::-moz-range-thumb {
       </div>
 
       <div class="base-plate">
-        <div class="row-primary">
-          <button class="expand-toggle" id="expand-btn">calibrate</button>
-        </div>
-
         <div class="row-modes">
-          <button id="triad-btn">third</button>
-          <button id="real-btn">free</button>
-          <button id="freeze-btn">frz</button>
+          <button id="triad-btn" aria-label="third hand" data-label="third"></button>
+          <button id="real-btn" aria-label="free mode" data-label="free"></button>
+          <button id="freeze-btn" aria-label="snooze selector" data-label="snooze"></button>
         </div>
 
         <div class="front-macros">
@@ -1171,33 +2037,33 @@ input[type=range]::-moz-range-thumb {
         <div class="advanced" id="adv-panel">
           <div class="adv-selects">
             <select id="key-select">
-              <option value="0" selected>C</option>
+              <option value="0">C</option>
               <option value="1">C♯</option>
               <option value="2">D</option>
               <option value="3">D♯</option>
               <option value="4">E</option>
               <option value="5">F</option>
               <option value="6">F♯</option>
-              <option value="7">G</option>
+              <option value="7" selected>G</option>
               <option value="8">G♯</option>
               <option value="9">A</option>
               <option value="10">B♭</option>
               <option value="11">B</option>
             </select>
             <select id="scale-select">
-              <option value="mixolydian">Mixolydian</option>
+              <option value="mixolydian" selected>Mixolydian</option>
               <option value="lydian">Lydian</option>
               <option value="dorian">Dorian</option>
               <option value="aeolian">Minor</option>
-              <option value="ionian" selected>Major</option>
+              <option value="ionian">Major</option>
               <option value="majorPent">Major Pent</option>
               <option value="minorPent">Minor Pent</option>
               <option value="suspended">Suspended</option>
               <option value="harmMinor">Harm Minor</option>
             </select>
             <select id="tuning-select">
-              <option value="equal" selected>Equal Temperament</option>
-              <option value="ji5">5-Limit</option>
+              <option value="equal">Equal Temperament</option>
+              <option value="ji5" selected>5-Limit</option>
               <option value="ji7">7-Limit</option>
               <option value="ji9">9-Limit</option>
               <option value="ji13">13-Limit</option>
@@ -1248,7 +2114,15 @@ input[type=range]::-moz-range-thumb {
       </div>
 
       <div class="brand-bar">
-        <div class="braun-logo">FM CLOCK</div>
+        <div class="braun-logo">
+          <button id="theme-btn" class="theme-toggle" aria-label="Switch to light mode" title="switch to light mode">LIGHT</button>
+          <span>FM CLOCK</span>
+        </div>
+        <button class="expand-toggle" id="expand-btn">calibrate</button>
+        <div class="snooze-control">
+          <span>rec</span>
+          <button id="snooze-btn" class="snooze-light" aria-label="Record arm" title="record arm"></button>
+        </div>
       </div>
     </div>
     <div class="status" id="status">select a root and press the winder</div>
@@ -1399,6 +2273,14 @@ function currentPairs() {
 const PAIRS = DX_ALGOS.alg32.pairs;
 
 let actx = null, convolver = null, reverbIn = null, reverbOut = null, masterOut = null, wetOut = null;
+let recorderIn = null, recorderNode = null, recorderSilence = null;
+let recording = {
+  active: false,
+  sampleRate: 44100,
+  buffers: [[], []],
+  length: 0,
+  startedAt: 0
+};
 let octave = 3;
 let running = false;
 let triadMode = false;
@@ -1414,26 +2296,30 @@ let clock = {
 };
 let voices = {};
 let active = {
-  rootPc: 0,
-  intervalPc: 0,
-  thirdPc: 4,
+  rootPc: 7,
+  intervalPc: 2,
+  thirdPc: 11,
   rootIndex: 0,
-  intIndex: 0,
+  intIndex: 4,
   thirdIndex: 0,
 };
 
 let P = {
-  key: 0,
-  scale: 'ionian',
-  tuning: 'equal',
+  key: 7,
+  scale: 'mixolydian',
+  tuning: 'ji5',
   algorithm: 'alg32',
   engine: 0.0,
   rate: 0.009,
   orbit: 0.56,
   oscmix: 0.25,
   realClock: false,
-  manualIntervalIndex: 0,
+  manualIntervalIndex: 4,
+  freezeMode: 'none',
   freezeInterval: false,
+  snoozeRoot: false,
+  recordArmed: false,
+  creamMode: false,
   shimmer: 0.46,
   drift: 4,
   evolve: 0.035,
@@ -1449,6 +2335,7 @@ const movement = {
   modes: {
     realClock: false,
     freeze: false,
+    snoozeRoot: false,
     triad: false
   },
 
@@ -1458,8 +2345,8 @@ const movement = {
       tooth: 0
     },
     minute: {
-      phase: 0,
-      tooth: 0
+      phase: 4 / 7,
+      tooth: 4
     },
     second: {
       phase: 0,
@@ -1471,14 +2358,14 @@ const movement = {
     root: {
       tooth: 0,
       target: 0,
-      note: 0,
+      note: 7,
       transition: 1,
       locked: true
     },
     interval: {
-      tooth: 0,
-      target: 0,
-      degree: 0,
+      tooth: 4,
+      target: 4,
+      degree: 4,
       transition: 1,
       locked: true,
       armed: false
@@ -1538,8 +2425,27 @@ function movementScaleLength() {
 function syncMovementModes() {
   movement.power.running = running;
   movement.modes.realClock = P.realClock;
+  P.snoozeRoot = P.freezeMode === 'root' || P.freezeMode === 'int';
+  P.freezeInterval = P.freezeMode === 'int';
   movement.modes.freeze = P.freezeInterval;
+  movement.modes.snoozeRoot = P.snoozeRoot;
   movement.modes.triad = triadMode;
+}
+
+function syncFreezeButton() {
+  const btn = document.getElementById('freeze-btn');
+  if (!btn) return;
+
+  const isRoot = P.freezeMode === 'root';
+  const isInt = P.freezeMode === 'int';
+  btn.classList.toggle('on', isInt);
+  btn.classList.toggle('root-freeze', isRoot);
+  btn.dataset.label = isInt ? 'int' : (isRoot ? 'root' : 'snooze');
+  btn.setAttribute(
+    'aria-label',
+    isInt ? 'full freeze' : (isRoot ? 'root freeze' : 'snooze selector')
+  );
+  btn.textContent = '';
 }
 
 function syncLegacyClockFromMovement() {
@@ -1737,7 +2643,9 @@ function updateRootRing(dt) {
 function updateMovementInternal(dt) {
   const before = movement.wheels.second.phase || 0;
 
-  movement.wheels.hour.phase = (movement.wheels.hour.phase + dt * P.rate / 60) % 1;
+  if (!movement.modes.snoozeRoot) {
+    movement.wheels.hour.phase = (movement.wheels.hour.phase + dt * P.rate / 60) % 1;
+  }
   movement.wheels.second.prevPhase = before;
   movement.wheels.second.phase = (movement.wheels.second.phase + dt * P.rate) % 1;
 
@@ -1746,7 +2654,7 @@ function updateMovementInternal(dt) {
 
   updateSafetyWindows();
   updateIntervalJumper(dt, wrapped);
-  updateRootRing(dt);
+  if (!movement.modes.snoozeRoot) updateRootRing(dt);
   updateRemontoire(dt);
 
   movement.wheels.second.prevPhase = after;
@@ -1807,7 +2715,22 @@ function requestMovementRootStep(delta) {
 
 function requestMovementHomeKey() {
   movement.requests.rootHome = P.key;
+  movement.safety.pendingRootHome = null;
   resolveMovementRequests();
+  syncLegacyClockFromMovement();
+}
+
+function forceRootHome() {
+  const roots = rootOrder();
+  movement.safety.pendingRootHome = null;
+  movement.requests.rootHome = null;
+  movement.wheels.hour.phase = 0;
+  movement.wheels.hour.tooth = 0;
+  movement.rings.root.tooth = 0;
+  movement.rings.root.target = 0;
+  movement.rings.root.note = roots[0] ?? P.key;
+  movement.rings.root.transition = 1;
+  movement.rings.root.locked = true;
   syncLegacyClockFromMovement();
 }
 
@@ -1881,10 +2804,14 @@ function ensureCtx() {
 
   masterOut = actx.createGain();
   wetOut = actx.createGain();
+  recorderIn = actx.createGain();
   masterOut.gain.value = P.volume;
   wetOut.gain.value = P.volume;
   masterOut.connect(actx.destination);
   wetOut.connect(actx.destination);
+  masterOut.connect(recorderIn);
+  wetOut.connect(recorderIn);
+  setupWavRecorder();
 
   convolver = actx.createConvolver();
   const sr = actx.sampleRate;
@@ -1910,6 +2837,117 @@ function ensureCtx() {
   reverbIn.connect(convolver);
   convolver.connect(reverbOut);
   reverbOut.connect(wetOut);
+}
+
+function setupWavRecorder() {
+  if (!actx || recorderNode || !recorderIn) return;
+
+  const bufferSize = 4096;
+  recorderNode = actx.createScriptProcessor(bufferSize, 2, 2);
+  recorderSilence = actx.createGain();
+  recorderSilence.gain.value = 0;
+
+  recorderNode.onaudioprocess = e => {
+    if (!recording.active) return;
+
+    const left = e.inputBuffer.getChannelData(0);
+    const right = e.inputBuffer.numberOfChannels > 1
+      ? e.inputBuffer.getChannelData(1)
+      : left;
+
+    recording.buffers[0].push(new Float32Array(left));
+    recording.buffers[1].push(new Float32Array(right));
+    recording.length += left.length;
+  };
+
+  recorderIn.connect(recorderNode);
+  recorderNode.connect(recorderSilence);
+  recorderSilence.connect(actx.destination);
+}
+
+function startWavRecording() {
+  ensureCtx();
+  recording.active = true;
+  recording.sampleRate = actx.sampleRate;
+  recording.buffers = [[], []];
+  recording.length = 0;
+  recording.startedAt = Date.now();
+}
+
+function mergeRecordingChannel(chunks, length) {
+  const merged = new Float32Array(length);
+  let offset = 0;
+
+  chunks.forEach(chunk => {
+    merged.set(chunk, offset);
+    offset += chunk.length;
+  });
+
+  return merged;
+}
+
+function writeAscii(view, offset, text) {
+  for (let i = 0; i < text.length; i++) {
+    view.setUint8(offset + i, text.charCodeAt(i));
+  }
+}
+
+function encodeWav(left, right, sampleRate) {
+  const channels = 2;
+  const bytesPerSample = 2;
+  const blockAlign = channels * bytesPerSample;
+  const dataBytes = left.length * blockAlign;
+  const buffer = new ArrayBuffer(44 + dataBytes);
+  const view = new DataView(buffer);
+
+  writeAscii(view, 0, 'RIFF');
+  view.setUint32(4, 36 + dataBytes, true);
+  writeAscii(view, 8, 'WAVE');
+  writeAscii(view, 12, 'fmt ');
+  view.setUint32(16, 16, true);
+  view.setUint16(20, 1, true);
+  view.setUint16(22, channels, true);
+  view.setUint32(24, sampleRate, true);
+  view.setUint32(28, sampleRate * blockAlign, true);
+  view.setUint16(32, blockAlign, true);
+  view.setUint16(34, 16, true);
+  writeAscii(view, 36, 'data');
+  view.setUint32(40, dataBytes, true);
+
+  let offset = 44;
+  for (let i = 0; i < left.length; i++) {
+    const l = Math.max(-1, Math.min(1, left[i]));
+    const r = Math.max(-1, Math.min(1, right[i]));
+    view.setInt16(offset, l < 0 ? l * 0x8000 : l * 0x7fff, true);
+    offset += 2;
+    view.setInt16(offset, r < 0 ? r * 0x8000 : r * 0x7fff, true);
+    offset += 2;
+  }
+
+  return new Blob([view], { type: 'audio/wav' });
+}
+
+function downloadWav(blob) {
+  const stamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `fm-clock-${stamp}.wav`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function stopWavRecording() {
+  if (!recording.active) return;
+
+  recording.active = false;
+  if (!recording.length) return;
+
+  const left = mergeRecordingChannel(recording.buffers[0], recording.length);
+  const right = mergeRecordingChannel(recording.buffers[1], recording.length);
+  downloadWav(encodeWav(left, right, recording.sampleRate));
 }
 
 function pcToFreq(pc, oct = octave) {
@@ -2235,8 +3273,8 @@ function buildTicks() {
     line.setAttribute('y1', CY + r1 * Math.sin(a));
     line.setAttribute('x2', CX + r2 * Math.cos(a));
     line.setAttribute('y2', CY + r2 * Math.sin(a));
-    line.setAttribute('stroke', major ? '#efede6' : '#96938a');
-    line.setAttribute('stroke-width', major ? '1.8' : '0.9');
+    line.setAttribute('stroke', major ? '#e8e1d6' : '#8b8479');
+    line.setAttribute('stroke-width', major ? '1.55' : '0.75');
     g.appendChild(line);
   }
 }
@@ -2293,6 +3331,18 @@ function buildRing() {
 
 function manualRoot(pc) {
   computeClockNotes();
+
+  if (pc === P.key && active.rootPc !== P.key) {
+    P.realClock = false;
+    movement.modes.realClock = false;
+    syncTimeButton();
+    forceRootHome();
+    computeClockNotes();
+    if (running) updateSoundFromClock();
+    updateVisuals();
+    updateStatus();
+    return;
+  }
 
   const degs = scaleDegrees();
   const rel = (pc - active.rootPc + 12) % 12;
@@ -2431,6 +3481,10 @@ function syncFrontControls() {
 function applyKey(pc) {
   P.key = pc;
   clock.rootPhase = 0;
+  P.realClock = false;
+  movement.modes.realClock = false;
+  syncTimeButton();
+  forceRootHome();
   const keySel = document.getElementById('key-select');
   if (keySel) keySel.value = String(P.key);
   computeClockNotes();
@@ -2443,8 +3497,11 @@ function applyKey(pc) {
 function syncTimeButton() {
   const btn = document.getElementById('real-btn');
   if (!btn) return;
+  const label = P.realClock ? 'time' : 'free';
   btn.classList.toggle('on', P.realClock);
-  btn.textContent = P.realClock ? 'time' : 'free';
+  btn.dataset.label = label;
+  btn.setAttribute('aria-label', `${label} mode`);
+  btn.textContent = '';
 }
 
 function lockFreeClockToCurrentTimePosition() {
@@ -2569,8 +3626,11 @@ document.getElementById('algo-select').addEventListener('change', e => {
 document.getElementById('triad-btn').addEventListener('click', () => {
   triadMode = !triadMode;
   movement.modes.triad = triadMode;
-  document.getElementById('triad-btn').classList.toggle('on', triadMode);
-  document.getElementById('triad-btn').textContent = triadMode ? 'third on' : 'third';
+  const btn = document.getElementById('triad-btn');
+  btn.classList.toggle('on', triadMode);
+  btn.dataset.label = triadMode ? 'third on' : 'third';
+  btn.setAttribute('aria-label', triadMode ? 'third hand on' : 'third hand');
+  btn.textContent = '';
   if (running) updateSoundFromClock();
   else stopVoice('third');
   updateVisuals();
@@ -2600,17 +3660,48 @@ document.getElementById('real-btn').addEventListener('click', () => {
 
 document.getElementById('freeze-btn').addEventListener('click', () => {
   computeClockNotes();
-  P.freezeInterval = !P.freezeInterval;
+  const modes = ['none', 'root', 'int'];
+  const ix = modes.indexOf(P.freezeMode);
+  P.freezeMode = modes[(ix + 1) % modes.length];
+  P.snoozeRoot = P.freezeMode === 'root' || P.freezeMode === 'int';
+  P.freezeInterval = P.freezeMode === 'int';
+  movement.modes.snoozeRoot = P.snoozeRoot;
   movement.modes.freeze = P.freezeInterval;
 
   if (P.freezeInterval) {
     requestMovementInterval(active.intIndex);
   }
 
-  document.getElementById('freeze-btn').classList.toggle('on', P.freezeInterval);
+  syncFreezeButton();
   if (running) updateSoundFromClock();
   updateVisuals();
   updateStatus();
+});
+
+document.getElementById('snooze-btn').addEventListener('click', () => {
+  const btn = document.getElementById('snooze-btn');
+
+  if (recording.active) {
+    stopWavRecording();
+  } else {
+    startWavRecording();
+  }
+
+  P.recordArmed = recording.active;
+  btn.classList.toggle('on', P.recordArmed);
+  btn.setAttribute('aria-label', P.recordArmed ? 'Stop recording and save WAV' : 'Record WAV');
+  btn.setAttribute('title', P.recordArmed ? 'stop recording and save WAV' : 'record WAV');
+  updateStatus();
+});
+
+document.getElementById('theme-btn').addEventListener('click', () => {
+  P.creamMode = !P.creamMode;
+  const btn = document.getElementById('theme-btn');
+  document.body.classList.toggle('cream-mode', P.creamMode);
+  btn.classList.toggle('on', P.creamMode);
+  btn.textContent = P.creamMode ? 'DARK' : 'LIGHT';
+  btn.setAttribute('aria-label', P.creamMode ? 'Switch to dark mode' : 'Switch to light mode');
+  btn.setAttribute('title', P.creamMode ? 'switch to dark mode' : 'switch to light mode');
 });
 
 function toggleAdvanced(force) {
@@ -2630,9 +3721,11 @@ document.getElementById('start-btn').addEventListener('click', () => {
   movement.power.running = running;
 
   const btn = document.getElementById('start-btn');
+  const label = document.querySelector('.side-start-label');
   btn.classList.toggle('on', running);
   btn.setAttribute('aria-label', running ? 'Press winder to stop' : 'Press winder to start');
   btn.setAttribute('title', running ? 'press winder to stop' : 'press winder to start');
+  if (label) label.textContent = running ? 'STOP' : 'START';
 
   if (running) {
     if (P.realClock) updateMovementFromRealClock(true);
@@ -2659,7 +3752,7 @@ function updateStatus() {
 
   el.innerHTML =
     `droning: ${NOTES[active.rootPc]} + ${NOTES[active.intervalPc]}${thirdText}` +
-    `<br>${P.realClock ? 'time' : 'free'} · interval degree ${intervalText}${P.freezeInterval ? ' · frozen' : ' · moving'}${triadMode ? ' · second=third hand' : ' · second hand modulates FM'}`;
+    `<br>${P.realClock ? 'time' : 'free'} · interval degree ${intervalText}${P.freezeMode === 'int' ? ' · int freeze' : (P.freezeMode === 'root' ? ' · root freeze' : ' · moving')}${P.recordArmed ? ' · recording' : ''}${triadMode ? ' · second=third hand' : ' · second hand modulates FM'}`;
   el.classList.add('active');
 }
 
@@ -2684,6 +3777,7 @@ setMasterVolume(P.volume, true);
 buildTicks();
 buildRing();
 syncTimeButton();
+syncFreezeButton();
 computeClockNotes();
 updateVisuals();
 updateStatus();
