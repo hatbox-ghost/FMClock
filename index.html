@@ -8,136 +8,165 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --page: #171717;
-  --panel: #111110;
-  --panel2: #1b1b19;
-  --panel-edge: #32312d;
-  --panel-text: #e9e6de;
-  --panel-muted: #9a9383;
-  --face: #0d0d0c;
-  --face-ink: #f0eee7;
-  --tick-minor: #9f9d96;
-  --tick-major: #efede6;
   --yellow: #efbb2b;
+  --yellow-dk: #c69820;
+  --text: #dedad1;
+  --muted: #6e6a60;
+  --dim: #38352c;
+  --border: #242220;
+  --case: #181714;
+  --base: #10100e;
+  --face: #0c0c0b;
+  --page: #080807;
+  --panel: var(--base);
+  --panel2: var(--case);
+  --panel-edge: var(--border);
+  --panel-text: var(--text);
+  --panel-muted: var(--muted);
+  --face-ink: var(--text);
+  --tick-minor: var(--muted);
+  --tick-major: var(--text);
   --green: #2da52e;
-  --red: #d1a033;
+  --red: var(--yellow-dk);
   --shadow: rgba(0,0,0,0.42);
 }
 
 html, body { min-height: 100%; }
 
 body {
-  background: linear-gradient(180deg, #242424 0%, #0f0f0f 100%);
-  color: var(--panel-text);
-  font-family: Helvetica, Arial, sans-serif;
+  background: #080807;
+  color: var(--text);
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 26px 18px 52px;
+  padding: 16px;
   overflow-x: hidden;
   overflow-y: auto;
 }
 
 .wrap {
-  width: min(980px, 100%);
+  width: min(760px, 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .instrument {
-  display: grid;
-  grid-template-columns: 500px 300px;
-  gap: 34px;
-  align-items: start;
-}
-
-.left {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
 }
 
 .clock-shell {
-  width: 500px;
-  height: 612px;
+  width: min(720px, calc(100vw - 32px));
+  height: min(900px, calc(100vh - 82px));
+  min-height: 650px;
   position: relative;
-  background: linear-gradient(180deg, #1a1a18 0%, #0d0d0c 85%);
-  border: 1px solid #2d2c28;
-  border-radius: 210px 210px 34px 34px / 180px 180px 34px 34px;
+  background:
+    radial-gradient(circle at 50% 26%, rgba(255,255,255,0.035), transparent 35%),
+    linear-gradient(180deg, var(--case) 0%, var(--base) 74%, #090908 100%);
+  border: 1px solid var(--border);
+  border-radius: 300px 300px 42px 42px / 245px 245px 42px 42px;
   box-shadow:
-    0 30px 70px rgba(0,0,0,0.40),
+    0 38px 90px rgba(0,0,0,0.52),
     inset 0 1px 0 rgba(255,255,255,0.06),
-    inset 0 -10px 30px rgba(0,0,0,0.22);
-  overflow: visible;
+    inset 0 -16px 42px rgba(0,0,0,0.32);
+  overflow: hidden;
 }
 
 .clock-shell::before {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: 14px;
   border-radius: inherit;
-  background: none;
+  border: 1px solid rgba(222,218,209,0.035);
+  background:
+    linear-gradient(90deg, rgba(222,218,209,0.038), transparent 18%, transparent 82%, rgba(222,218,209,0.025));
   pointer-events: none;
 }
 
 #ring {
   position: absolute;
-  left: 56px;
-  top: 34px;
-  width: 388px;
-  height: 388px;
+  left: 50%;
+  top: clamp(20px, 4vh, 42px);
+  transform: translateX(-50%);
+  width: min(580px, 78vw, calc((100vh - 270px) * 0.92));
+  height: auto;
   overflow: visible;
+  filter: drop-shadow(0 20px 24px rgba(0,0,0,0.26));
 }
 
 .side-knob {
   position: absolute;
-  right: -12px;
-  top: 282px;
-  width: 28px;
-  height: 82px;
+  right: -1px;
+  top: 43%;
+  width: 38px;
+  height: 102px;
   border-radius: 0 18px 18px 0;
-  background: linear-gradient(180deg, #2b2b29 0%, #11110f 100%);
-  border: 1px solid #3a3935;
+  background: linear-gradient(180deg, #23211d 0%, var(--base) 100%);
+  border: 1px solid var(--dim);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.05);
+  padding: 0;
+  text-indent: -999px;
+  overflow: hidden;
+  z-index: 7;
+}
+
+.side-knob:hover {
+  background: linear-gradient(180deg, #2a2823 0%, #141310 100%);
+}
+
+.side-knob:active {
+  transform: translateX(3px);
+}
+
+.side-knob.on {
+  background: linear-gradient(180deg, var(--yellow) 0%, #916f18 100%);
+  border-color: var(--yellow-dk);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.22),
+    0 0 16px rgba(239,187,43,0.16);
 }
 
 .braun-logo {
   position: absolute;
-  left: 45px;
-  bottom: 46px;
-  color: #d9d6cf;
-  font-size: 28px;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  color: rgba(217,214,207,0.46);
+  font-size: 8px;
   font-weight: 800;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.34em;
   line-height: 1;
   user-select: none;
 }
 
-
-.right {
-  width: 300px;
-  background: linear-gradient(180deg, #1b1b18 0%, #11110f 100%);
-  border: 1px solid var(--panel-edge);
-  border-radius: 18px;
-  box-shadow:
-    0 20px 42px rgba(0,0,0,0.34),
-    inset 0 1px 0 rgba(255,255,255,0.05);
-  padding: 16px 14px 15px;
+.mode-row {
+  position: absolute;
+  left: 50%;
+  top: calc(clamp(20px, 4vh, 42px) + min(580px, 78vw, calc((100vh - 270px) * 0.92)) - 28px);
+  transform: translateX(-50%);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(54px, 1fr));
+  gap: 8px;
+  width: min(360px, calc(100% - 86px));
+  z-index: 5;
 }
 
 .button-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 58px;
+  grid-template-columns: 1fr 1fr 58px;
   gap: 7px;
   margin-bottom: 12px;
 }
 
 button, select {
-  background: #24231f;
-  border: 1px solid #4a473e;
-  color: var(--panel-text);
+  background: #181713;
+  border: 1px solid var(--dim);
+  color: var(--text);
   font-family: Helvetica, Arial, sans-serif;
   font-size: 8px;
   font-weight: 700;
@@ -152,7 +181,7 @@ button {
   transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.05s;
 }
 
-button:hover { background: #2e2c27; }
+button:hover { background: #211f1a; }
 button:active { transform: translateY(1px); }
 
 button.on {
@@ -164,7 +193,7 @@ button.on {
 #real-btn.on {
   background: var(--yellow);
   color: #11110f;
-  border-color: #c69720;
+  border-color: var(--yellow-dk);
 }
 
 #freeze-btn {
@@ -176,6 +205,91 @@ button.on {
   background: #2b5d2a;
   color: #f3f0e7;
   border-color: #3d7f3b;
+}
+
+.cal-toggle {
+  position: absolute;
+  left: 34px;
+  top: 49%;
+  width: 42px;
+  height: 28px;
+  z-index: 8;
+  opacity: 0.84;
+}
+
+.front-controls {
+  position: absolute;
+  left: 50%;
+  bottom: 54px;
+  transform: translateX(-50%);
+  width: min(560px, calc(100% - 88px));
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 18px;
+  padding: 18px 20px 22px;
+  border-top: 1px solid rgba(222,218,209,0.10);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.025), rgba(0,0,0,0.08));
+  border-radius: 0 0 24px 24px;
+}
+
+.macro {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 82px 1fr 58px;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 12px;
+  border: 1px solid rgba(222,218,209,0.075);
+  border-radius: 10px;
+  background:
+    linear-gradient(180deg, rgba(24,23,20,0.92), rgba(16,16,14,0.78));
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.035),
+    inset 0 -10px 18px rgba(0,0,0,0.16);
+}
+
+.macro .sl-lbl {
+  color: var(--text);
+  letter-spacing: 0.24em;
+  font-size: 8px;
+}
+
+.macro .sl-val {
+  color: var(--text);
+  font-size: 9px;
+}
+
+.calibration-drawer {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 100%);
+  width: min(610px, calc(100% - 46px));
+  max-height: min(72vh, 560px);
+  overflow-y: auto;
+  z-index: 20;
+  padding: 18px 18px 20px;
+  border: 1px solid rgba(222,218,209,0.12);
+  border-bottom: none;
+  border-radius: 18px 18px 0 0;
+  background:
+    linear-gradient(180deg, rgba(24,23,20,0.98), rgba(12,12,11,0.99));
+  box-shadow:
+    0 -18px 46px rgba(0,0,0,0.42),
+    inset 0 1px 0 rgba(255,255,255,0.055);
+  transition: transform 0.22s ease;
+}
+
+body.cal-open .calibration-drawer {
+  transform: translate(-50%, 0);
+}
+
+.drawer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px 18px;
+  padding-top: 0;
 }
 
 .panel {
@@ -292,7 +406,7 @@ input[type=range]::-moz-range-thumb {
 .legend span { color: var(--panel-text); }
 
 .status {
-  margin-top: 12px;
+  margin-top: 10px;
   font-size: 11.5px;
   color: #c6c0b3;
   min-height: 34px;
@@ -336,7 +450,7 @@ input[type=range]::-moz-range-thumb {
 .n-pulse { display: none; }
 
 .nd.in-scale .n-bg {
-  stroke: rgba(255,255,255,0.16);
+  stroke: rgba(255,255,255,0.22);
 }
 
 .nd.root .n-bg {
@@ -352,11 +466,21 @@ input[type=range]::-moz-range-thumb {
 .nd.interval .n-bg {
   fill: rgba(0,0,0,0.0);
   stroke: var(--yellow);
-  stroke-width: 1.7;
+  stroke-width: 2.2;
 }
 
 .nd.interval .n-txt {
   fill: var(--yellow);
+}
+
+.nd.third .n-bg {
+  stroke: rgba(239,187,43,0.62);
+  stroke-width: 1.2;
+  stroke-dasharray: 2 2;
+}
+
+.nd.third .n-txt {
+  fill: #dfd7c6;
 }
 
 .nd.root.interval .n-bg {
@@ -372,19 +496,19 @@ input[type=range]::-moz-range-thumb {
 
 .hour-hand {
   stroke: #f1eee6;
-  stroke-width: 7.2;
+  stroke-width: 6.6;
   filter: drop-shadow(0 1px 1px rgba(0,0,0,0.20));
 }
 
 .minute-hand {
   stroke: #f1eee6;
-  stroke-width: 5.2;
+  stroke-width: 4.8;
   filter: drop-shadow(0 1px 1px rgba(0,0,0,0.20));
 }
 
 .second-hand {
   stroke: var(--yellow);
-  stroke-width: 2.2;
+  stroke-width: 2;
   opacity: 1;
 }
 
@@ -404,30 +528,6 @@ input[type=range]::-moz-range-thumb {
   pointer-events: none;
 }
 
-@media (max-width: 920px) {
-  body { justify-content: flex-start; padding-top: 18px; }
-  .instrument {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-  .clock-shell { width: min(500px, 94vw); height: min(612px, 115vw); }
-  #ring { left: 50%; transform: translateX(-50%); top: 28px; width: min(388px, 82vw); height: auto; }
-  .right { width: min(300px, 94vw); }
-  .status { max-width: 90vw; }
-}
-
-@media (max-height: 760px) and (orientation: landscape) {
-  body { padding: 12px 12px 36px; }
-  .instrument {
-    grid-template-columns: 410px 290px;
-    gap: 20px;
-  }
-  .clock-shell { width: 410px; height: 500px; border-radius: 170px 170px 28px 28px / 150px 150px 28px 28px; }
-  #ring { left: 18px; top: 20px; width: 374px; }
-  .braun-logo { left: 34px; bottom: 34px; font-size: 24px; }
-  .-meta { right: 32px; bottom: 38px; }
-}
-
 .clock-shell {
   --tension: 0;
 }
@@ -436,8 +536,8 @@ input[type=range]::-moz-range-thumb {
   content: "";
   position: absolute;
   left: 50%;
-  top: 405px;
-  width: 82px;
+  top: calc(clamp(20px, 4vh, 42px) + min(580px, 78vw, calc((100vh - 270px) * 0.92)) + 14px);
+  width: 104px;
   height: 2px;
   transform: translateX(-50%) scaleX(calc(0.25 + var(--tension) * 0.75));
   transform-origin: center;
@@ -447,505 +547,716 @@ input[type=range]::-moz-range-thumb {
   pointer-events: none;
 }
 
-
-
-.crown-panel {
-  padding-bottom: 12px;
+@media (max-width: 720px) {
+  body { padding: 10px; }
+  .clock-shell {
+    width: calc(100vw - 20px);
+    min-height: 680px;
+    height: calc(100vh - 70px);
+    border-radius: 190px 190px 34px 34px / 150px 150px 34px 34px;
+  }
+  #ring { width: min(470px, 90vw, calc((100vh - 320px) * 0.98)); }
+  .mode-row {
+    top: calc(clamp(20px, 4vh, 42px) + min(470px, 90vw, calc((100vh - 320px) * 0.98)) - 22px);
+    width: min(330px, calc(100% - 64px));
+    gap: 6px;
+  }
+  .front-controls {
+    width: calc(100% - 32px);
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 12px 12px 16px;
+    bottom: 44px;
+  }
+  .macro {
+    grid-template-columns: 76px 1fr 56px;
+    padding: 9px 10px;
+  }
+  .drawer-grid { grid-template-columns: 1fr; }
 }
 
-.crown-control-row {
-  display: grid;
-  grid-template-columns: 1fr 72px;
+@media (max-height: 720px) and (min-width: 760px) {
+  .clock-shell {
+    width: min(660px, calc(100vw - 32px));
+    height: calc(100vh - 64px);
+    min-height: 620px;
+  }
+  #ring { width: min(500px, calc((100vh - 250px) * 0.94)); }
+  .mode-row {
+    top: calc(clamp(20px, 4vh, 42px) + min(500px, calc((100vh - 250px) * 0.94)) - 28px);
+  }
+  .front-controls { bottom: 48px; }
+}
+
+/* Object-layout override from the compact chronometer direction */
+body {
+  background: #080807;
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 10px;
+  padding: 12px 12px 28px;
 }
 
-.crown-copy {
-  font-size: 7.5px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--panel-muted);
-  font-weight: 700;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 40% at 50% 0%, rgba(40,38,32,0.35) 0%, transparent 60%);
+  pointer-events: none;
 }
 
-.crown-mode {
-  position: static;
+.wrap {
+  width: min(520px, 100%);
+}
+
+.instrument {
+  position: relative;
+  width: min(520px, 100%);
+  display: block;
+  background: linear-gradient(168deg, #1e1d19 0%, #131210 55%, #0d0d0b 100%);
+  border: 1px solid #28261e;
+  border-radius: 232px 232px 18px 18px / 188px 188px 18px 18px;
+  box-shadow:
+    0 48px 90px rgba(0,0,0,0.60),
+    0 16px 32px rgba(0,0,0,0.40),
+    inset 0 1px 0 rgba(255,255,255,0.08),
+    inset 0 -2px 0 rgba(0,0,0,0.5);
+  --tension: 0;
+}
+
+.clock-shell {
+  width: auto;
+  height: auto;
+  min-height: 0;
+  position: relative;
+  background: transparent;
+  border: none;
+  border-radius: inherit;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.clock-shell::before { display: none; }
+
+.instrument::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 466px;
   width: 72px;
-  height: 28px;
-  border-radius: 4px;
-  padding: 0;
-  font-size: 8px;
-  letter-spacing: 0.14em;
-  opacity: 1;
-  background: #24231f;
-  border: 1px solid #514d43;
-  color: #e9e4d7;
-}
-
-.crown-mode.on {
+  height: 2px;
+  transform: translateX(-50%) scaleX(calc(0.18 + var(--tension) * 0.82));
+  transform-origin: center;
   background: var(--yellow);
-  color: #11110f;
-  border-color: #c69720;
+  opacity: calc(0.08 + var(--tension) * 0.58);
+  border-radius: 999px;
+  pointer-events: none;
+  transition: opacity 0.4s;
 }
 
+.clock-shell::after { display: none; }
 
-.movement-controls-panel {
-  padding-bottom: 12px;
+.face-region {
+  position: relative;
+  height: 474px;
+  overflow: visible;
 }
 
-.movement-knobs {
+#ring {
+  position: absolute;
+  left: 30px;
+  top: 20px;
+  width: 460px;
+  height: 460px;
+  transform: none;
+  overflow: visible;
+  filter: none;
+}
+
+.side-knob {
+  position: absolute;
+  right: -13px;
+  top: 218px;
+  width: 26px;
+  height: 66px;
+  border-radius: 0 13px 13px 0;
+  background: linear-gradient(180deg, #232118 0%, #0d0d0b 100%);
+  border: 1px solid #302e26;
+  border-left: none;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+  cursor: ns-resize;
+  z-index: 2;
+}
+
+.side-knob::before {
+  content: "";
+  position: absolute;
+  inset: 10px 4px;
+  background: repeating-linear-gradient(180deg, transparent 0px, transparent 4px, rgba(255,255,255,0.06) 4px, rgba(255,255,255,0.06) 5px);
+  border-radius: 2px;
+}
+
+.base-plate {
+  background: linear-gradient(180deg, #111010 0%, #0c0c0b 100%);
+  border-top: 1px solid #1e1c16;
+  padding: 12px 20px 12px;
+  box-shadow: inset 0 3px 8px rgba(0,0,0,0.4);
+}
+
+.row-primary {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 9px;
-}
-
-.mini-knob {
-  min-width: 0;
-  border: 1px solid #38352f;
-  background: #151512;
-  border-radius: 9px;
-  padding: 9px 8px 8px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.03);
-}
-
-.mini-lbl {
-  font-size: 7px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--panel-muted);
-  font-weight: 700;
+  grid-template-columns: max-content;
+  justify-content: center;
+  gap: 7px;
   margin-bottom: 8px;
-  text-align: center;
 }
 
-.mini-knob input[type=range] {
+.row-modes {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-bottom: 9px;
+}
+
+.row-vol {
+  display: grid;
+  grid-template-columns: 38px 1fr 34px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.front-macros {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px 18px;
+  margin-bottom: 12px;
+  padding-top: 4px;
+}
+
+button, select {
+  font-family: Helvetica, 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.13em;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button {
+  font-size: 7px;
+  background: #1a1916;
+  border: 1px solid #32302a;
+  color: var(--muted);
+  height: 27px;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+  box-shadow: 0 1px 0 rgba(255,255,255,0.04), inset 0 1px 3px rgba(0,0,0,0.3);
+}
+
+button:hover {
+  background: #222019;
+  color: var(--text);
+  border-color: #46433a;
+}
+
+button:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+}
+
+button.on {
+  background: var(--text);
+  color: #0c0c0b;
+  border-color: var(--text);
+  box-shadow: none;
+}
+
+#start-btn:not(.side-knob) {
+  position: static;
+  width: auto;
+  height: 27px;
+  border-radius: 3px;
+  text-indent: 0;
+  overflow: visible;
+  font-size: 8px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+}
+
+#start-btn:not(.side-knob)::before { display: none; }
+
+#start-btn.on {
+  background: var(--yellow);
+  color: #0c0c0b;
+  border-color: var(--yellow-dk);
+  box-shadow: 0 0 14px rgba(239,187,43,0.22);
+}
+
+#start-btn.side-knob {
+  position: absolute;
+  right: -13px;
+  top: 218px;
+  width: 26px;
+  height: 66px;
+  border-radius: 0 13px 13px 0;
+  background: linear-gradient(180deg, #232118 0%, #0d0d0b 100%);
+  border: 1px solid #302e26;
+  border-left: none;
+  box-shadow: 2px 0 10px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.04);
+  cursor: pointer;
+  z-index: 8;
+  padding: 0;
+  text-indent: -999px;
+  overflow: hidden;
+}
+
+#start-btn.side-knob::before {
+  content: "";
+  position: absolute;
+  display: block;
+  inset: 10px 4px;
+  background: repeating-linear-gradient(180deg, transparent 0px, transparent 4px, rgba(255,255,255,0.06) 4px, rgba(255,255,255,0.06) 5px);
+  border-radius: 2px;
+}
+
+#start-btn.side-knob:hover {
+  background: linear-gradient(180deg, #2a2823 0%, #141310 100%);
+  border-color: #46433a;
+}
+
+#start-btn.side-knob:active {
+  transform: translateX(3px);
+}
+
+#start-btn.side-knob.on {
+  background: linear-gradient(180deg, var(--yellow) 0%, #916f18 100%);
+  border-color: var(--yellow-dk);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.22), 0 0 16px rgba(239,187,43,0.16);
+}
+
+#real-btn.on {
+  background: var(--yellow);
+  color: #0c0c0b;
+  border-color: var(--yellow-dk);
+}
+
+#freeze-btn.on {
+  background: #1e2e1e;
+  color: #7abf7a;
+  border-color: #364836;
+  box-shadow: none;
+}
+
+select {
+  font-size: 7px;
+  background: #1a1916;
+  border: 1px solid #32302a;
+  color: var(--text);
+  height: 27px;
+  padding: 0 22px 0 7px;
+  outline: none;
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted) 50%),
+    linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 10px) 11px, calc(100% - 6px) 11px;
+  background-size: 4px 4px, 4px 4px;
+  background-repeat: no-repeat;
+  background-color: #1a1916;
+}
+
+input[type=range] {
+  height: 1.5px;
+  background: #36332a;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  width: 11px;
+  height: 11px;
+  background: #d0ccc0;
+  box-shadow: 0 0 0 1px #565040;
+}
+
+input[type=range]::-moz-range-thumb {
+  width: 11px;
+  height: 11px;
+  background: #d0ccc0;
+}
+
+.expand-toggle {
   display: block;
   width: 100%;
-  margin: 9px 0 8px;
-}
-
-.step-btn {
-  width: 100%;
-  height: 28px;
-  border-radius: 999px;
-  font-size: 7px;
-  letter-spacing: 0.14em;
-}
-
-.step-btn:active {
-  background: var(--yellow);
-  color: #11110f;
-}
-
-.mini-knob .sl-val {
-  text-align: center;
-  font-size: 7.5px;
-}
-
-
-/* movement view */
-#movement-view {
-  position: absolute;
-  left: 56px;
-  top: 34px;
-  width: 388px;
-  height: 388px;
-  overflow: visible;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.18s ease;
-}
-
-body.movement-view #ring {
-  opacity: 0;
-  pointer-events: none;
-}
-
-body.movement-view #movement-view {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.mv-face {
-  fill: #0f0f0e;
-  stroke: #61615e;
-  stroke-width: 1.3;
-}
-
-.mv-title {
-  fill: #d8d4ca;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-}
-
-.mv-node {
-  fill: transparent;
-  stroke: #68645b;
-  stroke-width: 1;
-}
-
-.mv-node.active {
-  fill: var(--yellow);
-  stroke: var(--yellow);
-}
-
-.mv-node.next {
-  stroke: #d8d4ca;
-  stroke-width: 1.5;
-}
-
-.mv-node-text {
-  fill: #d8d4ca;
-  font-size: 8px;
-  font-weight: 700;
-  pointer-events: none;
-}
-
-.mv-small-text {
-  fill: #9f9b91;
+  height: 22px;
+  background: none;
+  border: none;
+  border-top: 1px solid #1c1a14;
+  color: #3a3830;
   font-size: 6.5px;
+  letter-spacing: 0.32em;
+  box-shadow: none;
+  border-radius: 0;
+  transition: color 0.18s;
+  margin-bottom: 0;
+}
+
+.row-primary .expand-toggle {
+  width: 86px;
+  height: 21px;
+  align-self: center;
+  background: transparent;
+  border: 1px solid #26241e;
+  color: #545048;
+  font-size: 6px;
+  letter-spacing: 0.20em;
+  margin: 0;
+}
+
+.row-primary .expand-toggle:hover,
+.row-primary .expand-toggle.open {
+  background: #171611;
+  border-color: #3a362b;
+  color: var(--muted);
+}
+
+.expand-toggle:hover,
+.expand-toggle.open {
+  color: var(--muted);
+  background: none;
+  transform: none;
+  box-shadow: none;
+}
+
+.expand-toggle.open {
+  border-bottom: 1px solid #1c1a14;
+}
+
+.advanced {
+  display: none;
+  padding-top: 14px;
+}
+
+.advanced.open { display: block; }
+
+.adv-selects {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px;
+  margin-bottom: 12px;
+}
+
+.engine-row {
+  display: grid;
+  grid-template-columns: 34px 1fr 34px;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 3px;
+}
+
+.engine-row input[type=range] {
+  height: 2px;
+  background: linear-gradient(90deg, #3a3830 0%, #5a5030 100%);
+}
+
+.engine-row input[type=range]::-webkit-slider-thumb {
+  background: var(--yellow);
+  box-shadow: 0 0 0 1px #8a6a10, 0 0 7px rgba(239,187,43,0.35);
+  width: 13px;
+  height: 13px;
+  border-color: #0c0c0b;
+}
+
+.engine-row input[type=range]::-moz-range-thumb {
+  background: var(--yellow);
+  border: 2px solid #0c0c0b;
+}
+
+.engine-lbl {
+  font-size: 6.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.engine-lbl.r {
+  color: var(--yellow);
+  text-align: right;
+}
+
+.engine-val {
+  text-align: center;
+  font-size: 6.5px;
+  letter-spacing: 0.26em;
+  color: var(--yellow);
+  margin-bottom: 12px;
   text-transform: uppercase;
 }
 
-.mv-label {
-  fill: #9f9b91;
+.sliders-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 7px 18px;
+}
+
+.sl {
+  display: grid;
+  grid-template-columns: 48px 1fr 32px;
+  align-items: center;
+  gap: 6px;
+}
+
+.sl-lbl {
+  font-size: 6.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 700;
+}
+
+.sl-val {
   font-size: 7px;
+  color: var(--muted);
   font-weight: 700;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.02em;
 }
 
-.mv-state {
-  fill: var(--yellow);
-  font-size: 7px;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.brand-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 20px 10px;
+  border-top: 1px solid #181610;
 }
 
-.mv-wheel {
-  fill: transparent;
-  stroke: #777168;
-  stroke-width: 1.1;
+.braun-logo {
+  position: static;
+  transform: none;
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #a8a49c;
+  user-select: none;
 }
 
-.mv-arm {
-  stroke: var(--yellow);
-  stroke-width: 2;
-  stroke-linecap: round;
-  transform-origin: 180px 180px;
+.status {
+  margin-top: 8px;
+  font-size: 10.5px;
+  color: #504e48;
+  min-height: 28px;
+  line-height: 1.45;
+  letter-spacing: 0.04em;
+  text-align: center;
+  max-width: 520px;
 }
 
-.mv-jumper-arm {
-  stroke: #d8d4ca;
-  stroke-width: 3;
-  stroke-linecap: round;
-  transform-origin: 80px 255px;
-  transition: transform 0.16s ease;
+.status.active { color: #8a8680; }
+
+.center-note,
+.center-sub {
+  opacity: 0;
+  pointer-events: none;
 }
 
-.mv-pivot {
-  fill: #d8d4ca;
-}
-
-.mv-box {
-  fill: #151512;
-  stroke: #49453b;
-  stroke-width: 1;
-}
-
-.mv-charge-bg {
-  fill: #2a2823;
-}
-
-.mv-charge {
-  fill: var(--yellow);
-}
-
-.mv-readout {
-  fill: #d8d4ca;
-  font-size: 8px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-@media (max-width: 920px) {
-  #movement-view {
-    left: 50%;
-    transform: translateX(-50%);
-    top: 28px;
-    width: min(388px, 82vw);
+@media (max-width: 620px) {
+  .instrument {
+    width: 100%;
+    border-radius: 50vw 50vw 18px 18px / 40vw 40vw 18px 18px;
+  }
+  #ring {
+    left: 16px;
+    width: calc(100% - 32px);
     height: auto;
   }
-}
-
-@media (max-height: 760px) and (orientation: landscape) {
-  #movement-view {
-    left: 18px;
-    top: 20px;
-    width: 374px;
+  .face-region {
+    height: auto;
+    min-height: 440px;
+  }
+  .instrument::after { top: 440px; }
+  .row-modes {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .sliders-grid,
+  .front-macros,
+  .adv-selects {
+    grid-template-columns: 1fr;
   }
 }
-
 </style>
 </head>
 <body>
 <div class="wrap">
+  <div class="instrument">
+    <div class="clock-shell">
+      <button id="start-btn" class="side-knob" aria-label="Press winder to start" title="press winder to start">start</button>
+      <div class="face-region">
+      <svg id="ring" width="390" height="390" viewBox="0 0 360 360">
+        <defs>
+          <radialGradient id="face-depth" cx="50%" cy="38%" r="72%">
+            <stop offset="0%" stop-color="#1a1914" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#080807" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="face-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="70%" stop-color="transparent"/>
+            <stop offset="100%" stop-color="rgba(0,0,0,0.6)"/>
+          </radialGradient>
+        </defs>
 
-    <div class="instrument">
-    <div class="left">
-      <div class="clock-shell">
-        <div class="crown-adjust-wrap"><div class="crown-adjust-label">movement assign</div></div>
-        <div class="side-knob" title="decorative side crown"></div>
+        <circle id="face-fill" cx="180" cy="180" r="146" fill="#0c0c0b"/>
+        <circle cx="180" cy="180" r="146" fill="url(#face-depth)"/>
+        <circle cx="180" cy="180" r="146" fill="url(#face-glow)"/>
+        <ellipse cx="180" cy="76" rx="54" ry="16" fill="rgba(255,255,255,0.025)"/>
+        <circle id="face-rim-outer" cx="180" cy="180" r="151.5" fill="none" stroke="#484640" stroke-width="1.2"/>
+        <circle id="face-rim-inner" cx="180" cy="180" r="148" fill="none" stroke="#1e1c18" stroke-width="0.8"/>
+        <text x="180" y="138" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="7.5" letter-spacing="3" fill="#2a2824" font-weight="400">quartz</text>
 
-        <svg id="ring" width="390" height="390" viewBox="0 0 360 360">
-          <defs>
-            <linearGradient id="case-sheen" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="rgba(255,255,255,0.10)"/>
-              <stop offset="22%" stop-color="rgba(255,255,255,0.02)"/>
-              <stop offset="78%" stop-color="rgba(0,0,0,0.00)"/>
-              <stop offset="100%" stop-color="rgba(255,255,255,0.03)"/>
-            </linearGradient>
-          </defs>
+        <g id="minute-ticks"></g>
+        <g id="spokes"></g>
+        <g id="nodes"></g>
 
-          <!-- face -->
-          <circle id="face-fill" cx="180" cy="180" r="146" fill="#0f0f0e"/>
-          <circle id="face-rim-outer" cx="180" cy="180" r="151.5" fill="none" stroke="#61615e" stroke-width="1.3"/>
-          <circle id="face-rim-inner" cx="180" cy="180" r="147.5" fill="none" stroke="#2e2d29" stroke-width="0.9"/>
+        <line id="hour-hand" class="hand hour-hand" x1="180" y1="180" x2="180" y2="95"/>
+        <line id="minute-hand" class="hand minute-hand" x1="180" y1="180" x2="180" y2="60"/>
+        <line id="second-hand" class="hand second-hand" x1="180" y1="188" x2="180" y2="44"/>
+        <circle class="hand-cap-under" cx="180" cy="180" r="8.5"/>
+        <circle class="hand-cap" cx="180" cy="180" r="11"/>
 
-          <g id="minute-ticks"></g>
-          <g id="spokes"></g>
-          <g id="nodes"></g>
-
-          <!-- hands -->
-          <line id="hour-hand" class="hand hour-hand" x1="180" y1="180" x2="180" y2="95"/>
-          <line id="minute-hand" class="hand minute-hand" x1="180" y1="180" x2="180" y2="60"/>
-          <line id="second-hand" class="hand second-hand" x1="180" y1="188" x2="180" y2="44"/>
-          <circle class="hand-cap-under" cx="180" cy="180" r="8.5"/>
-          <circle class="hand-cap" cx="180" cy="180" r="11"/>
-
-          <!-- kept for logic, hidden visually -->
-          <text id="ctr-note" class="center-note" x="180" y="172" text-anchor="middle" dominant-baseline="middle"></text>
-          <text id="ctr-sub" class="center-sub" x="180" y="195" text-anchor="middle" dominant-baseline="middle"></text>
-        </svg>
-
-        <svg id="movement-view" width="390" height="390" viewBox="0 0 360 360" aria-label="movement view">
-          <circle class="mv-face" cx="180" cy="180" r="146"/>
-          <text class="mv-title" x="180" y="52" text-anchor="middle">movement</text>
-
-          <g id="mv-root-ring"></g>
-          <g id="mv-interval-ring"></g>
-
-          <g id="mv-second-wheel">
-            <circle class="mv-wheel" cx="180" cy="180" r="42"/>
-            <line id="mv-second-arm" class="mv-arm" x1="180" y1="180" x2="180" y2="142"/>
-            <text class="mv-label" x="180" y="232" text-anchor="middle">second wheel</text>
-          </g>
-
-          <g id="mv-jumper">
-            <line id="mv-jumper-arm" class="mv-jumper-arm" x1="80" y1="255" x2="132" y2="255"/>
-            <circle class="mv-pivot" cx="80" cy="255" r="4"/>
-            <text class="mv-label" x="106" y="276" text-anchor="middle">jumper</text>
-            <text id="mv-jumper-state" class="mv-state" x="106" y="289" text-anchor="middle">locked</text>
-          </g>
-
-          <g id="mv-safety">
-            <rect class="mv-box" x="205" y="242" width="76" height="48" rx="8"/>
-            <text class="mv-label" x="243" y="262" text-anchor="middle">safety</text>
-            <text id="mv-safety-state" class="mv-state" x="243" y="278" text-anchor="middle">closed</text>
-          </g>
-
-          <g id="mv-remontoire">
-            <rect class="mv-box" x="76" y="72" width="72" height="38" rx="8"/>
-            <rect class="mv-charge-bg" x="87" y="94" width="50" height="5" rx="3"/>
-            <rect id="mv-rem-charge" class="mv-charge" x="87" y="94" width="50" height="5" rx="3"/>
-            <text class="mv-label" x="112" y="88" text-anchor="middle">force</text>
-          </g>
-
-          <text id="mv-readout" class="mv-readout" x="180" y="326" text-anchor="middle">root / interval</text>
-        </svg>
-
-        <div class="braun-logo">DIETER</div>
-</div>
-
-      <div class="status" id="status">select a key and press start</div>
-    </div>
-
-    <div class="right">
-      <div class="button-row">
-        <button id="start-btn">start</button>
-        <button id="triad-btn">triad</button>
-        <button id="real-btn">real</button>
-        <button id="freeze-btn">frz</button>
+        <text id="ctr-note" class="center-note" x="180" y="172" text-anchor="middle" dominant-baseline="middle"></text>
+        <text id="ctr-sub" class="center-sub" x="180" y="195" text-anchor="middle" dominant-baseline="middle"></text>
+      </svg>
       </div>
 
-      <div class="panel">
-        <div class="panel-title">scale quantizer</div>
-        <div class="ctrl-row">
-          <div class="ctrl-lbl">Home</div>
-          <select id="key-select">
-            <option value="0" selected>C</option>
-            <option value="1">C♯</option>
-            <option value="2">D</option>
-            <option value="3">D♯</option>
-            <option value="4">E</option>
-            <option value="5">F</option>
-            <option value="6">F♯</option>
-            <option value="7">G</option>
-            <option value="8">G♯</option>
-            <option value="9">A</option>
-            <option value="10">B♭</option>
-            <option value="11">B</option>
-          </select>
+      <div class="base-plate">
+        <div class="row-primary">
+          <button class="expand-toggle" id="expand-btn">calibrate</button>
         </div>
-        <div class="ctrl-row">
-          <div class="ctrl-lbl">Scale</div>
-          <select id="scale-select">
-            <option value="mixolydian" selected>Mixolydian</option>
-            <option value="lydian">Lydian</option>
-            <option value="dorian">Dorian</option>
-            <option value="aeolian">Aeolian</option>
-            <option value="ionian">Ionian</option>
-            <option value="majorPent">Major Pent</option>
-            <option value="minorPent">Minor Pent</option>
-            <option value="suspended">Suspended</option>
-            <option value="harmMinor">Harmonic Minor</option>
-          </select>
-        </div>
-        <div class="ctrl-row">
-          <div class="ctrl-lbl">Tune</div>
-          <select id="tuning-select">
-            <option value="equal" selected>Equal Temperament</option>
-            <option value="ji5">5-Limit</option>
-            <option value="ji7">7-Limit</option>
-            <option value="ji9">9-Limit</option>
-            <option value="ji13">13-Limit</option>
-            <option value="ji17">17-Limit</option>
-            <option value="partch11">Partch 11</option>
-            <option value="pythagorean">Pythagorean</option>
-            <option value="wtp_lmy">WTP / LMY</option>
-            <option value="bohlen">Bohlen–Pierce</option>
-            <option value="kafi22">Kafi / 22 Shruti</option>
-            <option value="yaman">Raga Yaman</option>
-            <option value="bhairav">Raga Bhairav</option>
-            <option value="malkauns">Raga Malkauns</option>
-          </select>
-        </div>
-        <div class="ctrl-row">
-          <div class="ctrl-lbl">Algo</div>
-          <select id="algo-select">
-            <option value="alg32" selected>DX7 32 Parallel</option>
-            <option value="alg16">DX7 16 Pad</option>
-            <option value="alg5">DX7 5 Glass</option>
-            <option value="alg2">DX7 2 Dual Stack</option>
-            <option value="alg1">DX7 1 Stack</option>
-            <option value="alg8">DX7 8 Bell</option>
-          </select>
-        </div>
-      </div>
 
-      <div class="panel view-panel">
-        <div class="panel-title">view</div>
-        <div class="crown-control-row">
-          <div class="crown-copy">clock display</div>
-          <button id="view-toggle-btn" class="crown-mode" title="view mode">FACE</button>
+        <div class="row-modes">
+          <button id="triad-btn">third</button>
+          <button id="real-btn">free</button>
+          <button id="freeze-btn">frz</button>
         </div>
-      </div>
 
-      <div class="panel root-drive-panel">
-        <div class="panel-title">root drive</div>
-        <div class="crown-control-row">
-          <div class="crown-copy">hour hand modulation</div>
-          <button id="root-drive-btn" class="crown-mode on" title="root drive">CRAWL</button>
-        </div>
-      </div>
-
-      <div class="panel movement-controls-panel">
-        <div class="panel-title">movement controls</div>
-        <div class="movement-knobs">
-          <div class="mini-knob">
-            <div class="mini-lbl">Volume</div>
-            <input type="range" id="r-volume" min="0" max="1" step="0.01" value="0.82">
-            <div class="sl-val" id="v-volume">0.82</div>
-          </div>
-          <div class="mini-knob">
-            <div class="mini-lbl">Interval</div>
-            <button id="interval-step-btn" class="step-btn">STEP</button>
-            <div class="sl-val" id="v-interval-step">+1</div>
-          </div>
-          <div class="mini-knob">
-            <div class="mini-lbl">Root</div>
-            <button id="root-step-btn" class="step-btn">STEP</button>
-            <div class="sl-val" id="v-root-step">+5th</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-title">clock motion</div>
-        <div class="sliders">
-          <div class="sl">
-            <div class="sl-lbl">Rate</div>
-            <input type="range" id="r-rate" min="0.0005" max="0.12" step="0.0005" value="0.006">
-            <div class="sl-val" id="v-rate">0.006</div>
-          </div>
+        <div class="front-macros">
           <div class="sl">
             <div class="sl-lbl">Orbit</div>
             <input type="range" id="r-orbit" min="0" max="1" step="0.01" value="0.56">
-            <div class="sl-val" id="v-orbit">0.56</div>
+            <div class="sl-val" id="v-orbit">PULSE</div>
           </div>
           <div class="sl">
-            <div class="sl-lbl">Osc Mix</div>
-            <input type="range" id="r-oscmix" min="0" max="1" step="0.01" value="0.25">
-            <div class="sl-val" id="v-oscmix">LOW 82</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="panel">
-        <div class="panel-title">voice base</div>
-        <div class="sliders">
-          <div class="sl">
-            <div class="sl-lbl">Shimmer</div>
+            <div class="sl-lbl">Chime</div>
             <input type="range" id="r-shimmer" min="0" max="2" step="0.02" value="0.46">
             <div class="sl-val" id="v-shimmer">0.46</div>
           </div>
           <div class="sl">
-            <div class="sl-lbl">Drift</div>
-            <input type="range" id="r-drift" min="0" max="22" step="0.5" value="4">
-            <div class="sl-val" id="v-drift">4¢</div>
+            <div class="sl-lbl">Engine</div>
+            <input type="range" id="r-engine" min="0" max="1" step="0.01" value="0">
+            <div class="sl-val" id="v-engine">QRTZ</div>
           </div>
           <div class="sl">
-            <div class="sl-lbl">Evolve</div>
-            <input type="range" id="r-evolve" min="0.004" max="0.28" step="0.004" value="0.035">
-            <div class="sl-val" id="v-evolve">0.035</div>
+            <div class="sl-lbl">Rate</div>
+            <input type="range" id="r-rate" min="0.0005" max="0.12" step="0.0005" value="0.009">
+            <div class="sl-val" id="v-rate">0.009</div>
           </div>
-          <div class="sl">
-            <div class="sl-lbl">Space</div>
-            <input type="range" id="r-space" min="0" max="1" step="0.01" value="0.50">
-            <div class="sl-val" id="v-space">0.50</div>
+        </div>
+
+        <div class="row-vol">
+          <div class="sl-lbl">vol</div>
+          <input type="range" id="r-volume" min="0" max="1" step="0.01" value="0.82">
+          <div class="sl-val" id="v-volume">0.82</div>
+        </div>
+
+        <div class="advanced" id="adv-panel">
+          <div class="adv-selects">
+            <select id="key-select">
+              <option value="0" selected>C</option>
+              <option value="1">C♯</option>
+              <option value="2">D</option>
+              <option value="3">D♯</option>
+              <option value="4">E</option>
+              <option value="5">F</option>
+              <option value="6">F♯</option>
+              <option value="7">G</option>
+              <option value="8">G♯</option>
+              <option value="9">A</option>
+              <option value="10">B♭</option>
+              <option value="11">B</option>
+            </select>
+            <select id="scale-select">
+              <option value="mixolydian">Mixolydian</option>
+              <option value="lydian">Lydian</option>
+              <option value="dorian">Dorian</option>
+              <option value="aeolian">Minor</option>
+              <option value="ionian" selected>Major</option>
+              <option value="majorPent">Major Pent</option>
+              <option value="minorPent">Minor Pent</option>
+              <option value="suspended">Suspended</option>
+              <option value="harmMinor">Harm Minor</option>
+            </select>
+            <select id="tuning-select">
+              <option value="equal" selected>Equal Temperament</option>
+              <option value="ji5">5-Limit</option>
+              <option value="ji7">7-Limit</option>
+              <option value="ji9">9-Limit</option>
+              <option value="ji13">13-Limit</option>
+              <option value="ji17">17-Limit</option>
+              <option value="partch11">Partch 11</option>
+              <option value="pythagorean">Pythagorean</option>
+              <option value="wtp_lmy">WTP / LMY</option>
+              <option value="bohlen">Bohlen–Pierce</option>
+              <option value="kafi22">Kafi / 22 Shruti</option>
+              <option value="yaman">Raga Yaman</option>
+              <option value="bhairav">Raga Bhairav</option>
+              <option value="malkauns">Raga Malkauns</option>
+            </select>
+            <select id="algo-select">
+              <option value="harmoniumWheel">Harmonium Wheel</option>
+              <option value="alg32" selected>DX7 32 Parallel</option>
+              <option value="alg16">DX7 16 Pad</option>
+              <option value="alg5">DX7 5 Glass</option>
+              <option value="alg2">DX7 2 Dual Stack</option>
+              <option value="alg1">DX7 1 Stack</option>
+              <option value="alg8">DX7 8 Bell</option>
+            </select>
+          </div>
+
+          <div class="sliders-grid">
+            <div class="sl">
+              <div class="sl-lbl">Mix</div>
+              <input type="range" id="r-oscmix" min="0" max="1" step="0.01" value="0.25">
+              <div class="sl-val" id="v-oscmix">LOW 82</div>
+            </div>
+            <div class="sl">
+              <div class="sl-lbl">Drift</div>
+              <input type="range" id="r-drift" min="0" max="22" step="0.5" value="4">
+              <div class="sl-val" id="v-drift">4¢</div>
+            </div>
+            <div class="sl">
+              <div class="sl-lbl">Evolve</div>
+              <input type="range" id="r-evolve" min="0.004" max="0.28" step="0.004" value="0.035">
+              <div class="sl-val" id="v-evolve">0.035</div>
+            </div>
+            <div class="sl">
+              <div class="sl-lbl">Space</div>
+              <input type="range" id="r-space" min="0" max="1" step="0.01" value="0.50">
+              <div class="sl-val" id="v-space">0.50</div>
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="legend">
-        <div><span>key</span> root</div>
-        <div><span>click</span> jump interval</div>
-        <div><span>second</span> synth mod</div>
-        <div><span>frz</span> hold interval</div>
-        <div><span>triad</span> second becomes 3rd voice</div>
+      <div class="brand-bar">
+        <div class="braun-logo">FM CLOCK</div>
       </div>
     </div>
+    <div class="status" id="status">select a root and press the winder</div>
   </div>
 </div>
 
 <script>
-// ─── Constants ───────────────────────────────────────────
+// Constants
 const NOTES   = ['C','C♯','D','D♯','E','F','F♯','G','G♯','A','B♭','B'];
 const BASE_HZ = 261.6255653005986; // C4
 
@@ -1000,7 +1311,6 @@ const TUNINGS = {
   },
   bohlen: {
     name: 'Bohlen–Pierce',
-    // compressed into a 12-position ring, tritave flavor
     ratios: [1,27/25,25/21,9/7,7/5,75/49,5/3,9/5,49/25,15/7,7/3,63/25]
   },
   kafi22: {
@@ -1021,14 +1331,17 @@ const TUNINGS = {
   }
 };
 
-// Circle-of-fifths clock positions.
 const FIFTHS = [0,7,2,9,4,11,6,1,8,3,10,5];
 
-// FM operator pair configs.
-// cR = carrier ratio, mR = modulator ratio, bScale = beta multiplier.
 const DX_ALGOS = {
-  // These are intentionally stable/drone-safe interpretations of DX7 routing ideas.
-  // They change ratios, output balance, and modulation depth without changing the working audio graph.
+  harmoniumWheel: {
+    name: 'Harmonium Wheel',
+    pairs: [
+      { cR: 1.00, mR: 2.00, bScale: 0.115, det: -1.7, gain: 0.33 },
+      { cR: 1.50, mR: 3.00, bScale: 0.090, det: +0.8, gain: 0.25 },
+      { cR: 2.00, mR: 4.00, bScale: 0.065, det: +2.2, gain: 0.18 }
+    ]
+  },
   alg32: {
     name: 'DX7 32 Parallel',
     pairs: [
@@ -1085,7 +1398,6 @@ function currentPairs() {
 
 const PAIRS = DX_ALGOS.alg32.pairs;
 
-// ─── State ───────────────────────────────────────────────
 let actx = null, convolver = null, reverbIn = null, reverbOut = null, masterOut = null, wetOut = null;
 let octave = 3;
 let running = false;
@@ -1099,30 +1411,28 @@ let clock = {
   secondPhase: 0,
   prevSecondPhase: 0,
   displayAngles: { hour: null, minute: null, second: null }
-}; // fifths clock by default; optional real-clock mode.
-let voices = {}; // root, interval, third
+};
+let voices = {};
 let active = {
   rootPc: 0,
-  intervalPc: 7,
+  intervalPc: 0,
   thirdPc: 4,
   rootIndex: 0,
-  intIndex: 4,
-  thirdIndex: 2,
+  intIndex: 0,
+  thirdIndex: 0,
 };
 
 let P = {
   key: 0,
-  viewMode: 'face',
-  homeKey: 0,
-  scale: 'mixolydian',
+  scale: 'ionian',
   tuning: 'equal',
   algorithm: 'alg32',
-  rate: 0.006,
+  engine: 0.0,
+  rate: 0.009,
   orbit: 0.56,
   oscmix: 0.25,
   realClock: false,
-  rootDrive: 'crawl',
-  manualIntervalIndex: 4,
+  manualIntervalIndex: 0,
   freezeInterval: false,
   shimmer: 0.46,
   drift: 4,
@@ -1131,9 +1441,6 @@ let P = {
   volume: 0.82,
 };
 
-// Phase 1 movement core:
-// The hands, note rings, modes, and requests now live in one mechanism object.
-// Legacy `clock`, `P`, and `active` are still mirrored for the existing UI/audio code.
 const movement = {
   power: {
     running: false
@@ -1141,7 +1448,6 @@ const movement = {
 
   modes: {
     realClock: false,
-    rootDrive: 'crawl',
     freeze: false,
     triad: false
   },
@@ -1152,8 +1458,8 @@ const movement = {
       tooth: 0
     },
     minute: {
-      phase: 4 / 7,
-      tooth: 4
+      phase: 0,
+      tooth: 0
     },
     second: {
       phase: 0,
@@ -1165,24 +1471,21 @@ const movement = {
     root: {
       tooth: 0,
       target: 0,
-      lastTooth: 0,
-      previousNote: 0,
-      targetNote: 0,
       note: 0,
       transition: 1,
       locked: true
     },
     interval: {
-      tooth: 4,
-      target: 4,
-      degree: 4,
+      tooth: 0,
+      target: 0,
+      degree: 0,
       transition: 1,
       locked: true,
       armed: false
     },
     third: {
-      tooth: 2,
-      degree: 2
+      tooth: 0,
+      degree: 0
     }
   },
 
@@ -1228,8 +1531,6 @@ const movement = {
   }
 };
 
-
-
 function movementScaleLength() {
   return Math.max(1, scaleDegrees().length);
 }
@@ -1237,7 +1538,6 @@ function movementScaleLength() {
 function syncMovementModes() {
   movement.power.running = running;
   movement.modes.realClock = P.realClock;
-  movement.modes.rootDrive = P.rootDrive;
   movement.modes.freeze = P.freezeInterval;
   movement.modes.triad = triadMode;
 }
@@ -1253,7 +1553,7 @@ function syncLegacyClockFromMovement() {
   movement.display.minuteAngle = clock.minutePhase * 360;
   movement.display.secondAngle = clock.secondPhase * 360;
 
-  const shell = document.querySelector('.clock-shell');
+  const shell = document.querySelector('.instrument');
   if (shell) shell.style.setProperty('--tension', movement.jumpers.interval.tension.toFixed(3));
 }
 
@@ -1279,7 +1579,6 @@ function resolveMovementRequests() {
   const n = movementScaleLength();
 
   if (movement.requests.rootHome !== null) {
-    // Root-home request is deferred during a root change window.
     if (movement.safety.rootWindow) {
       movement.safety.pendingRootHome = movement.requests.rootHome;
     } else {
@@ -1296,8 +1595,6 @@ function resolveMovementRequests() {
   if (movement.requests.interval !== null) {
     const tooth = ((movement.requests.interval % n) + n) % n;
 
-    // Safety cam: during the changeover window, queue the click.
-    // This prevents double-advances and weird jumps.
     if (movement.safety.intervalWindow && !movement.modes.freeze) {
       movement.safety.pendingInterval = tooth;
     } else {
@@ -1315,7 +1612,7 @@ function resolveMovementRequests() {
   }
 }
 
-function updateMovementFromRealClock() {
+function updateMovementFromRealClock(syncHarmony = false) {
   const now = new Date();
   const h = now.getHours() % 12;
   const m = now.getMinutes();
@@ -1326,34 +1623,37 @@ function updateMovementFromRealClock() {
   movement.wheels.second.prevPhase = movement.wheels.second.phase;
   movement.wheels.second.phase = (sec / 60) % 1;
 
+  const roots = rootOrder();
   const n = movementScaleLength();
-  movement.wheels.hour.tooth = Math.floor(movement.wheels.hour.phase * rootOrder().length);
+  const rootTooth = Math.floor(movement.wheels.hour.phase * roots.length) % Math.max(1, roots.length);
+  movement.wheels.hour.tooth = rootTooth;
   movement.wheels.minute.tooth = Math.floor(movement.wheels.minute.phase * n);
-  movement.rings.interval.tooth = movement.wheels.minute.tooth;
-  movement.rings.interval.target = movement.wheels.minute.tooth;
-  movement.rings.interval.degree = movement.wheels.minute.tooth;
-  movement.rings.interval.transition = 1;
-  movement.rings.interval.locked = true;
+
+  if (syncHarmony) {
+    movement.rings.root.tooth = rootTooth;
+    movement.rings.root.target = rootTooth;
+    movement.rings.root.note = roots[rootTooth] ?? P.key;
+    movement.rings.root.transition = 1;
+    movement.rings.root.locked = true;
+    movement.rings.interval.tooth = movement.wheels.minute.tooth;
+    movement.rings.interval.target = movement.wheels.minute.tooth;
+    movement.rings.interval.degree = movement.wheels.minute.tooth;
+    movement.rings.interval.transition = 1;
+    movement.rings.interval.locked = true;
+  }
 }
 
 function updateRemontoire(dt) {
-  // Constant-force remontoire-style modulation.
-  // This is intentionally NOT sampling the second-hand sine at release.
-  // The point is an evenly spaced, fixed-energy impulse that is smoothed into the modulation system.
   movement.remontoire.charge -= dt / Math.max(0.08, movement.remontoire.period);
 
   if (movement.remontoire.charge <= 0) {
     movement.remontoire.charge = 1;
-    movement.remontoire.output = 0.72; // fixed quantum of energy
-  } else {
-    // Between releases, let the impulse decay toward rest.
-    movement.remontoire.output += (0.18 - movement.remontoire.output) * Math.min(1, dt * 1.65);
+    movement.remontoire.output = 0.35 + 0.65 * secondMacroRaw();
   }
 
-  movement.remontoire.smoothed +=
-    (movement.remontoire.output - movement.remontoire.smoothed) * Math.min(1, dt * 4.2);
+  const target = movement.remontoire.output;
+  movement.remontoire.smoothed += (target - movement.remontoire.smoothed) * Math.min(1, dt * 5.0);
 }
-
 
 function updateSafetyWindows() {
   const s = movement.wheels.second.phase;
@@ -1371,24 +1671,14 @@ function updateSafetyWindows() {
   movement.jumpers.interval.engaged = !movement.safety.intervalWindow && movement.rings.interval.locked;
 }
 
-
-function advanceIntervalOneTooth(reason = 'manual') {
-  if (movement.modes.freeze) return;
-
-  const n = movementScaleLength();
-  const current = movement.rings.interval.tooth || 0;
-  const next = (current + 1) % n;
-
-  movement.rings.interval.target = next;
-  movement.rings.interval.transition = 0;
-  movement.rings.interval.locked = false;
-}
-
 function updateIntervalJumper(dt, wrapped) {
   const n = movementScaleLength();
 
   if (wrapped && !movement.modes.freeze) {
-    advanceIntervalOneTooth('second-wrap');
+    const next = (movement.rings.interval.tooth + 1) % n;
+    movement.rings.interval.target = next;
+    movement.rings.interval.transition = 0;
+    movement.rings.interval.locked = false;
   }
 
   if (!movement.rings.interval.locked) {
@@ -1409,7 +1699,6 @@ function updateIntervalJumper(dt, wrapped) {
         movement.requests.interval = pending;
       }
     } else {
-      // Display stays mostly stable until the jumper settles.
       movement.wheels.minute.phase = movement.rings.interval.tooth / n;
     }
   } else {
@@ -1421,46 +1710,19 @@ function updateIntervalJumper(dt, wrapped) {
 function updateRootRing(dt) {
   const roots = rootOrder();
   const rootN = Math.max(1, roots.length);
-
-  if (P.rootDrive === 'hold') {
-    movement.rings.root.tooth = 0;
-    movement.rings.root.target = 0;
-    movement.rings.root.lastTooth = 0;
-    movement.rings.root.previousNote = P.key;
-    movement.rings.root.targetNote = P.key;
-    movement.rings.root.note = P.key;
-    movement.rings.root.transition = 1;
-    movement.rings.root.locked = true;
-    movement.wheels.hour.phase = 0;
-    return;
-  }
-
   const target = Math.floor(movement.wheels.hour.phase * rootN) % rootN;
 
   if (target !== movement.rings.root.tooth && movement.rings.root.locked) {
-    movement.rings.root.previousNote = roots[movement.rings.root.tooth] ?? P.key;
     movement.rings.root.target = target;
-    movement.rings.root.targetNote = roots[target] ?? P.key;
     movement.rings.root.transition = 0;
     movement.rings.root.locked = false;
   }
 
   if (!movement.rings.root.locked) {
-    // Longer, smoother harmonic crawl between roots.
-    movement.rings.root.transition += dt / 3.0;
+    movement.rings.root.transition += dt / 1.4;
     if (movement.rings.root.transition >= 1) {
-      const oldTooth = movement.rings.root.tooth;
       movement.rings.root.tooth = movement.rings.root.target;
-      movement.rings.root.previousNote = movement.rings.root.targetNote;
-      movement.rings.root.transition = 1;
       movement.rings.root.locked = true;
-
-      // Mechanical coupling: when the hour/root ring settles into a new root,
-      // the minute/interval ring advances one tooth so the route does not feel pinned.
-      if (movement.rings.root.tooth !== oldTooth && !movement.modes.freeze) {
-        movement.rings.root.lastTooth = movement.rings.root.tooth;
-        advanceIntervalOneTooth('root-settle');
-      }
     }
   }
 
@@ -1471,6 +1733,7 @@ function updateRootRing(dt) {
     movement.safety.pendingRootHome = null;
   }
 }
+
 function updateMovementInternal(dt) {
   const before = movement.wheels.second.phase || 0;
 
@@ -1489,13 +1752,22 @@ function updateMovementInternal(dt) {
   movement.wheels.second.prevPhase = after;
 }
 
+function updateThirdHandFromSecond() {
+  const degs = scaleDegrees();
+  const n = Math.max(1, degs.length);
+  const phase = movement.wheels.second.phase || 0;
+  const tooth = Math.floor(phase * n) % n;
+
+  movement.rings.third.tooth = tooth;
+  movement.rings.third.degree = tooth;
+}
+
 function updateMovement(dt = 0) {
   syncMovementModes();
 
   if (movement.modes.realClock) {
-    updateMovementFromRealClock();
+    updateMovementFromRealClock(false);
     updateSafetyWindows();
-    updateRootRing(0);
     updateRemontoire(dt);
   } else {
     if (dt > 0 && movement.power.running) {
@@ -1512,10 +1784,7 @@ function updateMovement(dt = 0) {
     }
   }
 
-  const n = movementScaleLength();
-  movement.rings.third.tooth = Math.floor(movement.wheels.second.phase * n) % n;
-  movement.rings.third.degree = movement.rings.third.tooth;
-
+  updateThirdHandFromSecond();
   resolveMovementRequests();
   syncLegacyClockFromMovement();
 }
@@ -1542,52 +1811,20 @@ function requestMovementHomeKey() {
   syncLegacyClockFromMovement();
 }
 
-function crownModeNext() {
-  const modes = ['volume', 'interval', 'root'];
-  const ix = modes.indexOf(movement.crown.mode);
-  movement.crown.mode = modes[(ix + 1) % modes.length];
-
-  const btn = document.getElementById('crown-mode-btn');
-  if (btn) {
-    btn.textContent = movement.crown.mode === 'volume' ? 'VOL' : movement.crown.mode === 'interval' ? 'INT' : 'ROOT';
-    btn.classList.toggle('on', movement.crown.mode !== 'volume');
-  }
+function engineMix() {
+  const x = Math.max(0, Math.min(1, P.engine));
+  return x * x * (3 - 2 * x);
 }
 
-function crownTurn(v) {
-  const val = Math.max(0, Math.min(1, Number(v)));
-  const prev = movement.crown.value ?? P.volume;
-  movement.crown.value = val;
-
-  if (movement.crown.mode === 'volume') {
-    setMasterVolume(val, true);
-    return;
-  }
-
-  const delta = val - prev;
-  if (Math.abs(delta) < 0.08) return;
-
-  if (movement.crown.mode === 'interval') {
-    const step = delta > 0 ? 1 : -1;
-    requestMovementInterval((movement.rings.interval.tooth || 0) + step);
-  }
-
-  if (movement.crown.mode === 'root') {
-    const step = delta > 0 ? 1 : -1;
-    requestMovementRootStep(step);
-  }
-
-  // Recenter the physical crown slider so repeated nudges work.
-  movement.crown.value = 0.5;
-  const side = document.getElementById('side-volume');
-  if (side) side.value = 0.5;
+function engineLabel(v) {
+  if (v < 0.15) return 'QRTZ';
+  if (v < 0.35) return 'WARM';
+  if (v < 0.65) return 'AUTO';
+  if (v < 0.85) return 'MECH';
+  return 'MECH+';
 }
-
-
 
 function oscMixGains(v) {
-  // Slightly high-tamed crossfade.
-  // The +1 octave reads louder psychoacoustically, so the high side is intentionally padded down.
   const x = Math.max(0, Math.min(1, v));
   const low = Math.cos(x * Math.PI / 2);
   const high = Math.sin(x * Math.PI / 2) * 0.68;
@@ -1649,7 +1886,6 @@ function ensureCtx() {
   masterOut.connect(actx.destination);
   wetOut.connect(actx.destination);
 
-  // Generative reverb impulse.
   convolver = actx.createConvolver();
   const sr = actx.sampleRate;
   const len = Math.floor(sr * 3.8);
@@ -1688,7 +1924,6 @@ function pcToFreq(pc, oct = octave) {
   const rootRatio = tuning.ratios[P.key] || Math.pow(2, P.key / 12);
   const noteRatio = tuning.ratios[pc] || Math.pow(2, pc / 12);
 
-  // Keeps selected key as the tuning reference/root.
   let ratio = noteRatio / rootRatio;
   while (ratio < 1) ratio *= 2;
   while (ratio >= 2) ratio /= 2;
@@ -1720,7 +1955,7 @@ function buildVoice(freq, role) {
   const pairNodes = currentPairs().map((cfg, idx) => {
     const fc = freq * cfg.cR;
     const fm = freq * cfg.mR;
-    const beta = P.shimmer * cfg.bScale;
+    const beta = P.shimmer * (1 + engineMix() * 1.15) * cfg.bScale;
 
     const carrier = actx.createOscillator();
     const upper = actx.createOscillator();
@@ -1735,7 +1970,7 @@ function buildVoice(freq, role) {
     carrier.type = upper.type = mod.type = lfo.type = 'sine';
 
     carrier.frequency.value = fc;
-    upper.frequency.value = fc * 2; // +1 octave carrier, same FM path as low oscillator
+    upper.frequency.value = fc * 2;
     carrier.detune.value = cfg.det * P.drift;
     upper.detune.value = cfg.det * P.drift;
     mod.frequency.value = fm;
@@ -1826,9 +2061,9 @@ function buildVoice(freq, role) {
     applyBase() {
       const now = actx.currentTime;
       pairNodes.forEach(o => {
-        const beta = P.shimmer * o.cfg.bScale;
+        const beta = P.shimmer * (1 + engineMix() * 1.15) * o.cfg.bScale;
         o.modGain.gain.setTargetAtTime(beta * o.fm, now, 0.35);
-        o.lfoGain.gain.setTargetAtTime(P.shimmer * o.fm * 0.16, now, 0.35);
+        o.lfoGain.gain.setTargetAtTime(P.shimmer * o.fm * (0.16 + engineMix() * 0.08), now, 0.35);
         o.lfo.frequency.setTargetAtTime(P.evolve * (0.65 + 0.18 * pairNodes.indexOf(o)), now, 0.4);
         o.carrier.detune.setTargetAtTime(o.cfg.det * P.drift, now, 0.22);
         if (o.upper) o.upper.detune.setTargetAtTime(o.cfg.det * P.drift, now, 0.22);
@@ -1838,20 +2073,20 @@ function buildVoice(freq, role) {
     },
 
     applySecondHand(m) {
-      // m = 0..1. This is the second-hand synth mod macro.
       const now = actx.currentTime;
-      const modDepth = 0.78 + (m * P.orbit * 0.78);
-      const driftDepth = P.drift + (m * P.orbit * 7.5);
-      const evolveDepth = P.evolve * (1 + m * P.orbit * 3.6);
-      const bright = (this.role === 'root' ? 2300 : 3200) + (m * P.orbit * 3600);
+      const e = engineMix();
+      const modDepth = 0.78 + (m * P.orbit * (0.78 + e * 0.38));
+      const driftDepth = P.drift + (m * P.orbit * (7.5 + e * 2.5));
+      const evolveDepth = P.evolve * (1 + m * P.orbit * (3.6 + e * 1.1));
+      const bright = (this.role === 'root' ? 2300 : 3200) + (m * P.orbit * (3600 + e * 1200));
 
       filter.frequency.setTargetAtTime(bright, now, 0.18);
       filter.Q.setTargetAtTime(0.28 + m * P.orbit * 0.58, now, 0.25);
 
       pairNodes.forEach((o, i) => {
-        const beta = P.shimmer * modDepth * o.cfg.bScale;
+        const beta = P.shimmer * (1 + e * 1.15) * modDepth * o.cfg.bScale;
         o.modGain.gain.setTargetAtTime(beta * o.fm, now, 0.18);
-        o.lfoGain.gain.setTargetAtTime(P.shimmer * o.fm * (0.11 + m * 0.13), now, 0.22);
+        o.lfoGain.gain.setTargetAtTime(P.shimmer * o.fm * (0.11 + m * (0.13 + e * 0.07)), now, 0.22);
         o.lfo.frequency.setTargetAtTime(evolveDepth * (0.62 + 0.2 * i), now, 0.24);
         o.carrier.detune.setTargetAtTime(o.cfg.det * driftDepth * (1 + i * 0.12), now, 0.18);
         if (o.upper) o.upper.detune.setTargetAtTime(o.cfg.det * driftDepth * (1 + i * 0.12), now, 0.18);
@@ -1872,9 +2107,8 @@ function setVoice(role, pc, octOffset = 0) {
   const old = voices[role];
   const fresh = buildVoice(freq, role);
   const t = actx.currentTime;
-  const isRootRole = role === 'root';
-  const fade = isRootRole ? 9.0 : 6.5;
-  const amp = isRootRole ? 0.34 : (triadMode && role === 'third' ? 0.20 : 0.24);
+  const fade = role === 'root' ? 3.8 : (role === 'third' ? 5.5 : 6.5);
+  const amp = role === 'root' ? 0.34 : (triadMode && role === 'third' ? 0.20 : 0.24);
 
   fresh.masterGain.gain.cancelScheduledValues(t);
   fresh.masterGain.gain.setValueAtTime(0, t);
@@ -1905,7 +2139,6 @@ function stopAllVoices() {
   Object.keys(voices).forEach(stopVoice);
 }
 
-// ─── Scale / clock logic ─────────────────────────────────
 function scaleDegrees() {
   return SCALES[P.scale].deg;
 }
@@ -1916,7 +2149,6 @@ function scalePcs() {
 
 function rootOrder() {
   const allowed = scalePcs();
-  // Preserve circle-of-fifths feel while only allowing notes from the selected scale.
   const ordered = FIFTHS.map(pc => (pc + P.key) % 12).filter(pc => allowed.includes(pc));
   return ordered.length ? ordered : [P.key];
 }
@@ -1932,12 +2164,9 @@ function degreeName(index) {
 function computeClockNotes() {
   updateMovement(0);
 
+  const roots = rootOrder();
   const degs = scaleDegrees();
 
-  // Movement readout:
-  // hour/root ring = scale-safe circle of fifths or held key
-  // minute/interval ring = indexed scale degree
-  // second wheel = independent modulation / third selector
   const rootIndex = movement.rings.root.tooth;
   const rootPc = movement.rings.root.note;
 
@@ -1945,9 +2174,7 @@ function computeClockNotes() {
     ? Math.floor(movement.wheels.minute.phase * degs.length) % degs.length
     : movement.rings.interval.tooth;
 
-  movement.rings.third.tooth = Math.floor(movement.wheels.second.phase * degs.length) % degs.length;
-  movement.rings.third.degree = movement.rings.third.tooth;
-  const thirdIndex = movement.rings.third.tooth;
+  const thirdIndex = movement.rings.third.tooth || 0;
 
   const rootRel = (rootPc - P.key + 12) % 12;
   const intervalPc = (rootPc + degs[intIndex]) % 12;
@@ -1960,17 +2187,10 @@ function computeClockNotes() {
   active = { rootPc, intervalPc, thirdPc, rootIndex, intIndex, thirdIndex, rootRel };
 }
 
-
 function updateSoundFromClock() {
   computeClockNotes();
 
-  // Safer crawl behavior:
-  // the movement decides the root, and the normal setVoice crossfade handles the transition.
-  // No stacked rootNext/pivot voices.
-  stopVoice('rootNext');
-  stopVoice('pivot');
   setVoice('root', active.rootPc, -1);
-
   const intervalOct = active.intervalPc <= active.rootPc ? 0 : -1;
   setVoice('interval', active.intervalPc, intervalOct);
 
@@ -1989,25 +2209,17 @@ function updateSoundFromClock() {
   Object.values(voices).forEach(v => v.applySecondHand(secondMacro()));
 }
 
-
 function secondMacroRaw() {
   const a = movement.wheels.second.phase * Math.PI * 2;
   return 0.5 + 0.5 * Math.sin(a - Math.PI / 2);
 }
 
 function secondMacro() {
-  // Second-hand modulation = mostly fixed-energy remontoire pulses,
-  // with a small amount of visible hand phase left in for clock/body relation.
-  const constantForce = movement.remontoire.smoothed;
-  const handShape = secondMacroRaw() * 0.22;
-  return Math.max(0, Math.min(1, constantForce * 0.78 + handShape));
+  return Math.max(0, Math.min(1, 0.35 * secondMacroRaw() + 0.65 * movement.remontoire.smoothed));
 }
 
-
-// ─── SVG Ring ────────────────────────────────────────────
 const SVG_NS = 'http://www.w3.org/2000/svg';
 const CX = 180, CY = 180, RING_R = 138;
-
 
 function buildTicks() {
   const g = document.getElementById('minute-ticks');
@@ -2029,138 +2241,17 @@ function buildTicks() {
   }
 }
 
-
-function buildMovementView() {
-  const rootG = document.getElementById('mv-root-ring');
-  const intG = document.getElementById('mv-interval-ring');
-  if (!rootG || !intG || rootG.childNodes.length) return;
-
-  for (let i = 0; i < 7; i++) {
-    const a = (i * (360 / 7) - 90) * Math.PI / 180;
-    const x = CX + 112 * Math.cos(a);
-    const y = CY + 112 * Math.sin(a);
-    const c = document.createElementNS(SVG_NS, 'circle');
-    c.setAttribute('class', 'mv-node mv-root-node');
-    c.setAttribute('cx', x);
-    c.setAttribute('cy', y);
-    c.setAttribute('r', 13);
-    c.setAttribute('data-i', i);
-    const t = document.createElementNS(SVG_NS, 'text');
-    t.setAttribute('class', 'mv-node-text mv-root-text');
-    t.setAttribute('x', x);
-    t.setAttribute('y', y + 1);
-    t.setAttribute('text-anchor', 'middle');
-    t.setAttribute('dominant-baseline', 'middle');
-    t.setAttribute('data-i', i);
-    t.textContent = '·';
-    rootG.appendChild(c);
-    rootG.appendChild(t);
-  }
-
-  for (let i = 0; i < 7; i++) {
-    const x = 88 + i * 31;
-    const y = 132;
-    const c = document.createElementNS(SVG_NS, 'circle');
-    c.setAttribute('class', 'mv-node mv-int-node');
-    c.setAttribute('cx', x);
-    c.setAttribute('cy', y);
-    c.setAttribute('r', 11);
-    c.setAttribute('data-i', i);
-    const t = document.createElementNS(SVG_NS, 'text');
-    t.setAttribute('class', 'mv-node-text mv-int-text');
-    t.setAttribute('x', x);
-    t.setAttribute('y', y + 1);
-    t.setAttribute('text-anchor', 'middle');
-    t.setAttribute('dominant-baseline', 'middle');
-    t.setAttribute('data-i', i);
-    t.textContent = String(i + 1);
-    intG.appendChild(c);
-    intG.appendChild(t);
-  }
-
-  const lbl = document.createElementNS(SVG_NS, 'text');
-  lbl.setAttribute('class', 'mv-label');
-  lbl.setAttribute('x', 180);
-  lbl.setAttribute('y', 116);
-  lbl.setAttribute('text-anchor', 'middle');
-  lbl.textContent = 'interval ring';
-  intG.appendChild(lbl);
-}
-
-function updateMovementView() {
-  if (P.viewMode !== 'movement') return;
-
-  const roots = rootOrder();
-  const degs = scaleDegrees();
-  const rootTooth = movement.rings.root.tooth || 0;
-  const rootTarget = movement.rings.root.target ?? rootTooth;
-  const intTooth = movement.rings.interval.tooth || 0;
-  const intTarget = movement.rings.interval.target ?? intTooth;
-
-  document.querySelectorAll('.mv-root-node').forEach(n => {
-    const i = +n.getAttribute('data-i');
-    n.classList.toggle('active', i === rootTooth);
-    n.classList.toggle('next', i === rootTarget && rootTarget !== rootTooth);
-    n.style.opacity = i < roots.length ? '1' : '0.18';
-  });
-  document.querySelectorAll('.mv-root-text').forEach(t => {
-    const i = +t.getAttribute('data-i');
-    t.textContent = i < roots.length ? NOTES[roots[i]] : '·';
-    t.style.opacity = i < roots.length ? '1' : '0.18';
-  });
-
-  document.querySelectorAll('.mv-int-node').forEach(n => {
-    const i = +n.getAttribute('data-i');
-    n.classList.toggle('active', i === intTooth);
-    n.classList.toggle('next', i === intTarget && intTarget !== intTooth);
-    n.style.opacity = i < degs.length ? '1' : '0.18';
-  });
-  document.querySelectorAll('.mv-int-text').forEach(t => {
-    const i = +t.getAttribute('data-i');
-    t.textContent = i < degs.length ? degreeName(i) : '·';
-    t.style.opacity = i < degs.length ? '1' : '0.18';
-  });
-
-  const secondArm = document.getElementById('mv-second-arm');
-  if (secondArm) secondArm.style.transform = `rotate(${(movement.wheels.second.phase || 0) * 360}deg)`;
-
-  const jumper = document.getElementById('mv-jumper-arm');
-  const jumperState = document.getElementById('mv-jumper-state');
-  const tension = movement.jumpers?.interval?.tension || 0;
-  if (jumper) jumper.style.transform = `rotate(${-18 * tension}deg)`;
-  if (jumperState) {
-    jumperState.textContent = movement.rings.interval.locked
-      ? (movement.safety.intervalWindow ? 'armed' : 'locked')
-      : 'settling';
-  }
-
-  const safety = document.getElementById('mv-safety-state');
-  if (safety) safety.textContent = movement.safety.intervalWindow
-    ? (movement.safety.pendingInterval !== null ? 'queued' : 'open')
-    : 'closed';
-
-  const charge = document.getElementById('mv-rem-charge');
-  if (charge) charge.setAttribute('width', String(Math.max(1, 50 * (movement.remontoire.charge ?? 0))));
-
-  const readout = document.getElementById('mv-readout');
-  if (readout) {
-    readout.textContent =
-      `root ${NOTES[active.rootPc]} · interval ${degreeName(active.intIndex)} · force ${Math.round((movement.remontoire.smoothed || 0) * 100)}`;
-  }
-}
-
-
 function buildRing() {
   const g = document.getElementById('nodes');
   g.innerHTML = '';
 
   FIFTHS.forEach((pc, i) => {
     const ang = (i * 30 - 90) * Math.PI / 180;
-    const nodeR = 92;
+    const nodeR = 103;
     const nx = CX + nodeR * Math.cos(ang);
     const ny = CY + nodeR * Math.sin(ang);
     const sharp = NOTES[pc].includes('♯') || NOTES[pc].includes('♭');
-    const r = sharp ? 14 : 16;
+    const r = sharp ? 16 : 18;
 
     const grp = document.createElementNS(SVG_NS, 'g');
     grp.classList.add('nd');
@@ -2179,7 +2270,7 @@ function buildRing() {
     txt.setAttribute('x', nx);
     txt.setAttribute('y', ny - 3);
     txt.setAttribute('text-anchor', 'middle');
-    txt.setAttribute('font-size', sharp ? '11.8' : '13.8');
+    txt.setAttribute('font-size', sharp ? '12.5' : '14.8');
     txt.setAttribute('dominant-baseline', 'middle');
     txt.textContent = NOTES[pc];
 
@@ -2208,13 +2299,10 @@ function manualRoot(pc) {
   const ix = degs.indexOf(rel);
   if (ix < 0) return;
 
-  // Phase 1: click becomes a request into the movement,
-  // not a direct rewrite of second/root timing.
   P.realClock = false;
   movement.modes.realClock = false;
 
-  const realBtn = document.getElementById('real-btn');
-  if (realBtn) realBtn.classList.remove('on');
+  syncTimeButton();
 
   requestMovementInterval(ix);
 
@@ -2245,7 +2333,6 @@ function updateScaleMarks() {
   });
 }
 
-
 function setHandRotationContinuous(id, targetDeg, key) {
   const el = document.getElementById(id);
   if (!el) return;
@@ -2263,34 +2350,17 @@ function setHandRotationContinuous(id, targetDeg, key) {
   el.style.transform = `rotate(${current}deg)`;
 }
 
-
-function syncKeySelectToActiveRoot() {
-  const keySel = document.getElementById('key-select');
-  if (!keySel) return;
-
-  // In crawl mode, the dropdown reads as the current root.
-  // Internally, P.key remains the home key that defines the route.
-  if (P.rootDrive === 'crawl' && running) {
-    keySel.value = String(active.rootPc);
-  } else {
-    keySel.value = String(P.key);
-  }
-}
-
 function updateVisuals() {
-  syncKeySelectToActiveRoot();
   const allowed = scalePcs();
 
   document.querySelectorAll('.nd').forEach(grp => {
     const pc = +grp.getAttribute('data-pc');
     grp.classList.toggle('root', pc === active.rootPc);
-    grp.classList.toggle('interval', pc === active.intervalPc || (triadMode && pc === active.thirdPc));
+    grp.classList.toggle('interval', pc === active.intervalPc);
+    grp.classList.toggle('third', triadMode && pc === active.thirdPc && pc !== active.intervalPc);
     grp.classList.toggle('in-scale', allowed.includes(pc));
   });
 
-  // Hands:
-  // Internal mode: hour points to locked key/root, minute points to selected interval note.
-  // Real mode: hands behave like an actual clock.
   const rootFi = FIFTHS.indexOf(active.rootPc);
   const intFi = FIFTHS.indexOf(active.intervalPc);
 
@@ -2308,8 +2378,7 @@ function updateVisuals() {
   const cSub = document.getElementById('ctr-sub');
   cNote.textContent = '';
   cSub.textContent = '';
-
-  updateMovementView();
+  syncFrontControls();
 }
 
 function drawSpokes() {
@@ -2317,7 +2386,6 @@ function drawSpokes() {
   if (spokes) spokes.innerHTML = '';
 }
 
-// ─── Controls ─────────────────────────────────────────────
 function bindSlider(id, valId, paramKey, fmt, onchange) {
   const sl = document.getElementById(id);
   const vl = document.getElementById(valId);
@@ -2330,14 +2398,94 @@ function bindSlider(id, valId, paramKey, fmt, onchange) {
   });
 }
 
+function orbitLabel(v) {
+  if (v < 0.22) return 'STILL';
+  if (v < 0.52) return 'PULSE';
+  if (v < 0.78) return 'ORBIT';
+  return 'FLUX';
+}
+
+function syncFrontControls() {
+  const root = document.getElementById('r-root-front');
+  const rootVal = document.getElementById('v-root-front');
+  const interval = document.getElementById('r-interval-front');
+  const intervalVal = document.getElementById('v-interval-front');
+  const degs = scaleDegrees();
+
+  if (root) root.value = P.key;
+  if (rootVal) rootVal.textContent = NOTES[P.key];
+
+  if (interval) {
+    interval.max = Math.max(0, degs.length - 1);
+    interval.value = Math.max(0, Math.min(degs.length - 1, active.intIndex || 0));
+  }
+  if (intervalVal) intervalVal.textContent = `${degreeName(active.intIndex)} ${NOTES[active.intervalPc]}`;
+
+  const orbitVal = document.getElementById('v-orbit');
+  if (orbitVal) orbitVal.textContent = orbitLabel(P.orbit);
+
+  const bellVal = document.getElementById('v-shimmer');
+  if (bellVal) bellVal.textContent = P.shimmer.toFixed(2);
+}
+
+function applyKey(pc) {
+  P.key = pc;
+  clock.rootPhase = 0;
+  const keySel = document.getElementById('key-select');
+  if (keySel) keySel.value = String(P.key);
+  computeClockNotes();
+  updateScaleMarks();
+  if (running) updateSoundFromClock();
+  updateVisuals();
+  updateStatus();
+}
+
+function syncTimeButton() {
+  const btn = document.getElementById('real-btn');
+  if (!btn) return;
+  btn.classList.toggle('on', P.realClock);
+  btn.textContent = P.realClock ? 'time' : 'free';
+}
+
+function lockFreeClockToCurrentTimePosition() {
+  updateMovementFromRealClock();
+
+  const roots = rootOrder();
+  const rootN = Math.max(1, roots.length);
+  const rootTooth = Math.floor(movement.wheels.hour.phase * rootN) % rootN;
+  movement.rings.root.tooth = rootTooth;
+  movement.rings.root.target = rootTooth;
+  movement.rings.root.note = roots[rootTooth] ?? P.key;
+  movement.rings.root.transition = 1;
+  movement.rings.root.locked = true;
+
+  const n = movementScaleLength();
+  const intervalTooth = Math.floor(movement.wheels.minute.phase * n) % n;
+  movement.rings.interval.tooth = intervalTooth;
+  movement.rings.interval.target = intervalTooth;
+  movement.rings.interval.degree = intervalTooth;
+  movement.rings.interval.transition = 1;
+  movement.rings.interval.locked = true;
+  movement.wheels.minute.tooth = intervalTooth;
+  P.manualIntervalIndex = intervalTooth;
+}
+
 bindSlider('r-rate', 'v-rate', 'rate', v => v.toFixed(4));
-bindSlider('r-orbit', 'v-orbit', 'orbit', v => v.toFixed(2));
+bindSlider('r-orbit', 'v-orbit', 'orbit', v => orbitLabel(v), () => {
+  syncFrontControls();
+});
 bindSlider('r-oscmix', 'v-oscmix', 'oscmix', v => oscMixLabel(v), val => {
   Object.values(voices).forEach(v => {
     if (v.setOscMix) v.setOscMix(val);
   });
 });
-bindSlider('r-shimmer','v-shimmer','shimmer', v => v.toFixed(2));
+bindSlider('r-engine', 'v-engine', 'engine', v => engineLabel(v), () => {
+  Object.values(voices).forEach(v => v.applyBase());
+  updateStatus();
+});
+bindSlider('r-shimmer','v-shimmer','shimmer', v => v.toFixed(2), () => {
+  syncFrontControls();
+});
 bindSlider('r-drift','v-drift','drift', v => v + '¢');
 bindSlider('r-evolve','v-evolve','evolve', v => v.toFixed(3));
 bindSlider('r-space','v-space','space', v => v.toFixed(2), val => {
@@ -2347,45 +2495,38 @@ bindSlider('r-space','v-space','space', v => v.toFixed(2), val => {
 bindSlider('r-volume','v-volume','volume', v => v.toFixed(2), val => {
   setMasterVolume(val, true);
 });
-const intervalStepBtn = document.getElementById('interval-step-btn');
-if (intervalStepBtn) {
-  intervalStepBtn.addEventListener('click', () => {
-    requestMovementInterval((movement.rings.interval.tooth || 0) + 1);
-    computeClockNotes();
-    if (running) updateSoundFromClock();
-    updateVisuals();
-    updateStatus();
-  });
-}
-
-const rootStepBtn = document.getElementById('root-step-btn');
-if (rootStepBtn) {
-  rootStepBtn.addEventListener('click', () => {
-    requestMovementRootStep(1);
-    computeClockNotes();
-    if (running) updateSoundFromClock();
-    updateVisuals();
-    updateStatus();
-  });
-}
-
 
 document.getElementById('key-select').addEventListener('change', e => {
-  P.key = +e.target.value;
-  P.homeKey = P.key;
-  requestMovementHomeKey();
-  computeClockNotes();
-  updateScaleMarks();
-  if (running) updateSoundFromClock();
-  updateVisuals();
-  updateStatus();
+  applyKey(+e.target.value);
 });
+
+const rootFront = document.getElementById('r-root-front');
+if (rootFront) {
+  rootFront.addEventListener('input', e => {
+    applyKey(+e.target.value);
+  });
+}
+
+const intervalFront = document.getElementById('r-interval-front');
+if (intervalFront) {
+  intervalFront.addEventListener('input', e => {
+    P.realClock = false;
+    movement.modes.realClock = false;
+    syncTimeButton();
+    requestMovementInterval(+e.target.value);
+    computeClockNotes();
+    if (running) updateSoundFromClock();
+    updateVisuals();
+    updateStatus();
+  });
+}
 
 document.getElementById('scale-select').addEventListener('change', e => {
   P.scale = e.target.value;
   requestMovementInterval(Math.min(movement.rings.interval.tooth || 0, scaleDegrees().length - 1));
   computeClockNotes();
   updateScaleMarks();
+  syncFrontControls();
   if (running) updateSoundFromClock();
   updateVisuals();
   updateStatus();
@@ -2393,7 +2534,6 @@ document.getElementById('scale-select').addEventListener('change', e => {
 
 document.getElementById('tuning-select').addEventListener('change', e => {
   P.tuning = e.target.value;
-  // Force clean crossfade into the same musical positions with the new tuning.
   if (running) {
     Object.keys(voices).forEach(role => {
       const old = voices[role];
@@ -2407,7 +2547,6 @@ document.getElementById('tuning-select').addEventListener('change', e => {
 
 document.getElementById('algo-select').addEventListener('change', e => {
   P.algorithm = e.target.value;
-  // Force a clean crossfade into the same notes with the new FM character.
   if (running) {
     const oldVoices = { ...voices };
     voices = {};
@@ -2431,6 +2570,7 @@ document.getElementById('triad-btn').addEventListener('click', () => {
   triadMode = !triadMode;
   movement.modes.triad = triadMode;
   document.getElementById('triad-btn').classList.toggle('on', triadMode);
+  document.getElementById('triad-btn').textContent = triadMode ? 'third on' : 'third';
   if (running) updateSoundFromClock();
   else stopVoice('third');
   updateVisuals();
@@ -2438,15 +2578,20 @@ document.getElementById('triad-btn').addEventListener('click', () => {
 });
 
 document.getElementById('real-btn').addEventListener('click', () => {
-  P.realClock = !P.realClock;
-  movement.modes.realClock = P.realClock;
-  document.getElementById('real-btn').classList.toggle('on', P.realClock);
+  const wasTime = P.realClock;
 
-  if (!P.realClock) {
-    movement.wheels.second.phase = 0;
-    movement.wheels.second.prevPhase = 0;
+  if (wasTime) {
+    lockFreeClockToCurrentTimePosition();
   }
 
+  P.realClock = !wasTime;
+  movement.modes.realClock = P.realClock;
+
+  if (P.realClock) {
+    updateMovementFromRealClock(true);
+  }
+
+  syncTimeButton();
   computeClockNotes();
   if (running) updateSoundFromClock();
   updateVisuals();
@@ -2468,6 +2613,17 @@ document.getElementById('freeze-btn').addEventListener('click', () => {
   updateStatus();
 });
 
+function toggleAdvanced(force) {
+  const panel = document.getElementById('adv-panel');
+  const btn = document.getElementById('expand-btn');
+  const open = typeof force === 'boolean' ? force : !panel.classList.contains('open');
+  panel.classList.toggle('open', open);
+  btn.classList.toggle('open', open);
+  btn.textContent = 'calibrate';
+}
+
+document.getElementById('expand-btn').addEventListener('click', () => toggleAdvanced());
+
 document.getElementById('start-btn').addEventListener('click', () => {
   ensureCtx();
   running = !running;
@@ -2475,9 +2631,11 @@ document.getElementById('start-btn').addEventListener('click', () => {
 
   const btn = document.getElementById('start-btn');
   btn.classList.toggle('on', running);
-  btn.textContent = running ? 'stop' : 'start';
+  btn.setAttribute('aria-label', running ? 'Press winder to stop' : 'Press winder to start');
+  btn.setAttribute('title', running ? 'press winder to stop' : 'press winder to start');
 
   if (running) {
+    if (P.realClock) updateMovementFromRealClock(true);
     updateSoundFromClock();
   } else {
     stopAllVoices();
@@ -2487,26 +2645,24 @@ document.getElementById('start-btn').addEventListener('click', () => {
   updateStatus();
 });
 
-// ─── Status ──────────────────────────────────────────────
 function updateStatus() {
   const el = document.getElementById('status');
   const thirdText = triadMode ? ` + ${NOTES[active.thirdPc]}` : '';
   const intervalText = degreeName(active.intIndex);
 
   if (!running) {
-    const mode = P.rootDrive === 'hold' ? 'root hold' : (P.realClock ? 'real clock' : 'root crawl + interval route + interval route');
-    el.textContent = `${NOTES[P.key]} ${SCALES[P.scale].name} · ${mode} · key menu follows current root`;
+    const mode = P.realClock ? 'time' : 'free';
+    el.textContent = `${NOTES[P.key]} ${SCALES[P.scale].name} · ${mode} · ${TUNINGS[P.tuning].name}`;
     el.classList.remove('active');
     return;
   }
 
   el.innerHTML =
     `droning: ${NOTES[active.rootPc]} + ${NOTES[active.intervalPc]}${thirdText}` +
-    `<br>${P.rootDrive === 'hold' ? 'root hold' : 'root crawl + interval route + interval route'} · interval degree ${intervalText}${P.freezeInterval ? ' · frozen' : ' · moving'} · second hand modulates FM/space/drift`;
+    `<br>${P.realClock ? 'time' : 'free'} · interval degree ${intervalText}${P.freezeInterval ? ' · frozen' : ' · moving'}${triadMode ? ' · second=third hand' : ' · second hand modulates FM'}`;
   el.classList.add('active');
 }
 
-// ─── Animation ───────────────────────────────────────────
 function animate(ts) {
   if (!clock.last) clock.last = ts;
   const dt = Math.min(0.05, (ts - clock.last) / 1000);
@@ -2524,13 +2680,10 @@ function animate(ts) {
   requestAnimationFrame(animate);
 }
 
-
-// ─── Init ────────────────────────────────────────────────
 setMasterVolume(P.volume, true);
 buildTicks();
-buildMovementView();
 buildRing();
-document.body.classList.toggle('movement-view', P.viewMode === 'movement');
+syncTimeButton();
 computeClockNotes();
 updateVisuals();
 updateStatus();
